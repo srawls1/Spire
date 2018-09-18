@@ -66,16 +66,26 @@ public class CharacterMovement : Movement
 	public override void Attack()
 	{ }
 
-	protected override bool canInteract(GameObject obj)
+	protected override GameObject canInteract(GameObject obj)
 	{
 		if (obj == gameObject || obj.transform.parent == transform)
 		{
-			return false;
+			return null;
 		}
 
-		return obj.GetComponent<Movement>() != null ||
-			obj.GetComponentInParent<Movement>() != null ||
-			obj.GetComponent<Interactable>() != null;
+		Interactable interactable = obj.GetComponentInParent<Interactable>();
+		if (interactable != null)
+		{
+			return interactable.gameObject;
+		}
+
+		Movement movement = obj.GetComponentInParent<Movement>();
+		if (movement != null)
+		{
+			return movement.gameObject;
+		}
+
+		return null;
 	}
 
 	protected override IEnumerator interact(GameObject obj)

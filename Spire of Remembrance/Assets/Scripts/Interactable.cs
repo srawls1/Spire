@@ -4,14 +4,9 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-	[SerializeField] private string m_interactionText;
-
-	public string interactionText
+	public abstract string interactionText
 	{
-		get
-		{
-			return m_interactionText;
-		}
+		get;
 	}
 
 	public abstract Coroutine Interact(GameObject interacter);

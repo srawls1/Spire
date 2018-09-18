@@ -55,6 +55,10 @@ public class CharacterController : Controller
 		if (Input.GetButtonDown("Interact") && interactables.Count > 0)
 		{
 			controlledMovement.Interact(interactables.First.Value);
+			if (OnInteractableChanged != null)
+			{
+				OnInteractableChanged(interactables.First.Value, interactables.Count > 1);
+			}
 		}
 
 		if (Input.GetButtonDown("Possess"))
@@ -111,7 +115,10 @@ public class CharacterController : Controller
 
 	private void AddInteractable(GameObject obj)
 	{
-		interactables.AddFirst(obj);
+		if (!interactables.Contains(obj))
+		{
+			interactables.AddFirst(obj);
+		}
 
 		if (OnInteractableChanged != null)
 		{

@@ -84,22 +84,24 @@ public abstract class Movement : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (canInteract(other.gameObject))
+		GameObject obj = canInteract(other.gameObject);
+		if (obj != null)
 		{
 			if (OnEnteredInteractable != null)
 			{
-				OnEnteredInteractable(other.gameObject);
+				OnEnteredInteractable(obj);
 			}
 		}
 	}
 
 	private void OnTriggerExit2D(Collider2D other)
 	{
-		if (canInteract(other.gameObject))
+		GameObject obj = canInteract(other.gameObject);
+		if (obj != null)
 		{
 			if (OnExitedInteractable != null)
 			{
-				OnExitedInteractable(other.gameObject);
+				OnExitedInteractable(obj);
 			}
 		}
 	}
@@ -138,7 +140,7 @@ public abstract class Movement : MonoBehaviour
 
 	#region Private Functions
 
-	protected abstract bool canInteract(GameObject obj);
+	protected abstract GameObject canInteract(GameObject obj);
 
 	protected abstract IEnumerator interact(GameObject obj);
 

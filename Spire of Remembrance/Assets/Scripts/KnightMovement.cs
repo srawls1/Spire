@@ -71,14 +71,25 @@ public class KnightMovement : Movement
 		animator.SetTrigger("Attack");
 	}
 
-	protected override bool canInteract(GameObject obj)
+	protected override GameObject canInteract(GameObject obj)
 	{
-		return obj.GetComponent<Interactable>() != null;
+		Interactable interactable = obj.GetComponentInParent<Interactable>();
+		if (interactable != null)
+		{
+			return interactable.gameObject;
+		}
+
+		return null;
 	}
 
 	protected override IEnumerator interact(GameObject obj)
 	{
-		yield return obj.GetComponent<Interactable>().Interact(gameObject);
+		Interactable interactable = obj.GetComponent<Interactable>();
+		if (interactable == null)
+		{
+			interactable = obj.GetComponentInParent<Interactable>();
+		}
+		yield return interactable.Interact(gameObject);
 	}
 
 	#endregion // Override Functions
