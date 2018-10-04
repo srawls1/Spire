@@ -8,13 +8,43 @@ public class CharacterController : Controller
 	#region Private Fields
 
 	private CharacterMovement spiritMovement;
-	private LinkedList<GameObject> interactables;
+	private Interaction[] interactables;
+	private int interactableIndex;
+	private int m_numKeys;
+
+	private static readonly Interaction[] empty = { };
+	private static CharacterController m_instance;
 
 	#endregion // Private Fields
 
+	#region Properties
+
+	public static CharacterController instance
+	{
+		get
+		{
+			if (m_instance == null)
+			{
+				m_instance = FindObjectOfType<CharacterController>();
+			}
+			return m_instance;
+		}
+	}
+
+	public int numKeys
+	{
+		get
+		{
+			return m_numKeys;
+		}
+			
+	}
+
+	#endregion // Properties
+
 	#region Events
 
-	public event Action<GameObject, bool> OnInteractableChanged;
+	public event Action<Interaction, bool> OnInteractableChanged;
 
 	#endregion // Events
 
@@ -22,7 +52,15 @@ public class CharacterController : Controller
 
 	new void Awake()
 	{
-		interactables = new LinkedList<GameObject>();
+		if (m_instance == null)
+		{
+			m_instance = this;
+		}
+		else if (m_instance != this)
+		{
+			Debug.LogWarning("Multiple character controllers in scene! Destroying one");
+			Destroy(gameObject);
+		}
 		spiritMovement = GetComponent<CharacterMovement>();
 		base.Awake();
 	}
@@ -40,34 +78,27 @@ public class CharacterController : Controller
 			controlledMovement.Attack();
 		}
 
-		if (Input.GetButtonDown("RotateInteractable") && interactables.Count > 1)
+		if (Input.GetButtonDown("RotateInteractable") && interactables.Length > 1)
 		{
-			GameObject obj = interactables.First.Value;
-			interactables.RemoveFirst();
-			interactables.AddLast(obj);
+			++interactableIndex;
+			interactableIndex %= interactables.Length;
+			Interaction inter = interactables[interactableIndex];
 			
 			if (OnInteractableChanged != null)
 			{
-				OnInteractableChanged(interactables.First.Value, true);
+				OnInteractableChanged(inter, true);
 			}
 		}
 
-		if (Input.GetButtonDown("Interact") && interactables.Count > 0)
+		if (Input.GetButtonDown("Interact") && interactables.Length > 0 && interactables[interactableIndex].enabled)
 		{
-			controlledMovement.Interact(interactables.First.Value);
-			if (OnInteractableChanged != null)
-			{
-				OnInteractableChanged(interactables.First.Value, interactables.Count > 1);
-			}
+			interactables[interactableIndex].interact();
+			RefreshInteractable();
 		}
 
 		if (Input.GetButtonDown("Possess"))
 		{
-			if (controlledMovement == spiritMovement && interactables.Count > 0)
-			{
-				spiritMovement.Possess(interactables.First.Value);
-			}
-			else
+			if (controlledMovement != spiritMovement)
 			{
 				Deposess();
 			}
@@ -78,15 +109,24 @@ public class CharacterController : Controller
 
 	#region Public Functions
 
+	public void gainKey()
+	{
+		++m_numKeys;
+	}
+
+	public void useKey()
+	{
+		--m_numKeys;
+	}
+
 	public override void Possess(Movement move)
 	{
 		if (controlledMovement != null)
 		{
-			controlledMovement.OnEnteredInteractable -= AddInteractable;
-			controlledMovement.OnExitedInteractable -= RemoveInteractable;
+			controlledMovement.OnNewInteractables -= SetInteractions;
 		}
 
-		interactables.Clear();
+		interactables = empty;
 		
 		if (OnInteractableChanged != null)
 		{
@@ -97,8 +137,7 @@ public class CharacterController : Controller
 
 		if (move != null)
 		{
-			controlledMovement.OnEnteredInteractable += AddInteractable;
-			controlledMovement.OnExitedInteractable += RemoveInteractable;
+			controlledMovement.OnNewInteractables += SetInteractions;
 		}
 	}
 
@@ -113,35 +152,20 @@ public class CharacterController : Controller
 
 	#region Private Functions
 
-	private void AddInteractable(GameObject obj)
+	private void RefreshInteractable()
 	{
-		if (!interactables.Contains(obj))
-		{
-			interactables.AddFirst(obj);
-		}
+		controlledMovement.RefreshInteracable();
+	}
+
+	private void SetInteractions(Interaction[] inters)
+	{
+		interactables = inters != null ? inters : empty;
+		interactableIndex = 0;
+		Interaction interaction = interactables.Length > 0 ? interactables[0] : null;
 
 		if (OnInteractableChanged != null)
 		{
-			OnInteractableChanged(obj, interactables.Count > 1);
-		}
-	}
-
-	private void RemoveInteractable(GameObject obj)
-	{
-		interactables.Remove(obj);
-		if (interactables.Count > 0)
-		{
-			if (OnInteractableChanged != null)
-			{
-				OnInteractableChanged(interactables.First.Value, interactables.Count > 1);
-			}
-		}
-		else
-		{
-			if (OnInteractableChanged != null)
-			{
-				OnInteractableChanged(null, interactables.Count > 0);
-			}
+			OnInteractableChanged(interaction, interactables.Length > 1);
 		}
 	}
 

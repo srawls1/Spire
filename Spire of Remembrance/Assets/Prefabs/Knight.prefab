@@ -19,8 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4240763545708644}
-  - component: {fileID: 58907204064022584}
-  m_Layer: 10
+  - component: {fileID: 61795405930875348}
+  - component: {fileID: 114927193834152096}
+  m_Layer: 8
   m_Name: Posession Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,20 +129,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &58907204064022584
-CircleCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1114894577031566}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 1
 --- !u!60 &60972300339866610
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -173,6 +160,20 @@ PolygonCollider2D:
       - {x: -0.21, y: -0.25}
       - {x: -0.12, y: -0.31}
       - {x: -0.089999996, y: -0.26999998}
+--- !u!61 &61795405930875348
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1114894577031566}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!61 &61892139475645154
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -256,8 +257,20 @@ MonoBehaviour:
   maxWalkSpeed: 3
   walkAcceleration: 10
   walkDecceleration: 20
+  interactionDistance: 2
   damage: 15
   attackForce: 7
+--- !u!114 &114927193834152096
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1114894577031566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdfbd52aa011cd846850fa859f4813eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212619184187087820
 SpriteRenderer:
   m_ObjectHideFlags: 1

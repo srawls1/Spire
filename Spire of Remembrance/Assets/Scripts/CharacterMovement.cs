@@ -24,17 +24,7 @@ public class CharacterMovement : Movement
 
 	public Coroutine Possess(GameObject interactable)
 	{
-		if (interactable == null)
-		{
-			return StartCoroutine(dummyCoroutine());
-		}
-
-		Movement movement = interactable.GetComponent<Movement>();
-		if (movement == null)
-		{
-			movement = interactable.GetComponentInParent<Movement>();
-		}
-
+		Movement movement = interactable != null ? interactable.GetComponentInParent<Movement>() : null;
 		if (movement == null)
 		{
 			return StartCoroutine(dummyCoroutine());
@@ -66,48 +56,12 @@ public class CharacterMovement : Movement
 	public override void Attack()
 	{ }
 
-	protected override GameObject canInteract(GameObject obj)
+	protected override int getInteractionLayermask()
 	{
-		if (obj == gameObject || obj.transform.parent == transform)
+		return LayerMask.GetMask(new string[]
 		{
-			return null;
-		}
-
-		Interactable interactable = obj.GetComponentInParent<Interactable>();
-		if (interactable != null)
-		{
-			return interactable.gameObject;
-		}
-
-		Movement movement = obj.GetComponentInParent<Movement>();
-		if (movement != null)
-		{
-			return movement.gameObject;
-		}
-
-		return null;
-	}
-
-	protected override IEnumerator interact(GameObject obj)
-	{
-		Movement movement = obj.GetComponent<Movement>();
-		if (movement == null)
-		{
-			movement = obj.GetComponentInParent<Movement>();
-		}
-		if (movement != null)
-		{
-			yield return Possess(obj);
-			yield break;
-		}
-
-		Interactable interactable = obj.GetComponent<Interactable>();
-		if (interactable == null)
-		{
-			yield break;
-		}
-
-		yield return interactable.Interact(gameObject);
+			"Spirit"
+		});
 	}
 
 	#endregion // Override Functions

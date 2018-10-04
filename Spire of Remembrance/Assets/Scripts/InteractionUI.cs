@@ -8,6 +8,7 @@ public class InteractionUI : MonoBehaviour
 	[SerializeField] private GameObject interactionPane;
 	[SerializeField] private GameObject switchActionRow;
 	[SerializeField] private Text interactionText;
+	[SerializeField] private Color disabledColor;
 
 	private void Start()
 	{
@@ -15,7 +16,7 @@ public class InteractionUI : MonoBehaviour
 		character.OnInteractableChanged += ShowInteractable;
 	}
 	
-	private void ShowInteractable(GameObject interactable, bool moreThanOne)
+	private void ShowInteractable(Interaction interactable, bool moreThanOne)
 	{
 		if (interactable == null)
 		{
@@ -23,10 +24,11 @@ public class InteractionUI : MonoBehaviour
 		}
 		else
 		{
-			Interactable inter = interactable.GetComponent<Interactable>();
-
 			interactionPane.SetActive(true);
-			interactionText.text = (inter != null) ? inter.interactionText : "Possess";
+			interactionText.text = interactable.interactionText;
+			interactionText.color = interactable.enabled ? Color.white : disabledColor;
+			interactionText.gameObject.SetActive(false);
+			interactionText.gameObject.SetActive(true);
 
 			switchActionRow.SetActive(moreThanOne);
 		}

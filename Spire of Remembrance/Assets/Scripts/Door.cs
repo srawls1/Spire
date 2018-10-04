@@ -7,16 +7,14 @@ public class Door : Interactable
 {
 	#region Editor Fields
 
-	[SerializeField] bool m_startOpen;
-	[SerializeField] Sprite closedSprite;
-	[SerializeField] Sprite openSprite;
+	[SerializeField] private bool m_open;
+	[SerializeField] private bool m_locked;
+	[SerializeField] private Sprite closedSprite;
+	[SerializeField] private Sprite openSprite;
 
 	#endregion // Editor Fields
 
 	#region Non-Editor Fields
-
-	private bool m_open;
-	private bool m_locked;
 
 	private new SpriteRenderer renderer;
 	private new Collider2D collider;
@@ -39,8 +37,9 @@ public class Door : Interactable
 			}
 
 			m_open = value;
-			collider.enabled = !m_open;
+			//collider.enabled = !m_open;
 			renderer.sprite = m_open ? openSprite : closedSprite;
+			gameObject.layer = LayerMask.NameToLayer(m_open ? "Interactable" : "Default");
 		}
 	}
 
@@ -60,17 +59,26 @@ public class Door : Interactable
 
 	#region Overrides
 
-	public override string interactionText
+	public override Interaction[] interactions
 	{
 		get
 		{
-			return open ? "Close Door" : "Open Door";
+			if (open)
+			{
+				return new Interaction[]
+				{
+					new Interaction("Close Door", ToggleOpen, true)
+				};
+			}
+			else
+			{
+				return new Interaction[]
+				{
+					new Interaction("Open Door", ToggleOpen, !locked),
+					new Interaction(locked ? "Unlock" : "Lock", ToggleLocked, CharacterController.instance.numKeys > 0)
+				};
+			}
 		}
-	}
-
-	public override Coroutine Interact(GameObject interacter)
-	{
-		return StartCoroutine(ToggleOpen());
 	}
 
 	#endregion // Overrides
@@ -81,17 +89,26 @@ public class Door : Interactable
 	{
 		renderer = GetComponent<SpriteRenderer>();
 		collider = GetComponent<Collider2D>();
-		open = m_startOpen;
+		open = open;
+		locked = locked;
 	}
 
 	#endregion // Unity Functions
 
 	#region Private Functions
 
-	private IEnumerator ToggleOpen()
+	private void ToggleOpen()
 	{
 		open = !open;
-		yield break;
+	}
+
+	private void ToggleLocked()
+	{
+		if (CharacterController.instance.numKeys > 0)
+		{
+			CharacterController.instance.useKey();
+			locked = !locked;
+		}
 	}
 
 	#endregion // Private Functions

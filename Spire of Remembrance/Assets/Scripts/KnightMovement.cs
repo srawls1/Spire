@@ -71,25 +71,12 @@ public class KnightMovement : Movement
 		animator.SetTrigger("Attack");
 	}
 
-	protected override GameObject canInteract(GameObject obj)
+	protected override int getInteractionLayermask()
 	{
-		Interactable interactable = obj.GetComponentInParent<Interactable>();
-		if (interactable != null)
+		return ~LayerMask.GetMask(new string[]
 		{
-			return interactable.gameObject;
-		}
-
-		return null;
-	}
-
-	protected override IEnumerator interact(GameObject obj)
-	{
-		Interactable interactable = obj.GetComponent<Interactable>();
-		if (interactable == null)
-		{
-			interactable = obj.GetComponentInParent<Interactable>();
-		}
-		yield return interactable.Interact(gameObject);
+			"Spirit"
+		});
 	}
 
 	#endregion // Override Functions

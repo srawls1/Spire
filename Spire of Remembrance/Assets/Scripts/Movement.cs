@@ -12,12 +12,10 @@ public abstract class Movement : MonoBehaviour
 {
 	#region Editor Fields
 
-	[SerializeField]
-	private float maxWalkSpeed;
-	[SerializeField]
-	private float walkAcceleration;
-	[SerializeField]
-	private float walkDecceleration;
+	[SerializeField] private float maxWalkSpeed;
+	[SerializeField] private float walkAcceleration;
+	[SerializeField] private float walkDecceleration;
+	[SerializeField] private float interactionDistance;
 
 	#endregion // Editor Fields
 
@@ -27,6 +25,7 @@ public abstract class Movement : MonoBehaviour
 	protected Animator animator;
 	protected Controller m_current;
 	private Facing m_facing;
+	private GameObject currentInteractionHit;
 
 	#endregion // Non-Editor Fields
 
@@ -69,8 +68,7 @@ public abstract class Movement : MonoBehaviour
 
 	#region Events
 
-	public event Action<GameObject> OnEnteredInteractable;
-	public event Action<GameObject> OnExitedInteractable;
+	public event Action<Interaction[]> OnNewInteractables;
 
 	#endregion // Events
 
@@ -82,26 +80,46 @@ public abstract class Movement : MonoBehaviour
 		animator = GetComponentInChildren<Animator>();
 	}
 
-	private void OnTriggerEnter2D(Collider2D other)
+	private void Update()
 	{
-		GameObject obj = canInteract(other.gameObject);
-		if (obj != null)
+		Vector2 direction = Vector2.zero;
+		switch (Facing)
 		{
-			if (OnEnteredInteractable != null)
-			{
-				OnEnteredInteractable(obj);
-			}
+			case Facing.left:
+				direction = Vector2.left;
+				break;
+			case Facing.right:
+				direction = Vector2.right;
+				break;
+			case Facing.up:
+				direction = Vector2.up;
+				break;
+			case Facing.down:
+				direction = Vector2.down;
+				break;
 		}
-	}
 
-	private void OnTriggerExit2D(Collider2D other)
-	{
-		GameObject obj = canInteract(other.gameObject);
-		if (obj != null)
+		Debug.DrawRay(transform.position, direction * interactionDistance);
+		RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, interactionDistance, getInteractionLayermask());
+		Collider2D c = hit.collider;
+		GameObject obj = c != null ? c.gameObject : null;
+		if (obj != currentInteractionHit)
 		{
-			if (OnExitedInteractable != null)
+			currentInteractionHit = obj;
+			Interactable interactable = obj != null ? obj.GetComponent<Interactable>() : null;
+			if (interactable == null)
 			{
-				OnExitedInteractable(obj);
+				if (OnNewInteractables != null)
+				{
+					OnNewInteractables(null);
+				}
+			}
+			else
+			{
+				if (OnNewInteractables != null)
+				{
+					OnNewInteractables(interactable.interactions);
+				}
 			}
 		}
 	}
@@ -112,26 +130,52 @@ public abstract class Movement : MonoBehaviour
 
 	public void Walk(Vector2 input)
 	{
+		Vector2 velocity = rigidBody.velocity;
 		if (input.magnitude > 1f)
 		{
 			input.Normalize();
 		}
-		Vector2 goalVelocity = input * maxWalkSpeed;
-		float changeFactor = goalVelocity.magnitude < rigidBody.velocity.magnitude || Vector2.Dot(rigidBody.velocity, goalVelocity) < 0f ?
-			walkDecceleration : walkAcceleration;
 
-		rigidBody.velocity = Vector2.Lerp(rigidBody.velocity, goalVelocity, Time.deltaTime * changeFactor);
+		Vector2 acceleration = input * walkAcceleration;
 
-		setFacing();
-		animator.SetFloat("Velocity", rigidBody.velocity.magnitude);
+		if (DecelerationRequired(input.x, velocity.x / maxWalkSpeed))
+		{
+			acceleration.x = -Mathf.Sign(velocity.x) * walkDecceleration;
+		}
+		if (DecelerationRequired(input.y, velocity.y / maxWalkSpeed))
+		{
+			acceleration.y = -Mathf.Sign(velocity.y) * walkDecceleration;
+		}
+
+		velocity += acceleration * Time.deltaTime;
+
+		// Cap it at max speed
+		if (velocity.x > maxWalkSpeed)
+		{
+			velocity.x = maxWalkSpeed;
+		}
+		if (velocity.y > maxWalkSpeed)
+		{
+			velocity.y = maxWalkSpeed;
+		}
+
+		// If input is zero and our velocity has crossed zero, no acceleration
+		if (Mathf.Approximately(input.x, 0f) && velocity.x * rigidBody.velocity.x < 0f)
+		{
+			velocity.x = 0f;
+		}
+		if (Mathf.Approximately(input.y, 0f) && velocity.y * rigidBody.velocity.y < 0f)
+		{
+			velocity.y = 0f;
+		}
+
+		rigidBody.velocity = velocity;
+		setFacing(input);
 	}
 
-	public void Interact(GameObject interactable)
+	public void RefreshInteracable()
 	{
-		if (interactable != null)
-		{
-			StartCoroutine(interact(interactable));
-		}
+		currentInteractionHit = null;
 	}
 
 	public abstract void Attack();
@@ -140,13 +184,26 @@ public abstract class Movement : MonoBehaviour
 
 	#region Private Functions
 
-	protected abstract GameObject canInteract(GameObject obj);
+	protected abstract int getInteractionLayermask();
 
-	protected abstract IEnumerator interact(GameObject obj);
-
-	protected void setFacing()
+	bool DecelerationRequired(float input, float velocity)
 	{
-		Vector2 velocity = rigidBody.velocity;
+		// Test if they have opposite signs, i.e. opposite directions
+		if (input * velocity < 0)
+		{
+			return true;
+		}
+
+		return (Mathf.Abs(input) < Mathf.Abs(velocity));
+	}
+
+	protected void setFacing(Vector2 velocity)
+	{
+		if (velocity.magnitude < 0.1f)
+		{
+			return;
+		}
+
 		if (Math.Abs(velocity.x) > Math.Abs(velocity.y))
 		{
 			if (velocity.x > 0.1f)

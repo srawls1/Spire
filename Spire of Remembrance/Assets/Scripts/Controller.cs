@@ -6,7 +6,11 @@ using UnityEngine;
 public abstract class Controller : MonoBehaviour
 {
 	protected Controller disabledController;
-	protected Movement controlledMovement;
+
+	public Movement controlledMovement
+	{
+		get; protected set;
+	}
 
 	protected void Awake()
 	{
