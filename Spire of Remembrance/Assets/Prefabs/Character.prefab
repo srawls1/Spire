@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 50656591273898712}
   - component: {fileID: 61006766043569766}
   - component: {fileID: 95991854223929452}
+  - component: {fileID: 114950058736119342}
   m_Layer: 8
   m_Name: Character
   m_TagString: Player
@@ -118,11 +119,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b4b702cbe68144fbeedd58ec85aa0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxWalkSpeed: 3
-  walkAcceleration: 15
-  walkDecceleration: 30
-  possessFadeDuration: 0.5
+  maxWalkSpeed: 4
+  walkAcceleration: 20
+  walkDecceleration: 40
+  interactionDistance: 2
+  possessFadeDuration: 0.3
   possessedEnemyHealthBar: {fileID: 0}
+--- !u!114 &114950058736119342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1206111589379376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0afba6bb0c02832458add732c311c079, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212536740254345188
 SpriteRenderer:
   m_ObjectHideFlags: 1

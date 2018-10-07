@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99da79881b5f0e745945e1b4a3264f9d, type: 3}
+  m_Name: DefaultSword
+  m_EditorClassIdentifier: 
+  m_damage: 5
+  m_attackForce: 7
+  m_attackAnimation: SwingAttack
+  m_attackSweepAngle: 90
+  m_attackDuration: 0.2
+  m_weaponSprite: {fileID: 21300000, guid: 9ee8aa6fad46171459f034bdff0de19e, type: 3}
+  m_trailColor: {r: 1, g: 1, b: 1, a: 1}

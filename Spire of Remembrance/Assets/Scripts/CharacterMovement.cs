@@ -53,9 +53,6 @@ public class CharacterMovement : Movement
 
 	#region Override Functions
 
-	public override void Attack()
-	{ }
-
 	protected override int getInteractionLayermask()
 	{
 		return LayerMask.GetMask(new string[]

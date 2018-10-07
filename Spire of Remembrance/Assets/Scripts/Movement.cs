@@ -22,9 +22,8 @@ public abstract class Movement : MonoBehaviour
 	#region Non-Editor Fields
 
 	protected Rigidbody2D rigidBody;
-	protected Animator animator;
+	protected EntityAnimations animator;
 	protected Controller m_current;
-	private Facing m_facing;
 	private GameObject currentInteractionHit;
 
 	#endregion // Non-Editor Fields
@@ -53,15 +52,7 @@ public abstract class Movement : MonoBehaviour
 
 	public Facing Facing
 	{
-		get
-		{
-			return m_facing;
-		}
-		protected set
-		{
-			m_facing = value;
-			animator.SetInteger("Facing", (int)m_facing);
-		}
+		get; protected set;
 	}
 
 	#endregion // Properties
@@ -77,7 +68,7 @@ public abstract class Movement : MonoBehaviour
 	private void Awake()
 	{
 		rigidBody = GetComponent<Rigidbody2D>();
-		animator = GetComponentInChildren<Animator>();
+		animator = GetComponentInChildren<EntityAnimations>();
 	}
 
 	private void Update()
@@ -171,6 +162,7 @@ public abstract class Movement : MonoBehaviour
 
 		rigidBody.velocity = velocity;
 		setFacing(input);
+		animator.UpdateMovementAnim(Facing, velocity.magnitude);
 	}
 
 	public void RefreshInteracable()
@@ -178,7 +170,10 @@ public abstract class Movement : MonoBehaviour
 		currentInteractionHit = null;
 	}
 
-	public abstract void Attack();
+	public void Attack()
+	{
+		animator.Attack(Facing);
+	}
 
 	#endregion // Public Functions
 

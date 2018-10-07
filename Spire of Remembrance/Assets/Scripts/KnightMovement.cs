@@ -7,11 +7,15 @@ public class KnightMovement : Movement
 {
 	#region Editor Fields
 
-	[SerializeField] private int damage;
-	[SerializeField] private float attackForce;
-	private Weapon m_weapon;
+	[SerializeField] private WeaponData m_weaponData;
 
 	#endregion // Editor Fields
+
+	#region Non-Editor Fields
+
+	private Weapon m_weapon;
+
+	#endregion // Non-Editor Fields
 
 	#region Properties
 
@@ -21,25 +25,17 @@ public class KnightMovement : Movement
 		{
 			return m_weapon;
 		}
+	}
+
+	public WeaponData weaponData
+	{
+		get
+		{
+			return m_weaponData;
+		}
 		set
 		{
-			if (m_weapon != null)
-			{
-				m_weapon.transform.parent = null;
-				m_weapon.gameObject.SetActive(false);
-			}
-
-			m_weapon = value;
-
-			if (m_weapon != null)
-			{
-				m_weapon.gameObject.SetActive(false);
-				m_weapon.transform.parent = transform;
-				m_weapon.transform.localPosition = Vector3.zero;
-				m_weapon.damage = damage;
-				m_weapon.attackForce = attackForce;
-				m_weapon.gameObject.name = "Weapon";
-			}
+			weapon.data = value;
 		}
 	}
 
@@ -49,27 +45,14 @@ public class KnightMovement : Movement
 
 	private void Start()
 	{
-		weapon = GetComponentInChildren<Weapon>();
-	}
-
-	public void OnStartAttackAnimation()
-	{
-		weapon.gameObject.SetActive(true);
-	}
-
-	public void OnFinishAttackAnimation()
-	{
-		weapon.gameObject.SetActive(false);
+		m_weapon = GetComponentInChildren<Weapon>();
+		m_weapon.gameObject.SetActive(false);
+		weaponData = weaponData;
 	}
 
 	#endregion // Unity Functions
 
 	#region Override Functions
-
-	public override void Attack()
-	{
-		animator.SetTrigger("Attack");
-	}
 
 	protected override int getInteractionLayermask()
 	{
