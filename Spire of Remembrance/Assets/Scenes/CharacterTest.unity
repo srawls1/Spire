@@ -1452,6 +1452,48 @@ MonoBehaviour:
   switchActionRow: {fileID: 658363204}
   interactionText: {fileID: 394508579}
   disabledColor: {r: 1, g: 1, b: 1, a: 0.472}
+--- !u!1001 &1955237756
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4611612207179464, guid: 507b0312a04ed104b9b2a9aac9036c23, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 4.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611612207179464, guid: 507b0312a04ed104b9b2a9aac9036c23, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 3.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611612207179464, guid: 507b0312a04ed104b9b2a9aac9036c23, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611612207179464, guid: 507b0312a04ed104b9b2a9aac9036c23, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611612207179464, guid: 507b0312a04ed104b9b2a9aac9036c23, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611612207179464, guid: 507b0312a04ed104b9b2a9aac9036c23, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611612207179464, guid: 507b0312a04ed104b9b2a9aac9036c23, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611612207179464, guid: 507b0312a04ed104b9b2a9aac9036c23, type: 2}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 507b0312a04ed104b9b2a9aac9036c23, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &2051329218
 GameObject:
   m_ObjectHideFlags: 0

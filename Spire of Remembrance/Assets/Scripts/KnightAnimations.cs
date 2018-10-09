@@ -34,7 +34,6 @@ public class KnightAnimations : EntityAnimations
 		Weapon weapon = movement.weapon;
 
 		animator.Play(weapon.attackAnimation + directionStringForState(state));
-		Debug.Log("Doing the attack animation");
 		weapon.gameObject.SetActive(true);
 
 		float centralAngle = getAngle(state);
