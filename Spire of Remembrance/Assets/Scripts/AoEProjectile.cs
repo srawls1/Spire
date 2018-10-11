@@ -23,7 +23,7 @@ public class AoEProjectile : Projectile
 			rigidBody.velocity = Vector2.zero;
 		}
 
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius);
+		Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, radius, Physics2D.GetLayerCollisionMask(gameObject.layer));
 		for (int i = 0; i < colliders.Length; ++i)
 		{
 			DealDamage(colliders[i]);

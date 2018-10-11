@@ -121,6 +121,11 @@ public abstract class Movement : MonoBehaviour
 
 	public void Walk(Vector2 input)
 	{
+		if (!enabled)
+		{
+			return;
+		}
+
 		Vector2 velocity = rigidBody.velocity;
 		if (input.magnitude > 1f)
 		{
@@ -172,6 +177,11 @@ public abstract class Movement : MonoBehaviour
 
 	public void Attack()
 	{
+		if (!enabled)
+		{
+			return;
+		}
+
 		animator.Attack(Facing);
 	}
 

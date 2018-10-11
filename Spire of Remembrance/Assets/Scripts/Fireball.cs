@@ -15,7 +15,37 @@ public class Fireball : AoEProjectile
 	protected override void DealDamage(Collider2D hitBox)
 	{
 		base.DealDamage(hitBox);
-		// TODO add burn status effect
-		// TODO check if its a torch, if so, light it
+		InflictBurnStatus(hitBox.gameObject);
+		Torch torch = hitBox.GetComponent<Torch>();
+		if (torch != null)
+		{
+			torch.lit = true;
+		}
+	}
+
+	private void InflictBurnStatus(GameObject obj)
+	{
+		FreezeStatus freeze = obj.GetComponent<FreezeStatus>();
+		if (freeze != null)
+		{
+			freeze.duration = 0f;
+			return;
+		}
+
+		BurnStatus burn = obj.GetComponent<BurnStatus>();
+		if (burn != null)
+		{
+			if (burnDuration > burn.duration)
+			{
+				burn.duration = burnDuration;
+				burn.damagePerSecond = damagePerSecond;
+			}
+		}
+		else
+		{
+			burn = obj.AddComponent<BurnStatus>();
+			burn.duration = burnDuration;
+			burn.damagePerSecond = damagePerSecond;
+		}
 	}
 }
