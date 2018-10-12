@@ -21,6 +21,7 @@ public class MageAnimations : EntityAnimations
 		animator.Play(state.ToString());
 		weapon.transform.parent.localRotation = Quaternion.Euler(0f, 0f, getAngle(state));
 		weapon.gameObject.SetActive(true);
+		movement.enabled = false;
 
 		yield return new WaitForSeconds(projectileReleaseTime);
 
@@ -29,5 +30,12 @@ public class MageAnimations : EntityAnimations
 		yield return new WaitForSeconds(attackDuration - projectileReleaseTime);
 
 		weapon.gameObject.SetActive(false);
+		movement.enabled = true;
+		currentState = returnToState;
+		if (queuedAction.HasValue)
+		{
+			PlayAnimation(queuedAction.Value);
+			queuedAction = null;
+		}
 	}
 }

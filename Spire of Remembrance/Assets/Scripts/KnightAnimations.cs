@@ -4,13 +4,47 @@ using UnityEngine;
 
 public class KnightAnimations : EntityAnimations
 {
-	private KnightMovement movement;
+	#region Editor Fields
+
+	[SerializeField] private WeaponData m_weaponData;
+
+	#endregion // Editor Fields
+
+	#region Non-Editor Fields
+
+	private Weapon weapon;
+
+	#endregion // Non-Editor Fields
+
+	#region Properties
+
+	public WeaponData weaponData
+	{
+		get
+		{
+			return m_weaponData;
+		}
+		set
+		{
+			weapon.data = value;
+		}
+	}
+
+	#endregion // Properties
+
+	#region Unity Functions
 
 	private new void Awake()
 	{
 		base.Awake();
-		movement = GetComponent<KnightMovement>();
+		weapon = GetComponentInChildren<Weapon>();
+		weapon.gameObject.SetActive(false);
+		weaponData = weaponData;
 	}
+
+	#endregion // Unity Functions
+
+	#region Private Functions
 
 	private string directionStringForState(Animations state)
 	{
@@ -31,10 +65,9 @@ public class KnightAnimations : EntityAnimations
 
 	protected override IEnumerator AttackRoutine(Animations state)
 	{
-		Weapon weapon = movement.weapon;
-
 		animator.Play(weapon.attackAnimation + directionStringForState(state));
 		weapon.gameObject.SetActive(true);
+		movement.enabled = false;
 
 		float centralAngle = getAngle(state);
 		float minAngle = centralAngle - weapon.attackSweepAngle / 2;
@@ -50,6 +83,7 @@ public class KnightAnimations : EntityAnimations
 		}
 
 		weapon.gameObject.SetActive(false);
+		movement.enabled = true;
 		currentState = returnToState;
 		if (queuedAction.HasValue)
 		{
@@ -57,4 +91,6 @@ public class KnightAnimations : EntityAnimations
 			queuedAction = null;
 		}
 	}
+
+	#endregion // Private Functions
 }

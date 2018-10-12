@@ -15,33 +15,11 @@ public class IceBall : AoEProjectile
 	protected override void DealDamage(Collider2D hitBox)
 	{
 		base.DealDamage(hitBox);
-		InflictFreezeStatus(hitBox.gameObject);
+		FreezeStatus.InflictFreezeStatus(hitBox.gameObject, freezeDuration);
 		Torch torch = hitBox.GetComponent<Torch>();
 		if (torch != null)
 		{
 			torch.lit = false;
-		}
-	}
-
-	private void InflictFreezeStatus(GameObject obj)
-	{
-		BurnStatus burn = obj.GetComponent<BurnStatus>();
-		if (burn != null)
-		{
-			burn.duration = 0f;
-			return;
-		}
-
-		FreezeStatus freeze = obj.GetComponent<FreezeStatus>();
-		if (freeze != null)
-		{
-			freeze.duration = Mathf.Max(freeze.duration, freezeDuration);
-			return;
-		}
-		else
-		{
-			freeze = obj.AddComponent<FreezeStatus>();
-			freeze.duration = freezeDuration;
 		}
 	}
 }

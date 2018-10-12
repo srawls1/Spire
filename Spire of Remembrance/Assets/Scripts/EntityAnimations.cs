@@ -26,6 +26,7 @@ public class EntityAnimations : MonoBehaviour
 
 	#region Non-Editor Fields
 
+	protected Movement movement;
 	protected Animator animator;
 	protected Animations currentState;
 	protected Animations? queuedAction;
@@ -37,6 +38,7 @@ public class EntityAnimations : MonoBehaviour
 
 	protected void Awake()
 	{
+		movement = GetComponent<Movement>();
 		animator = GetComponent<Animator>();
 		queuedAction = null;
 	}

@@ -8,7 +8,7 @@ public enum Facing
 	right, up, left, down
 }
 
-public abstract class Movement : MonoBehaviour
+public class Movement : MonoBehaviour
 {
 	#region Editor Fields
 
@@ -189,7 +189,10 @@ public abstract class Movement : MonoBehaviour
 
 	#region Private Functions
 
-	protected abstract int getInteractionLayermask();
+	protected virtual int getInteractionLayermask()
+	{
+		return Physics2D.GetLayerCollisionMask(gameObject.layer);
+	}
 
 	bool DecelerationRequired(float input, float velocity)
 	{
