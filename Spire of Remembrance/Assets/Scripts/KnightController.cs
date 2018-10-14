@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KnightController : Controller
+public class KnightController : AIController
 {
-
-	private void Update()
-	{
-		controlledMovement.Walk(Vector2.zero);
-	}
+	
 }

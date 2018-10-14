@@ -30,7 +30,6 @@ public class FreezeStatus : MonoBehaviour
 		while (duration > 0f)
 		{
 			duration -= Time.deltaTime;
-			rigidBody.velocity = Vector2.zero;
 
 			yield return null;
 		}

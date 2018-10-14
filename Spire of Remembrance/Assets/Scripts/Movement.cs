@@ -123,6 +123,7 @@ public class Movement : MonoBehaviour
 	{
 		if (!enabled)
 		{
+			rigidBody.velocity = Vector2.zero;
 			return;
 		}
 
