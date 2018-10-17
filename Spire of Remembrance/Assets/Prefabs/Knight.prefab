@@ -407,6 +407,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f5f95982da02541b6d05aa14ac9bee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathAnimDuration: 1
+  fallAnimDuration: 1
   m_weaponData: {fileID: 11400000, guid: 25eca1e17c40977479cc8511800cc86c, type: 2}
 --- !u!114 &114803160047419598
 MonoBehaviour:
@@ -434,7 +436,7 @@ MonoBehaviour:
   maxWalkSpeed: 3
   walkAcceleration: 10
   walkDecceleration: 20
-  interactionDistance: 2
+  interactionDistance: 1
 --- !u!114 &114927193834152096
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -285,6 +285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78da7ecb7e30bd0408f0ebd9444b424b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathAnimDuration: 1
+  fallAnimDuration: 1
   attackDuration: 1.5
   projectileReleaseTime: 0.5
 --- !u!114 &114644731256415636

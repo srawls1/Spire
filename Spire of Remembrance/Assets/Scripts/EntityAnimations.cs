@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -19,10 +20,26 @@ public class EntityAnimations : MonoBehaviour
 		AttackRight,
 		AttackUp,
 		AttackLeft,
-		AttackDown 
+		AttackDown,
+		StaggerRight,
+		StaggerUp,
+		StaggerLeft,
+		StaggerDown,
+		DieRight,
+		DieUp,
+		DieLeft,
+		DieDown,
+		FallInPit
 	}
 
 	#endregion // Local Enum
+
+	#region Editor Fields
+
+	[SerializeField] private float deathAnimDuration;
+	[SerializeField] private float fallAnimDuration;
+
+	#endregion // Editor Fields
 
 	#region Non-Editor Fields
 
@@ -50,7 +67,7 @@ public class EntityAnimations : MonoBehaviour
 	public void UpdateMovementAnim(Facing facing, float speed)
 	{
 		// Don't interrupt attacks
-		if (isAttackState(currentState))
+		if (isAttackState(currentState) || isDeathState(currentState))
 		{
 			return;
 		}
@@ -94,6 +111,25 @@ public class EntityAnimations : MonoBehaviour
 		}
 	}
 
+	internal void Stagger(Facing facing)
+	{
+		switch (facing)
+		{
+			case Facing.right:
+				PlayAnimation(Animations.StaggerRight);
+				break;
+			case Facing.up:
+				PlayAnimation(Animations.StaggerUp);
+				break;
+			case Facing.left:
+				PlayAnimation(Animations.StaggerLeft);
+				break;
+			case Facing.down:
+				PlayAnimation(Animations.StaggerDown);
+				break;
+		}
+	}
+
 	public void Attack(Facing facing)
 	{
 		switch (facing)
@@ -111,6 +147,34 @@ public class EntityAnimations : MonoBehaviour
 				PlayAnimation(Animations.AttackDown);
 				break;
 		}
+	}
+
+	public void Die(Facing facing)
+	{
+		switch (facing)
+		{
+			case Facing.right:
+				PlayAnimation(Animations.DieRight);
+				break;
+			case Facing.up:
+				PlayAnimation(Animations.DieUp);
+				break;
+			case Facing.left:
+				PlayAnimation(Animations.DieLeft);
+				break;
+			case Facing.down:
+				PlayAnimation(Animations.DieDown);
+				break;
+		}
+		movement.enabled = false;
+		Destroy(gameObject, deathAnimDuration);
+	}
+
+	public void FallInPit()
+	{
+		PlayAnimation(Animations.FallInPit);
+		movement.enabled = false;
+		Destroy(gameObject, fallAnimDuration);
 	}
 
 	#endregion // Public Functions
@@ -155,6 +219,13 @@ public class EntityAnimations : MonoBehaviour
 			state == Animations.AttackLeft || state == Animations.AttackDown;
 	}
 
+	protected bool isDeathState(Animations state)
+	{
+		return state == Animations.DieRight || state == Animations.DieUp ||
+			state == Animations.DieLeft || state == Animations.DieDown ||
+			state == Animations.FallInPit;
+	}
+
 	protected virtual IEnumerator AttackRoutine(Animations state)
 	{
 		yield break;
@@ -167,18 +238,22 @@ public class EntityAnimations : MonoBehaviour
 			case Animations.IdleRight:
 			case Animations.WalkingRight:
 			case Animations.AttackRight:
+			case Animations.DieRight:
 				return 0f;
 			case Animations.IdleUp:
 			case Animations.WalkingUp:
 			case Animations.AttackUp:
+			case Animations.DieUp:
 				return 90f;
 			case Animations.IdleLeft:
 			case Animations.WalkingLeft:
 			case Animations.AttackLeft:
+			case Animations.DieLeft:
 				return 180f;
 			case Animations.IdleDown:
 			case Animations.WalkingDown:
 			case Animations.AttackDown:
+			case Animations.DieDown:
 				return 270f;
 			default:
 				return 0f;

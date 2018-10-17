@@ -55,6 +55,14 @@ public class Movement : MonoBehaviour
 		get; protected set;
 	}
 
+	public virtual bool canPassPit
+	{
+		get
+		{
+			return false;
+		}
+	}
+
 	#endregion // Properties
 
 	#region Events
@@ -65,13 +73,13 @@ public class Movement : MonoBehaviour
 
 	#region Unity Functions
 
-	private void Awake()
+	protected void Awake()
 	{
 		rigidBody = GetComponent<Rigidbody2D>();
 		animator = GetComponentInChildren<EntityAnimations>();
 	}
 
-	private void Update()
+	protected void Update()
 	{
 		Vector2 direction = Vector2.zero;
 		switch (Facing)

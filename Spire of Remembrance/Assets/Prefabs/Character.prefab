@@ -122,7 +122,7 @@ MonoBehaviour:
   maxWalkSpeed: 4
   walkAcceleration: 20
   walkDecceleration: 40
-  interactionDistance: 2
+  interactionDistance: 1
   possessFadeDuration: 0.3
   possessedEnemyHealthBar: {fileID: 0}
 --- !u!114 &114950058736119342
@@ -136,6 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0afba6bb0c02832458add732c311c079, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathAnimDuration: 1
+  fallAnimDuration: 1
 --- !u!212 &212536740254345188
 SpriteRenderer:
   m_ObjectHideFlags: 1

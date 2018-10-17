@@ -17,7 +17,7 @@ public class EnemyHealth : Damageable
 
 	#region Non-Editor Fields
 
-	Animator animator;
+	EntityAnimations animations;
 	Movement movement;
 	Rigidbody2D rigidBody;
 	int currentHealth;
@@ -29,14 +29,9 @@ public class EnemyHealth : Damageable
 	private void Awake()
 	{
 		currentHealth = maxHealth;
-		animator = GetComponent<Animator>();
+		animations = GetComponent<EntityAnimations>();
 		movement = GetComponent<Movement>();
 		rigidBody = GetComponent<Rigidbody2D>();
-	}
-
-	public void OnAnimationDeath()
-	{
-		Destroy(gameObject);
 	}
 
 	#endregion // Unity Functions
@@ -67,7 +62,7 @@ public class EnemyHealth : Damageable
 		float knockback = Mathf.Max(force - poise, 0f);
 		if (knockback > 0)
 		{
-			animator.SetTrigger("Stagger");
+			animations.Stagger(movement.Facing);
 		}
 		rigidBody.velocity = positionDif * -knockback;
 		HealthChanged(currentHealth, maxHealth);
@@ -97,7 +92,7 @@ public class EnemyHealth : Damageable
 	private void Die()
 	{
 		currentHealth = 0;
-		animator.SetTrigger("Death");
+		animations.Die(movement.Facing);
 
 		if (movement.CurrentController is CharacterController)
 		{

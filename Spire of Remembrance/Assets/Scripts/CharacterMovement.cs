@@ -14,6 +14,7 @@ public class CharacterMovement : Movement
 
 	#region Non-Editor Fields
 
+	private new Collider2D collider;
 	private Color baseColor;
 	private Vector3 baseScale;
 	private Vector3 basePosition;
@@ -50,6 +51,16 @@ public class CharacterMovement : Movement
 	}
 
 	#endregion // Public Functions
+
+	#region Unity Functions
+
+	protected new void Awake()
+	{
+		base.Awake();
+		collider = GetComponent<Collider2D>();
+	}
+
+	#endregion // Unity Functions
 
 	#region Override Functions
 
@@ -90,12 +101,14 @@ public class CharacterMovement : Movement
 	private Coroutine FadeInto(GameObject obj)
 	{
 		rigidBody.bodyType = RigidbodyType2D.Kinematic;
+		collider.enabled = false;
 		return StartCoroutine(FadeIntoRoutine(obj));
 	}
 
 	private IEnumerator FadeOutOf(GameObject obj)
 	{
 		yield return StartCoroutine(FadeOutOfRoutine(obj));
+		collider.enabled = true;
 		transform.parent = null;
 		rigidBody.bodyType = RigidbodyType2D.Dynamic;
 	}
