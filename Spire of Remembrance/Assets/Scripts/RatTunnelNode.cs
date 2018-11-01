@@ -5,8 +5,14 @@ using UnityEngine;
 
 public class RatTunnelNode : MonoBehaviour
 {
+	#region Editor Fields
+
 	[SerializeField] private float distancePermission;
 	[SerializeField] private RatTunnelNode[] connectingNodes;
+
+	#endregion // Editor Fields
+
+	#region Public Functions
 
 	public bool IsInNode(Vector2 position)
 	{
@@ -43,7 +49,7 @@ public class RatTunnelNode : MonoBehaviour
 	public int ClosestDirectionIndex(Vector2 direction)
 	{
 		int closestIndex = -1;
-		float maxDotProduct = direction.magnitude / Mathf.Sqrt(2f); // This corresponds to a maximum angle of 45 deg
+		float maxDotProduct = 0; // This corresponds to a maximum angle of 90 deg
 
 		for (int i = 0; i < connectingNodes.Length; ++i)
 		{
@@ -79,4 +85,6 @@ public class RatTunnelNode : MonoBehaviour
 		Vector2 startingPosition = transform.position;
 		return startingPosition + direction * Mathf.Clamp(displacement, 0f, maxDistance);
 	}
+
+	#endregion // Public Functions
 }

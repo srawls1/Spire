@@ -5,7 +5,13 @@ using UnityEngine;
 
 public class RatTunnel : MonoBehaviour
 {
+	#region Editor Fields
+
 	[SerializeField] private RatTunnelNode[] endPoints;
+
+	#endregion // Editor Fields
+
+	#region Public Functions
 
 	public bool IsAtEntry(Vector2 position)
 	{
@@ -38,7 +44,7 @@ public class RatTunnel : MonoBehaviour
 			return false;
 		}
 
-		return endPoints[entryIndex].ClosestDirectionIndex(direction) < 0;
+		return endPoints[entryIndex].ClosestDirectionIndex(direction) < -0.1f;
 	}
 
 	public Vector2 MoveInDirection(ref RatTunnelNode currentNode, Vector2 position, Vector2 movement)
@@ -82,6 +88,7 @@ public class RatTunnel : MonoBehaviour
 			float dist = disp.magnitude;
 			int connectionIndex = currentNode.ClosestDirectionIndex(disp);
 			Vector2 dir = currentNode.GetConnectingDirection(connectionIndex);
+
 			dist += Vector2.Dot(movement, dir);
 			Vector2 newPosition = currentNode.GetTowardConnectionPosition(connectionIndex, dist);
 
@@ -93,6 +100,10 @@ public class RatTunnel : MonoBehaviour
 			return newPosition;
 		}
 	}
+
+	#endregion // Public Functions
+
+	#region Private Functions
 
 	private int getEntryIndex(Vector2 position)
 	{
@@ -106,4 +117,6 @@ public class RatTunnel : MonoBehaviour
 
 		return -1;
 	}
+
+	#endregion // Private Functions
 }

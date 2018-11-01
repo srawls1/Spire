@@ -67,7 +67,7 @@ public class CharacterController : Controller
 
 	void Update()
 	{
-		Vector2 input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 		if (controlledMovement != null)
 		{
 			controlledMovement.Walk(input);

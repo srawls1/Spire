@@ -12,9 +12,9 @@ public class Movement : MonoBehaviour
 {
 	#region Editor Fields
 
-	[SerializeField] private float maxWalkSpeed;
-	[SerializeField] private float walkAcceleration;
-	[SerializeField] private float walkDecceleration;
+	[SerializeField] protected float maxWalkSpeed;
+	[SerializeField] protected float walkAcceleration;
+	[SerializeField] protected float walkDecceleration;
 	[SerializeField] private float interactionDistance;
 
 	#endregion // Editor Fields
@@ -127,7 +127,7 @@ public class Movement : MonoBehaviour
 
 	#region Public Functions
 
-	public void Walk(Vector2 input)
+	public virtual void Walk(Vector2 input)
 	{
 		if (!enabled)
 		{
@@ -135,7 +135,34 @@ public class Movement : MonoBehaviour
 			return;
 		}
 
-		Vector2 velocity = rigidBody.velocity;
+		Vector2 velocity = getUpdatedVelocity(rigidBody.velocity, input);
+		rigidBody.velocity = velocity;
+		setFacing(input);
+		animator.UpdateMovementAnim(Facing, velocity.magnitude);
+	}
+
+	public void RefreshInteracable()
+	{
+		currentInteractionHit = null;
+	}
+
+	public void Attack()
+	{
+		if (!enabled)
+		{
+			return;
+		}
+
+		animator.Attack(Facing);
+	}
+
+	#endregion // Public Functions
+
+	#region Private Functions
+
+	protected Vector2 getUpdatedVelocity(Vector2 currentVelocity, Vector2 input)
+	{
+		Vector2 velocity = currentVelocity;
 		if (input.magnitude > 1f)
 		{
 			input.Normalize();
@@ -174,29 +201,8 @@ public class Movement : MonoBehaviour
 			velocity.y = 0f;
 		}
 
-		rigidBody.velocity = velocity;
-		setFacing(input);
-		animator.UpdateMovementAnim(Facing, velocity.magnitude);
+		return velocity;
 	}
-
-	public void RefreshInteracable()
-	{
-		currentInteractionHit = null;
-	}
-
-	public void Attack()
-	{
-		if (!enabled)
-		{
-			return;
-		}
-
-		animator.Attack(Facing);
-	}
-
-	#endregion // Public Functions
-
-	#region Private Functions
 
 	protected virtual int getInteractionLayermask()
 	{
