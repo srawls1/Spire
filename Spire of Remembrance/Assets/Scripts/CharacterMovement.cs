@@ -9,6 +9,9 @@ public class CharacterMovement : Movement
 
 	[SerializeField] private float possessFadeDuration;
 	[SerializeField] private HealthBar possessedEnemyHealthBar;
+	[SerializeField] private int physicalLayer;
+	[SerializeField] private Color  physicalColor;
+	[SerializeField] private float physicalDuration;
 
 	#endregion // Editor Fields
 
@@ -18,6 +21,7 @@ public class CharacterMovement : Movement
 	private Color baseColor;
 	private Vector3 baseScale;
 	private Vector3 basePosition;
+	private int baseLayer;
 
 	#endregion // Non-Editor Fields
 
@@ -50,6 +54,22 @@ public class CharacterMovement : Movement
 		return StartCoroutine(dummyCoroutine());
 	}
 
+	public void TurnPhysical()
+	{
+		if (gameObject.layer == physicalLayer)
+		{
+			return;
+		}
+
+		baseLayer = gameObject.layer;
+		SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+		baseColor = renderer.color;
+
+		gameObject.layer = physicalLayer;
+		renderer.color = physicalColor;
+		StartCoroutine(TurnBackToSpiritTimer());
+	}
+
 	#endregion // Public Functions
 
 	#region Unity Functions
@@ -66,10 +86,17 @@ public class CharacterMovement : Movement
 
 	protected override int getInteractionLayermask()
 	{
-		return LayerMask.GetMask(new string[]
+		if (gameObject.layer == physicalLayer)
 		{
-			"Spirit"
-		});
+			return base.getInteractionLayermask();
+		}
+		else
+		{
+			return LayerMask.GetMask(new string[]
+			{
+				"Spirit"
+			});
+		}
 	}
 
 	#endregion // Override Functions
@@ -79,6 +106,14 @@ public class CharacterMovement : Movement
 	private IEnumerator dummyCoroutine()
 	{
 		yield break;
+	}
+
+	private IEnumerator TurnBackToSpiritTimer()
+	{
+		SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+		yield return new WaitForSeconds(physicalDuration);
+		renderer.color = baseColor;
+		gameObject.layer = baseLayer;
 	}
 
 	private IEnumerator possessRoutine(Movement movement)

@@ -125,6 +125,9 @@ MonoBehaviour:
   interactionDistance: 1
   possessFadeDuration: 0.3
   possessedEnemyHealthBar: {fileID: 0}
+  physicalLayer: 0
+  physicalColor: {r: 1, g: 1, b: 1, a: 1}
+  physicalDuration: 5
 --- !u!114 &114950058736119342
 MonoBehaviour:
   m_ObjectHideFlags: 1

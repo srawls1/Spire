@@ -141,16 +141,27 @@ public class CharacterController : Controller
 		}
 	}
 
-	public void Deposess()
+	public Coroutine Deposess()
 	{
 		controlledMovement.CurrentController = controlledMovement.GetComponent<Controller>();
 		Possess(GetComponent<Movement>());
-		spiritMovement.Depossess();
+		return spiritMovement.Depossess();
+	}
+
+	public Coroutine TurnPhysical()
+	{
+		return StartCoroutine(TurnPhysicalRoutine());
 	}
 
 	#endregion // Public Functions
 
 	#region Private Functions
+
+	private IEnumerator TurnPhysicalRoutine()
+	{
+		yield return Deposess();
+		spiritMovement.TurnPhysical();
+	}
 
 	private void RefreshInteractable()
 	{

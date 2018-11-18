@@ -18,6 +18,7 @@ public class Door : Interactable
 
 	private new SpriteRenderer renderer;
 	private new Collider2D collider;
+	private int startingLayer;
 
 	#endregion // Non-Editor Fields
 
@@ -39,7 +40,7 @@ public class Door : Interactable
 			m_open = value;
 			//collider.enabled = !m_open;
 			renderer.sprite = m_open ? openSprite : closedSprite;
-			gameObject.layer = LayerMask.NameToLayer(m_open ? "Interactable" : "Default");
+			gameObject.layer = m_open ?  LayerMask.NameToLayer("Interactable") : startingLayer;
 		}
 	}
 
@@ -91,6 +92,7 @@ public class Door : Interactable
 		collider = GetComponent<Collider2D>();
 		open = open;
 		locked = locked;
+		startingLayer = gameObject.layer;
 	}
 
 	#endregion // Unity Functions
