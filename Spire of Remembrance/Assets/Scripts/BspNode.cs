@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ public class BspNode
 	}
 
 	private List<NavRectangle> rects;
-	public IReadOnlyList<NavRectangle> rectangles
+	public ReadOnlyCollection<NavRectangle> rectangles
 	{
 		get
 		{
@@ -90,6 +91,7 @@ public class BspNode
 					return rects[i];
 				}
 			}
+			return null;
 		}
 		else
 		{

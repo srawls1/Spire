@@ -95,7 +95,7 @@ public class NavRectangle
 			return true;
 		}
 
-		if (Mathf.Approximately(centerX, other.centerX, 0f) &&
+		if (Mathf.Approximately(centerX, other.centerX) &&
 			Mathf.Approximately(width, other.width))
 		{
 			return true;
