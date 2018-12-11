@@ -56,6 +56,6 @@ public class TreasureChest : Interactable
 			case Facing.left:
 				return Vector3.left;
 		}
-		throw new NotImplementedException();
+		return Vector3.zero;
 	}
 }

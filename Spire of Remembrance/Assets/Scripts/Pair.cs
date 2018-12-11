@@ -5,5 +5,5 @@ using UnityEngine;
 public class Pair<T, R>
 {
 	public T first;
-	public T second;
+	public R second;
 }

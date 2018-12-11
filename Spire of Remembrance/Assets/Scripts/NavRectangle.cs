@@ -3,13 +3,40 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class NavRectangle
 {
-	public float centerX { get; private set; }
-	public float centerY { get; private set; }
-	public float width { get; private set; }
-	public float height { get; private set; }
-	public int navTerrainType { get; private set; }
+	[SerializeField] private float m_centerX;
+	[SerializeField] private float m_centerY;
+	[SerializeField] private float m_width;
+	[SerializeField] private float m_height;
+	[SerializeField] private int m_navTerrainType;
+	[SerializeField] private LinkedList<NavRectangle> adjoiningRectangles;
+
+	public float centerX
+	{
+		get { return m_centerX; }
+		private set { m_centerX = value; }
+	}
+	public float centerY
+	{
+		get { return m_centerY; }
+		private set { m_centerY = value; }
+	}
+	public float width
+	{
+		get { return m_width; }
+		private set { m_width = value; }
+	}
+	public float height
+	{
+		get { return m_height; }
+		private set { m_height = value; }
+	}
+	public int navTerrainType {
+		get { return m_navTerrainType; }
+		private set { m_navTerrainType = value; }
+	}
 
 	public float minX
 	{
@@ -39,8 +66,6 @@ public class NavRectangle
 			return centerY + height / 2;
 		}
 	}
-
-	private LinkedList<NavRectangle> adjoiningRectangles;
 
 	public NavRectangle(float cx, float cy, float w, float h, int navType)
 	{
@@ -84,7 +109,13 @@ public class NavRectangle
 		}
 
 		adjoiningRectangles.AddLast(other);
+		other.adjoiningRectangles.AddLast(this);
 		return true;
+	}
+
+	public void DrawGizmos()
+	{
+		Gizmos.DrawWireCube(new Vector2(centerX, centerY), new Vector2(width / 2, height / 2));
 	}
 
 	private bool FitsWholeSide(NavRectangle other)
@@ -104,9 +135,9 @@ public class NavRectangle
 		return false;
 	}
 
-	public IEnumerator<NavRectangle> GetAdjacentRectangles()
+	public IEnumerable<NavRectangle> GetAdjacentRectangles()
 	{
-		return adjoiningRectangles.GetEnumerator();
+		return adjoiningRectangles;
 	}
 
 	public Pair<Vector2, Vector2> GetAdjoiningEdge(NavRectangle other)
@@ -186,12 +217,55 @@ public class NavRectangle
 
 	public Pair<NavRectangle, NavRectangle> SplitHorizontally(float y)
 	{
-		throw new NotImplementedException();
+		float lowerCenter = (minY + y) / 2;
+		float lowerHeight = y - minY;
+		float upperCenter = (y + maxY) / 2;
+		float upperHeight = maxY - y;
+		NavRectangle lowerRect = new NavRectangle(centerX, lowerCenter, width, lowerHeight, navTerrainType);
+		NavRectangle upperRect = new NavRectangle(centerX, upperCenter, width, upperHeight, navTerrainType);
+		HandleSplitAdjoinments(lowerRect, upperRect);
+		return new Pair<NavRectangle, NavRectangle>()
+		{
+			first = lowerRect,
+			second = upperRect
+		};
+	}
+
+	private void HandleSplitAdjoinments(NavRectangle rect1, NavRectangle rect2)
+	{
+		rect1.adjoiningRectangles.AddLast(rect2);
+		rect2.adjoiningRectangles.AddLast(rect1);
+
+		foreach (NavRectangle adjoining in adjoiningRectangles)
+		{
+			adjoining.adjoiningRectangles.Remove(this);
+			if (rect1.GetAdjoiningEdge(adjoining) != null)
+			{
+				rect1.adjoiningRectangles.AddLast(adjoining);
+				adjoining.adjoiningRectangles.AddLast(rect1);
+			}
+			if (rect2.GetAdjoiningEdge(adjoining) != null)
+			{
+				rect2.adjoiningRectangles.AddLast(adjoining);
+				adjoining.adjoiningRectangles.AddLast(rect2);
+			}
+		}
 	}
 
 	public Pair<NavRectangle, NavRectangle> SplitVertically(float x)
 	{
-		throw new NotImplementedException();
+		float leftCenter = (minX + x) / 2;
+		float leftWidth = x - minX;
+		float rightCenter = (x + maxX) / 2;
+		float rightWidth = maxX - x;
+		NavRectangle leftRect = new NavRectangle(leftCenter, centerY, leftWidth, height, navTerrainType);
+		NavRectangle rightRect = new NavRectangle(rightCenter, centerY, rightWidth, height, navTerrainType);
+		HandleSplitAdjoinments(leftRect, rightRect);
+		return new Pair<NavRectangle, NavRectangle>()
+		{
+			first = leftRect,
+			second = rightRect
+		};
 	}
 
 	public bool ContainsPoint(Vector2 point)
