@@ -21,12 +21,12 @@ GameObject:
   - component: {fileID: 4393700241568808}
   - component: {fileID: 212377295689435078}
   - component: {fileID: 114527897324356332}
-  - component: {fileID: 114924254971155746}
   - component: {fileID: 95580292970141994}
   - component: {fileID: 114154718919895102}
   - component: {fileID: 114584065402444162}
   - component: {fileID: 61331174306110548}
   - component: {fileID: 50400715806282968}
+  - component: {fileID: 114929223084187810}
   m_Layer: 0
   m_Name: Bat
   m_TagString: Untagged
@@ -198,7 +198,7 @@ MonoBehaviour:
   frontPoise: 0
   backPoise: 0
   maxHealth: 5
---- !u!114 &114924254971155746
+--- !u!114 &114929223084187810
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1410676282675462}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb4066301aecd3448953184e8634c9a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 00e11c0f418c0254b82d0358b1bab5b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 0

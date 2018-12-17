@@ -52,13 +52,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4341852905330152}
   - component: {fileID: 212326402433007048}
-  - component: {fileID: 61749381446103116}
   - component: {fileID: 114208425236787156}
   - component: {fileID: 95352083389268364}
   - component: {fileID: 114958121728422524}
   - component: {fileID: 114358845152585062}
   - component: {fileID: 50166046174212858}
   - component: {fileID: 114012239529798188}
+  - component: {fileID: 58222196634771016}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -187,8 +187,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61749381446103116
-BoxCollider2D:
+--- !u!58 &58222196634771016
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -200,7 +200,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Radius: 0.5
 --- !u!61 &61875137021436066
 BoxCollider2D:
   m_ObjectHideFlags: 1

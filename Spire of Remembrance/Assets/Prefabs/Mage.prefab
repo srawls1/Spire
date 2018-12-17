@@ -72,8 +72,8 @@ GameObject:
   - component: {fileID: 114218180704735012}
   - component: {fileID: 114417399504543416}
   - component: {fileID: 114680846199400100}
-  - component: {fileID: 61021546568200574}
   - component: {fileID: 50064046309915000}
+  - component: {fileID: 58513579403160850}
   m_Layer: 0
   m_Name: Mage
   m_TagString: Untagged
@@ -187,8 +187,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61021546568200574
-BoxCollider2D:
+--- !u!58 &58513579403160850
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -200,7 +200,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Radius: 0.5
 --- !u!61 &61416079914097636
 BoxCollider2D:
   m_ObjectHideFlags: 1

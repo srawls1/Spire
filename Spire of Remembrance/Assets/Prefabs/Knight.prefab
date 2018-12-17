@@ -38,12 +38,12 @@ GameObject:
   - component: {fileID: 4546154504523478}
   - component: {fileID: 212619184187087820}
   - component: {fileID: 114879237018346718}
-  - component: {fileID: 61892139475645154}
   - component: {fileID: 50051190050752486}
   - component: {fileID: 95869680309747646}
   - component: {fileID: 114089028685052820}
   - component: {fileID: 114803160047419598}
   - component: {fileID: 114688472195039682}
+  - component: {fileID: 58249071756722914}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Untagged
@@ -189,6 +189,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &58249071756722914
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1296812185788976}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!60 &60771413269870164
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -230,20 +244,6 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
---- !u!61 &61892139475645154
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1296812185788976}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2

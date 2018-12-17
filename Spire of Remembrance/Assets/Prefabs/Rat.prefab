@@ -37,13 +37,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4124793026077118}
   - component: {fileID: 212849449142355130}
-  - component: {fileID: 114704222137703848}
   - component: {fileID: 95904305158099552}
   - component: {fileID: 114345058489842536}
   - component: {fileID: 114777314145330232}
   - component: {fileID: 61143456189061672}
   - component: {fileID: 50678731656111652}
   - component: {fileID: 114785262940188442}
+  - component: {fileID: 114866820223313652}
   m_Layer: 0
   m_Name: Rat
   m_TagString: Untagged
@@ -167,18 +167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdfbd52aa011cd846850fa859f4813eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114704222137703848
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1531867576785340}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb4066301aecd3448953184e8634c9a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackRange: 0
 --- !u!114 &114777314145330232
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -210,6 +198,18 @@ MonoBehaviour:
   walkAcceleration: 30
   walkDecceleration: 60
   interactionDistance: 0
+--- !u!114 &114866820223313652
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1531867576785340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a2eec25a557c934ca3e85d7b49cd0fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackRange: 0
 --- !u!212 &212849449142355130
 SpriteRenderer:
   m_ObjectHideFlags: 1

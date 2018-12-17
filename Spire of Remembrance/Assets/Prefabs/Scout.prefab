@@ -52,13 +52,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4610767545468416}
   - component: {fileID: 212427769056096886}
-  - component: {fileID: 61703170055932776}
   - component: {fileID: 114007355885105868}
   - component: {fileID: 95699581531608530}
   - component: {fileID: 114150134512152952}
   - component: {fileID: 114060856389877298}
   - component: {fileID: 50820000337272538}
   - component: {fileID: 114644731256415636}
+  - component: {fileID: 58131186594564062}
   m_Layer: 0
   m_Name: Scout
   m_TagString: Untagged
@@ -187,8 +187,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61703170055932776
-BoxCollider2D:
+--- !u!58 &58131186594564062
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -200,7 +200,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Radius: 0.5
 --- !u!61 &61969258300336576
 BoxCollider2D:
   m_ObjectHideFlags: 1

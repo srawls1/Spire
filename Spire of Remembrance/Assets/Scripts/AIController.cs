@@ -40,6 +40,7 @@ public class AIController : Controller
 	{
 		while (true)
 		{
+			Debug.Log(gameObject.name + ": " + path.Count + " points");
 			float waitTime = Random.Range(0.3f, 0.5f) * path.Count;
 			yield return new WaitForSeconds(waitTime);
 			path = NavMesh.instance.GetClosestPath(transform.position, target.transform.position, GetNavTerrainMask());
@@ -48,6 +49,15 @@ public class AIController : Controller
 
 	protected void Update()
 	{
+		if (path != null)
+		{
+			Vector2 location = transform.position;
+			for (int i = 0; i < path.Count; ++i)
+			{
+				Debug.DrawLine(location, path[i]);
+				location = path[i];
+			}
+		}
 		if (target == null)
 		{
 			controlledMovement.Walk(Vector2.zero);

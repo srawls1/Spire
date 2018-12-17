@@ -53,6 +53,11 @@ public class NavMesh : MonoBehaviour
 	[SerializeField] private int maxRectsPerCell;
 	[SerializeField] private NavRectangle[] rects;
 
+	public IEnumerable<NavRectangle> rectangles
+	{
+		get { return rects; } 
+	}
+
 	private BspNode root;
 
 	void Start()
@@ -60,9 +65,23 @@ public class NavMesh : MonoBehaviour
 		BuildMesh();
 	}
 
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.color = Color.green;
+		for (int i = 0; i < rects.Length; ++i)
+		{
+			Gizmos.DrawWireCube(new Vector2(rects[i].centerX, rects[i].centerY),
+								new Vector2(rects[i].width, rects[i].height));
+		}
+	}
+
 	private void BuildMesh()
 	{
 		root = new BspNode(minX, minY, maxX, maxY, maxRectsPerCell);
+		for (int i = 0; i < rects.Length; ++i)
+		{
+			rects[i].DeserializeAdjacents(rects);
+		}
 		for (int i = 0; i < rects.Length; ++i)
 		{
 			root.AddRect(rects[i]);
@@ -88,15 +107,6 @@ public class NavMesh : MonoBehaviour
 		return points;
 	}
 
-	public void OnDrawGizmosSelected()
-	{
-		Gizmos.color = Color.green;
-		foreach (NavRectangle rect in rects)
-		{
-			rect.DrawGizmos();
-		}
-	}
-
 	private Vector2 GetBestEdgePoint(NavRectangle rect1, NavRectangle rect2, Vector2 currentPos, Vector2 destination)
 	{
 		Pair<Vector2, Vector2> connectingEdge = rect1.GetAdjoiningEdge(rect2);
@@ -115,20 +125,16 @@ public class NavMesh : MonoBehaviour
 		float t = detA1 / detA;
 		t = Mathf.Clamp(t, 0f, 1f);
 		Vector2 edgePoint = Vector2.Lerp(connectingEdge.first, connectingEdge.second, t);
-		if (t == 1f)
-		{
-			edgePoint += (connectingEdge.first - connectingEdge.second).normalized;
-		}
-		else if (t == 0f)
-		{
-			edgePoint += (connectingEdge.second - connectingEdge.first).normalized;
-		}
 
 		return edgePoint;
 	}
 
 	private List<NavRectangle> AStarPath(NavRectangle start, NavRectangle end, int linkTypeMask)
 	{
+		if (start == end)
+		{
+			return new List<NavRectangle>() { start };
+		}
 		PriorityQueue<float, NavRectangle> openRects = new PriorityQueue<float, NavRectangle>();
 		openRects.Add(Heuristic(start, end), start);
 		Dictionary<NavRectangle, float> closedRects = new Dictionary<NavRectangle, float>();
@@ -142,7 +148,7 @@ public class NavMesh : MonoBehaviour
 
 			foreach (NavRectangle adjoining in rect.GetAdjacentRectangles())
 			{
-				if (adjoining == end)
+				if (adjoining.Equals(end))
 				{
 					parentsInPath[end] = rect;
 					break;
@@ -153,7 +159,7 @@ public class NavMesh : MonoBehaviour
 				}
 
 				float cost = Heuristic(rect, adjoining) + Heuristic(adjoining, end);
-				if (closedRects.ContainsKey(adjoining) && cost <  closedRects[adjoining])
+				if (closedRects.ContainsKey(adjoining) && cost < closedRects[adjoining])
 				{
 					closedRects.Remove(adjoining);
 				}

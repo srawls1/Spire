@@ -23,12 +23,12 @@ GameObject:
   - component: {fileID: 95577111366657494}
   - component: {fileID: 114887815721800928}
   - component: {fileID: 114898463686483854}
-  - component: {fileID: 61094882948569524}
   - component: {fileID: 50428009099484538}
   - component: {fileID: 114177618833698868}
   - component: {fileID: 114961933620327776}
+  - component: {fileID: 58984992610744778}
   m_Layer: 0
-  m_Name: Medium
+  m_Name: Exorcist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,8 +98,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61094882948569524
-BoxCollider2D:
+--- !u!58 &58984992610744778
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -111,7 +111,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Radius: 0.5
 --- !u!61 &61201438386534292
 BoxCollider2D:
   m_ObjectHideFlags: 1

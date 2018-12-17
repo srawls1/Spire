@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,8 +9,10 @@ public class NavRectangle
 	[SerializeField] private float m_centerY;
 	[SerializeField] private float m_width;
 	[SerializeField] private float m_height;
-	[SerializeField] private int m_navTerrainType;
-	[SerializeField] private LinkedList<NavRectangle> adjoiningRectangles;
+	[SerializeField] private NavTerrainTypes m_navTerrainType;
+	[SerializeField] private int[] adjoiningIDs;
+
+	private List<NavRectangle> adjoiningRectangles = new List<NavRectangle>();
 
 	public float centerX
 	{
@@ -34,8 +35,8 @@ public class NavRectangle
 		private set { m_height = value; }
 	}
 	public int navTerrainType {
-		get { return m_navTerrainType; }
-		private set { m_navTerrainType = value; }
+		get { return (int)m_navTerrainType; }
+		private set { m_navTerrainType = (NavTerrainTypes)value; }
 	}
 
 	public float minX
@@ -67,15 +68,28 @@ public class NavRectangle
 		}
 	}
 
+	public int ID;
+	private static int nextID;
+
+	static NavRectangle()
+	{
+		nextID = 0;
+	}
+
+	public NavRectangle()
+	{
+		ID = nextID++;
+		adjoiningRectangles = new List<NavRectangle>();
+	}
+
 	public NavRectangle(float cx, float cy, float w, float h, int navType)
+		: this()
 	{
 		centerX = cx;
 		centerY = cy;
 		width = w;
 		height = h;
 		navTerrainType = navType;
-
-		adjoiningRectangles = new LinkedList<NavRectangle>();
 	}
 
 	public NavRectangle(Vector2 center, Vector2 extents, int navType)
@@ -85,6 +99,25 @@ public class NavRectangle
 	public NavRectangle(Vector2 center, int navType)
 		: this(center.x, center.y, 1.0f, 1.0f, navType)
 	{ }
+
+	public void SerializeAdjacents(List<NavRectangle> list)
+	{
+		adjoiningIDs = new int[adjoiningRectangles.Count];
+		for (int i = 0; i < adjoiningIDs.Length; ++i)
+		{
+			adjoiningIDs[i] = list.IndexOf(adjoiningRectangles[i]);
+		}
+	}
+
+	public void DeserializeAdjacents(NavRectangle[] list)
+	{
+		nextID = list.Length;
+		adjoiningRectangles = new List<NavRectangle>();
+		foreach (int index in adjoiningIDs)
+		{
+			adjoiningRectangles.Add(list[index]);
+		}
+	}
 
 	// This will return whether or not the adjoining rectangle is separate from this one
 	public bool Adjoin(NavRectangle other)
@@ -108,14 +141,9 @@ public class NavRectangle
 			return false;
 		}
 
-		adjoiningRectangles.AddLast(other);
-		other.adjoiningRectangles.AddLast(this);
+		adjoiningRectangles.Add(other);
+		other.adjoiningRectangles.Add(this);
 		return true;
-	}
-
-	public void DrawGizmos()
-	{
-		Gizmos.DrawWireCube(new Vector2(centerX, centerY), new Vector2(width / 2, height / 2));
 	}
 
 	private bool FitsWholeSide(NavRectangle other)
@@ -133,6 +161,11 @@ public class NavRectangle
 		}
 
 		return false;
+	}
+
+	public void ClearAdjoinments()
+	{
+		adjoiningRectangles.Clear();
 	}
 
 	public IEnumerable<NavRectangle> GetAdjacentRectangles()
@@ -189,7 +222,7 @@ public class NavRectangle
 		{
 			float minEdgeY = Mathf.Max(minY, minY2);
 			float maxEdgeY = Mathf.Min(maxY, maxY2);
-			if (maxEdgeY < minEdgeY)
+			if (maxEdgeY <= minEdgeY)
 			{
 				return null;
 			}
@@ -203,7 +236,7 @@ public class NavRectangle
 		{
 			float minEdgeX = Mathf.Max(minX, minX2);
 			float maxEdgeX = Mathf.Min(maxX, maxX2);
-			if (maxEdgeX < minEdgeX)
+			if (maxEdgeX <= minEdgeX)
 			{
 				return null;
 			}
@@ -233,21 +266,22 @@ public class NavRectangle
 
 	private void HandleSplitAdjoinments(NavRectangle rect1, NavRectangle rect2)
 	{
-		rect1.adjoiningRectangles.AddLast(rect2);
-		rect2.adjoiningRectangles.AddLast(rect1);
+		rect1.adjoiningRectangles.Add(rect2);
+		rect2.adjoiningRectangles.Add(rect1);
 
-		foreach (NavRectangle adjoining in adjoiningRectangles)
+		for (int i = 0; i < adjoiningRectangles.Count; ++i)
 		{
+			NavRectangle adjoining = adjoiningRectangles[i];
 			adjoining.adjoiningRectangles.Remove(this);
 			if (rect1.GetAdjoiningEdge(adjoining) != null)
 			{
-				rect1.adjoiningRectangles.AddLast(adjoining);
-				adjoining.adjoiningRectangles.AddLast(rect1);
+				rect1.adjoiningRectangles.Add(adjoining);
+				adjoining.adjoiningRectangles.Add(rect1);
 			}
 			if (rect2.GetAdjoiningEdge(adjoining) != null)
 			{
-				rect2.adjoiningRectangles.AddLast(adjoining);
-				adjoining.adjoiningRectangles.AddLast(rect2);
+				rect2.adjoiningRectangles.Add(adjoining);
+				adjoining.adjoiningRectangles.Add(rect2);
 			}
 		}
 	}
@@ -272,5 +306,44 @@ public class NavRectangle
 	{
 		return Mathf.Abs(point.x - centerX) < width / 2 &&
 			Mathf.Abs(point.y - centerY) < height / 2;
+	}
+
+	public override bool Equals(object other)
+	{
+		if (!(other is NavRectangle))
+		{
+			return false;
+		}
+		NavRectangle rect = other as NavRectangle;
+		return Mathf.Approximately(centerX, rect.centerX) &&
+			Mathf.Approximately(centerY, rect.centerY) &&
+			Mathf.Approximately(width, rect.width) &&
+			Mathf.Approximately(height, rect.height) &&
+			navTerrainType == rect.navTerrainType;
+	}
+
+	public static bool operator==(NavRectangle rect1, NavRectangle rect2)
+	{
+		if (object.ReferenceEquals(rect1, null))
+		{
+			return rect2 == null;
+		}
+		return rect1.Equals(rect2);
+	}
+
+	public static bool operator!=(NavRectangle rect1, NavRectangle rect2)
+	{
+		return !(rect1 == rect2);
+	}
+
+	public override int GetHashCode()
+	{
+		return Mathf.RoundToInt(13 * centerX + 23 * centerY + 37 *
+			width + 57 * height + navTerrainType);
+	}
+
+	public override string ToString()
+	{
+		return "NavRect " + ID;
 	}
 }

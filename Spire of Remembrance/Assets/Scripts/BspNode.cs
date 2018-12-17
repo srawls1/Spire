@@ -81,43 +81,59 @@ public class BspNode
 		{
 			float midX = (minX + maxX) / 2;
 			float midY = (minY + maxY) / 2;
-			if (rect.minX < midX && rect.maxX > midX)
+			if (rect.minX < midX && rect.minY < midY)
 			{
-				Pair<NavRectangle, NavRectangle> newRects = rect.SplitVertically(midX);
-				AddRect(newRects.first);
-				AddRect(newRects.second);
-				return;
+				llChild.AddRect(rect);
 			}
-			if (rect.minY < midY && rect.maxY > midY)
+			if (rect.minX < midX && rect.maxY > midY)
 			{
-				Pair<NavRectangle, NavRectangle> newRects = rect.SplitHorizontally(midY);
-				AddRect(newRects.first);
-				AddRect(newRects.second);
-				return;
+				ulChild.AddRect(rect);
 			}
+			if (rect.maxX > midX && rect.minY < midY)
+			{
+				lrChild.AddRect(rect);
+			}
+			if (rect.maxX > midX && rect.maxY > midY)
+			{
+				urChild.AddRect(rect);
+			}
+			//if (rect.minX < midX && rect.maxX > midX)
+			//{
+			//	Pair<NavRectangle, NavRectangle> newRects = rect.SplitVertically(midX);
+			//	AddRect(newRects.first);
+			//	AddRect(newRects.second);
+			//	return;
+			//}
+			//if (rect.minY < midY && rect.maxY > midY)
+			//{
+			//	Pair<NavRectangle, NavRectangle> newRects = rect.SplitHorizontally(midY);
+			//	AddRect(newRects.first);
+			//	AddRect(newRects.second);
+			//	return;
+			//}
 
-			if (rect.centerX < midX)
-			{
-				if (rect.centerY < midY)
-				{
-					llChild.AddRect(rect);
-				}
-				else
-				{
-					ulChild.AddRect(rect);
-				}
-			}
-			else
-			{
-				if (rect.centerY < midY)
-				{
-					lrChild.AddRect(rect);
-				}
-				else
-				{
-					urChild.AddRect(rect);
-				}
-			}
+			//if (rect.centerX < midX)
+			//{
+			//	if (rect.centerY < midY)
+			//	{
+			//		llChild.AddRect(rect);
+			//	}
+			//	else
+			//	{
+			//		ulChild.AddRect(rect);
+			//	}
+			//}
+			//else
+			//{
+			//	if (rect.centerY < midY)
+			//	{
+			//		lrChild.AddRect(rect);
+			//	}
+			//	else
+			//	{
+			//		urChild.AddRect(rect);
+			//	}
+			//}
 		}
 	}
 
