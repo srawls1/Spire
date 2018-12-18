@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour {
+public class HealthBar : MonoBehaviour
+{
 
 	[SerializeField] private Damageable m_target;
 	[SerializeField] private Image fullBackground;
@@ -53,7 +54,7 @@ public class HealthBar : MonoBehaviour {
 		}
 	}
 
-	private void Awake()
+	private void Start()
 	{
 		fullBackgroundRect = fullBackground.transform as RectTransform;
 		filledPortionRect = filledPortion.transform as RectTransform;
@@ -68,7 +69,8 @@ public class HealthBar : MonoBehaviour {
 		}
 
 		float portionFilled = (float)current / max;
-		float totalWidth = fullBackgroundRect.sizeDelta.x;
+		float totalWidth = fullBackgroundRect.rect.width;
+
 		filledPortionRect.sizeDelta = new Vector2(portionFilled * totalWidth, filledPortionRect.sizeDelta.y);
 		filledPortionRect.anchoredPosition = new Vector2(totalWidth * portionFilled * 0.5f, 0);
 	}

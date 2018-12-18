@@ -11,7 +11,7 @@ public class EnemyHealth : Damageable
 	[SerializeField] private float backArmor;
 	[SerializeField] private float frontPoise;
 	[SerializeField] private float backPoise;
-	[SerializeField] private int maxHealth;
+	[SerializeField] protected int m_maxHealth;
 
 	#endregion // Editor Fields
 
@@ -20,9 +20,33 @@ public class EnemyHealth : Damageable
 	EntityAnimations animations;
 	Movement movement;
 	Rigidbody2D rigidBody;
-	int currentHealth;
+	private int m_currentHealth;
 
 	#endregion // Non-Editor Fields
+
+	#region Properties
+
+	public int maxHealth
+	{
+		get
+		{
+			return m_maxHealth;
+		}
+	}
+
+	public int currentHealth
+	{
+		get
+		{
+			return m_currentHealth;
+		}
+		private set
+		{
+			m_currentHealth = value;
+		}
+	}
+
+	#endregion // Properties
 
 	#region Unity Functions
 
@@ -64,7 +88,7 @@ public class EnemyHealth : Damageable
 		{
 			animations.Stagger(movement.Facing);
 		}
-		rigidBody.velocity = positionDif * -knockback;
+		rigidBody.AddForce(positionDif * -knockback, ForceMode2D.Impulse);
 		HealthChanged(currentHealth, maxHealth);
 	}
 
@@ -89,7 +113,7 @@ public class EnemyHealth : Damageable
 		}
 	}
 
-	private void Die()
+	protected virtual void Die()
 	{
 		currentHealth = 0;
 		animations.Die(movement.Facing);

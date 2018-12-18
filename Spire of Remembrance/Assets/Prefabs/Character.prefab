@@ -26,6 +26,8 @@ GameObject:
   - component: {fileID: 95991854223929452}
   - component: {fileID: 114950058736119342}
   - component: {fileID: 58666664584741204}
+  - component: {fileID: 114636302147080424}
+  - component: {fileID: 114454545693527230}
   m_Layer: 8
   m_Name: Character
   m_TagString: Player
@@ -128,6 +130,55 @@ MonoBehaviour:
   physicalLayer: 0
   physicalColor: {r: 1, g: 1, b: 1, a: 1}
   physicalDuration: 5
+--- !u!114 &114454545693527230
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1206111589379376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6609849a35be00a4a9b2764aaa04c993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathAnimDuration: 3
+  fallAnimDuration: 3
+--- !u!114 &114636302147080424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1206111589379376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cbeb0195a6ad194fa40496560dddeb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frontArmor: 0
+  backArmor: 0
+  frontPoise: 0
+  backPoise: 0
+  maxHealth: 25
+  damageFromLight:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 1.0217793
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  lightDamageMultiplier: 1
+  bodyDamagePortion: 0.5
 --- !u!114 &114950058736119342
 MonoBehaviour:
   m_ObjectHideFlags: 1

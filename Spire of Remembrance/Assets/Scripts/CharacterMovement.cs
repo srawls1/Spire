@@ -18,6 +18,7 @@ public class CharacterMovement : Movement
 	#region Non-Editor Fields
 
 	private new Collider2D collider;
+	private SpiritHealth health;
 	private Color baseColor;
 	private Vector3 baseScale;
 	private Vector3 basePosition;
@@ -35,7 +36,9 @@ public class CharacterMovement : Movement
 			return StartCoroutine(dummyCoroutine());
 		}
 
-		possessedEnemyHealthBar.target = movement.GetComponent<Damageable>();
+		EnemyHealth bodyHealth = movement.GetComponent<EnemyHealth>();
+		possessedEnemyHealthBar.target = bodyHealth;
+		health.possessedBody = bodyHealth;
 		return StartCoroutine(possessRoutine(movement));
 	}
 
@@ -47,6 +50,7 @@ public class CharacterMovement : Movement
 			{
 				GameObject possessed = transform.parent.gameObject;
 				possessedEnemyHealthBar.target = null;
+				health.possessedBody = null;
 				return StartCoroutine(FadeOutOf(possessed));
 			}
 		}
@@ -78,6 +82,7 @@ public class CharacterMovement : Movement
 	{
 		base.Awake();
 		collider = GetComponent<Collider2D>();
+		health = GetComponent<SpiritHealth>();
 	}
 
 	#endregion // Unity Functions

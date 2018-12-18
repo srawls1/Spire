@@ -31,7 +31,6 @@ public class RatMovement : Movement
 		RatTunnelNode entry = tunnel.GetEntryNode(transform.position, lastInput);
 		if (entry != null)
 		{
-			Debug.Log(entry);
 			currentNode = entry;
 			currentTunnel = tunnel;
 			rigidBody.bodyType = RigidbodyType2D.Static;
