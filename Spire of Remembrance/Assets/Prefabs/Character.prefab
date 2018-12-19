@@ -24,7 +24,6 @@ GameObject:
   - component: {fileID: 114337781081511474}
   - component: {fileID: 50656591273898712}
   - component: {fileID: 95991854223929452}
-  - component: {fileID: 114950058736119342}
   - component: {fileID: 58666664584741204}
   - component: {fileID: 114636302147080424}
   - component: {fileID: 114454545693527230}
@@ -42,7 +41,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1206111589379376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.867, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -158,7 +157,7 @@ MonoBehaviour:
   backArmor: 0
   frontPoise: 0
   backPoise: 0
-  maxHealth: 25
+  m_maxHealth: 25
   damageFromLight:
     serializedVersion: 2
     m_Curve:
@@ -179,19 +178,6 @@ MonoBehaviour:
     m_RotationOrder: 0
   lightDamageMultiplier: 1
   bodyDamagePortion: 0.5
---- !u!114 &114950058736119342
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1206111589379376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0afba6bb0c02832458add732c311c079, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deathAnimDuration: 1
-  fallAnimDuration: 1
 --- !u!212 &212536740254345188
 SpriteRenderer:
   m_ObjectHideFlags: 1

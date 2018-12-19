@@ -92,6 +92,16 @@ public class EnemyHealth : Damageable
 		HealthChanged(currentHealth, maxHealth);
 	}
 
+	public void Heal(int healAmount)
+	{
+		currentHealth += healAmount;
+		if (currentHealth > maxHealth)
+		{
+			currentHealth = maxHealth;
+		}
+		HealthChanged(currentHealth, maxHealth);
+	}
+
 	#endregion // Override Functions
 
 	#region Private Functions

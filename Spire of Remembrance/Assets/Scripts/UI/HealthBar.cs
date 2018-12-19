@@ -1,18 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
+	#region Editor Fields
 
 	[SerializeField] private Damageable m_target;
 	[SerializeField] private Image fullBackground;
 	[SerializeField] private Image filledPortion;
 	[SerializeField] private Text healthText;
 
+	#endregion // Editor Fields
+
+	#region Non-Editor Fields
+
 	private RectTransform fullBackgroundRect;
 	private RectTransform filledPortionRect;
+
+	#endregion // Non-Editor Fields
+
+	#region Properties
 
 	public Damageable target
 	{
@@ -54,12 +61,20 @@ public class HealthBar : MonoBehaviour
 		}
 	}
 
+	#endregion // Properties
+
+	#region Unity Functions
+
 	private void Start()
 	{
 		fullBackgroundRect = fullBackground.transform as RectTransform;
 		filledPortionRect = filledPortion.transform as RectTransform;
 		target = target;
 	}
+
+	#endregion // Unity Functions
+
+	#region Private Functions
 
 	private void UpdateHealthBar(int current, int max)
 	{
@@ -74,4 +89,6 @@ public class HealthBar : MonoBehaviour
 		filledPortionRect.sizeDelta = new Vector2(portionFilled * totalWidth, filledPortionRect.sizeDelta.y);
 		filledPortionRect.anchoredPosition = new Vector2(totalWidth * portionFilled * 0.5f, 0);
 	}
+
+	#endregion // Private Functions
 }

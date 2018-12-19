@@ -197,7 +197,7 @@ MonoBehaviour:
   backArmor: 0
   frontPoise: 0
   backPoise: 0
-  maxHealth: 5
+  m_maxHealth: 1
 --- !u!114 &114929223084187810
 MonoBehaviour:
   m_ObjectHideFlags: 1
