@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Key : Pickup
+public class SpiritOrbPickup : Pickup
 {
 	protected override void PerformPickupAction()
 	{
-		CharacterController.instance.gainKey();
+		CharacterController.instance.gainSpiritOrb();
 		base.PerformPickupAction();
 	}
 }

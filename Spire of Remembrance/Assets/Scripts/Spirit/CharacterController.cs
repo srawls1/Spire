@@ -11,6 +11,7 @@ public class CharacterController : Controller
 	private Interaction[] interactables;
 	private int interactableIndex;
 	private int m_numKeys;
+	private int m_numSpiritOrbs;
 
 	private static readonly Interaction[] empty = { };
 	private static CharacterController m_instance;
@@ -37,7 +38,24 @@ public class CharacterController : Controller
 		{
 			return m_numKeys;
 		}
-			
+		private set
+		{
+			m_numKeys = value;
+			// TODO - update UI
+		}
+	}
+
+	public int numSpiritOrbs
+	{
+		get
+		{
+			return m_numSpiritOrbs;
+		}
+		private set
+		{
+			m_numSpiritOrbs = value;
+			// TODO - update UI
+		}
 	}
 
 	#endregion // Properties
@@ -111,12 +129,22 @@ public class CharacterController : Controller
 
 	public void gainKey()
 	{
-		++m_numKeys;
+		++numKeys;
 	}
 
 	public void useKey()
 	{
-		--m_numKeys;
+		--numKeys;
+	}
+
+	public void gainSpiritOrb()
+	{
+		++numSpiritOrbs;
+	}
+
+	public void useSpiritOrbs(int count)
+	{
+		--numSpiritOrbs;
 	}
 
 	public override void Possess(Movement move)

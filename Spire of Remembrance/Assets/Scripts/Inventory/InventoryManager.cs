@@ -1,18 +1,38 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-	//private InventoryItem 
-
-	// Use this for initialization
-	void Start () {
-		
+	private static InventoryManager m_instance;
+	public static InventoryManager instance
+	{
+		get
+		{
+			if (m_instance == null)
+			{
+				m_instance = FindObjectOfType<InventoryManager>();
+			}
+			return m_instance;
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	private void Awake()
+	{
+		if (m_instance == null)
+		{
+			m_instance = this;
+		}
+		else if (m_instance != this)
+		{
+			Destroy(this);
+		}
+	}
+
+
+	public Bottle GetAvailableBottle(Type potionType)
+	{
+		throw new NotImplementedException();
 	}
 }

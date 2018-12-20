@@ -13,18 +13,24 @@ public abstract class HealthPotion : GradualFillPotion
 	public override void Use(Controller controller, Bottle container)
 	{
 		EnemyHealth health = GetHealthTarget(controller);
-		if (health == null)
+		portionFull = HealTarget(portionFull, healScale, health);
+		ClearIfEmpty(container);
+	}
+
+	public static float HealTarget(float portion, float scale, EnemyHealth target)
+	{
+		if (target == null)
 		{
-			return;
+			return portion;
 		}
 
-		int roomToHeal = health.maxHealth - health.currentHealth;
-		int ableToHeal = Mathf.RoundToInt(healScale * portionFull);
+		int roomToHeal = target.maxHealth - target.currentHealth;
+		int ableToHeal = Mathf.RoundToInt(scale * portion);
 		int amountHealed = Mathf.Min(roomToHeal, ableToHeal);
 
-		health.Heal(amountHealed);
-		portionFull -= amountHealed / healScale;
-		ClearIfEmpty(container);
+		target.Heal(amountHealed);
+		portion -= amountHealed / scale;
+		return portion;
 	}
 
 	protected abstract EnemyHealth GetHealthTarget(Controller controller);

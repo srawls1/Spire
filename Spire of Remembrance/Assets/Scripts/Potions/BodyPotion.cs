@@ -11,6 +11,11 @@ public class BodyPotion : HealthPotion
 
 	protected override EnemyHealth GetHealthTarget(Controller controller)
 	{
+		return GetBodyHealth(controller);
+	}
+
+	public static EnemyHealth GetBodyHealth(Controller controller)
+	{
 		if (controller.controlledMovement == null ||
 			controller.controlledMovement == controller.GetComponent<Movement>())
 		{
