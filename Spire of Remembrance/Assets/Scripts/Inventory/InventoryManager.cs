@@ -30,9 +30,9 @@ public class InventoryManager : MonoBehaviour
 		}
 	}
 
-
 	public Bottle GetAvailableBottle(Type potionType)
 	{
-		throw new NotImplementedException();
+		// TODO
+		return null;
 	}
 }

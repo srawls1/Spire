@@ -1,23 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class HealthBar : Gauge
 {
 	#region Editor Fields
 
 	[SerializeField] private Damageable m_target;
-	[SerializeField] private Image fullBackground;
-	[SerializeField] private Image filledPortion;
-	[SerializeField] private Text healthText;
 
 	#endregion // Editor Fields
-
-	#region Non-Editor Fields
-
-	private RectTransform fullBackgroundRect;
-	private RectTransform filledPortionRect;
-
-	#endregion // Non-Editor Fields
 
 	#region Properties
 
@@ -39,18 +29,18 @@ public class HealthBar : MonoBehaviour
 			{
 				fullBackground.enabled = false;
 				filledPortion.enabled = false;
-				if (healthText != null)
+				if (text != null)
 				{
-					healthText.enabled = false;
+					text.enabled = false;
 				}
 			}
 			else
 			{
 				fullBackground.enabled = true;
 				filledPortion.enabled = true;
-				if (healthText != null)
+				if (text != null)
 				{
-					healthText.enabled = true;
+					text.enabled = true;
 				}
 
 				m_target.OnHealthChanged += UpdateHealthBar;
@@ -67,8 +57,6 @@ public class HealthBar : MonoBehaviour
 
 	private void Start()
 	{
-		fullBackgroundRect = fullBackground.transform as RectTransform;
-		filledPortionRect = filledPortion.transform as RectTransform;
 		target = target;
 	}
 
@@ -78,16 +66,7 @@ public class HealthBar : MonoBehaviour
 
 	private void UpdateHealthBar(int current, int max)
 	{
-		if (healthText != null)
-		{
-			healthText.text = string.Format("{0}/{1}", current, max);
-		}
-
-		float portionFilled = (float)current / max;
-		float totalWidth = fullBackgroundRect.rect.width;
-
-		filledPortionRect.sizeDelta = new Vector2(portionFilled * totalWidth, filledPortionRect.sizeDelta.y);
-		filledPortionRect.anchoredPosition = new Vector2(totalWidth * portionFilled * 0.5f, 0);
+		UpdateUI(current, max);
 	}
 
 	#endregion // Private Functions
