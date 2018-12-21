@@ -25,7 +25,7 @@ public abstract class GradualFillPotionPickup : Pickup
 			fillAmount = bodyPotion.Fill(fillAmount);
 		}
 
-		if (fillAmount == 0)
+		if (fillAmount < 0.01f)
 		{
 			base.PerformPickupAction();
 		}

@@ -50,7 +50,7 @@ public abstract class GradualFillPotion : Potion
 
 	protected void ClearIfEmpty(Bottle container)
 	{
-		if (portionFull == 0f)
+		if (portionFull < .01f)
 		{
 			container.containedPotion = null;
 		}
