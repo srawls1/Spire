@@ -4,11 +4,16 @@ using UnityEngine;
 
 public abstract class HealthPotion : GradualFillPotion
 {
-	[SerializeField] public float healScale;
+	public float healScale
+	{
+		get; private set;
+	}
 
-	public HealthPotion(Sprite partial, Sprite full)
+	public HealthPotion(Sprite partial, Sprite full, float scale)
 		: base(partial, full)
-	{ }
+	{
+		healScale = scale;
+	}
 
 	public override void Use(Controller controller, Bottle container)
 	{

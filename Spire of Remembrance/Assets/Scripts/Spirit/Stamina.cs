@@ -101,7 +101,7 @@ public class Stamina : MonoBehaviour
 
 	public void Restore(float amount)
 	{
-		currentStamina += Time.deltaTime;
+		currentStamina += amount;
 	}
 
 	#endregion // Public Functions

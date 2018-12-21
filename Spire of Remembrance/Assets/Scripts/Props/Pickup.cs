@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
-	private void OnCollisionEnter2D(Collision2D collision)
+	[SerializeField] private GameObject pickupRoot;
+
+	private void OnTriggerEnter2D(Collider2D collider)
 	{
-		if (collision.gameObject == CharacterController.instance.gameObject ||
-			collision.gameObject == CharacterController.instance.controlledMovement.gameObject)
+		if (collider.gameObject == CharacterController.instance.gameObject ||
+			collider.gameObject == CharacterController.instance.controlledMovement.gameObject)
 		{
 			PerformPickupAction();
 		}
@@ -15,6 +17,6 @@ public class Pickup : MonoBehaviour
 
 	protected virtual void PerformPickupAction()
 	{
-		Destroy(gameObject);
+		Destroy(pickupRoot);
 	}
 }

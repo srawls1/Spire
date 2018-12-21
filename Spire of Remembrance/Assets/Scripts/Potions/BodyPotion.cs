@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class BodyPotion : HealthPotion
 {
-	public BodyPotion(Sprite partial, Sprite full)
-		: base(partial, full)
+	public BodyPotion(Sprite partial, Sprite full, float scale)
+		: base(partial, full, scale)
 	{ }
 
 	protected override EnemyHealth GetHealthTarget(Controller controller)

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212940249428985746}
   - component: {fileID: 61437217782485212}
   - component: {fileID: 114487254409183646}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,6 +71,7 @@ MonoBehaviour:
   openSprite: {fileID: 21300004, guid: 81645a9e33073964495a9d7d874f02dd, type: 3}
   contentsPrefab: {fileID: 1433257158152042, guid: b1fd2c8e6511d3a4da7f041398c4d583,
     type: 2}
+  facing: 0
 --- !u!212 &212940249428985746
 SpriteRenderer:
   m_ObjectHideFlags: 1
