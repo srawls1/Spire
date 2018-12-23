@@ -81,8 +81,6 @@ public class Weapon : MonoBehaviour
 
 	public void OnTriggerEnter2D(Collider2D collision)
 	{
-		Debug.Log(collision.gameObject);
-
 		if (transform.IsChildOf(collision.transform))
 		{
 			return;
@@ -96,7 +94,6 @@ public class Weapon : MonoBehaviour
 
 		alreadyHitTargets.Add(damageable);
 
-		Debug.Log(string.Format("Dealing damage {0} and knocking back {1}", damage, attackForce));
 		damageable.TakeDamage(damage, transform.position, attackForce);
 	}
 

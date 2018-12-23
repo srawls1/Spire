@@ -41,7 +41,7 @@ public class CharacterController : Controller
 		private set
 		{
 			m_numKeys = value;
-			// TODO - update UI
+			InGameUIManager.instance.SetNumKeys(m_numKeys);
 		}
 	}
 
@@ -54,7 +54,7 @@ public class CharacterController : Controller
 		private set
 		{
 			m_numSpiritOrbs = value;
-			// TODO - update UI
+			InGameUIManager.instance.SetNumSpiritOrbs(m_numSpiritOrbs);
 		}
 	}
 
@@ -83,6 +83,12 @@ public class CharacterController : Controller
 		base.Awake();
 	}
 
+	void Start()
+	{
+		numSpiritOrbs = numSpiritOrbs;
+		numKeys = numKeys;
+	}
+
 	void Update()
 	{
 		Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
@@ -101,7 +107,7 @@ public class CharacterController : Controller
 			++interactableIndex;
 			interactableIndex %= interactables.Length;
 			Interaction inter = interactables[interactableIndex];
-			
+
 			if (OnInteractableChanged != null)
 			{
 				OnInteractableChanged(inter, true);
@@ -155,7 +161,7 @@ public class CharacterController : Controller
 		}
 
 		interactables = empty;
-		
+
 		if (OnInteractableChanged != null)
 		{
 			OnInteractableChanged(null, false);

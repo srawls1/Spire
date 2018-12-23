@@ -38,8 +38,12 @@ public class KnightAnimations : EntityAnimations
 	{
 		base.Awake();
 		weapon = GetComponentInChildren<Weapon>();
-		weapon.gameObject.SetActive(false);
+	}
+
+	private void Start()
+	{
 		weaponData = weaponData;
+		weapon.gameObject.SetActive(false);
 	}
 
 	#endregion // Unity Functions
