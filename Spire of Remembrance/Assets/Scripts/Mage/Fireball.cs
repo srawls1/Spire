@@ -15,6 +15,8 @@ public class Fireball : AoEProjectile
 	protected override void DealDamage(Collider2D hitBox)
 	{
 		base.DealDamage(hitBox);
+		hitBox.gameObject.SendMessage("OnFireDamage");
+		// TODO - the rest of this handling should be moved to the OnFireDamage messages of the targets
 		BurnStatus.InflictBurnStatus(hitBox.gameObject, burnDuration, damagePerSecond);
 		Torch torch = hitBox.GetComponent<Torch>();
 		if (torch != null)

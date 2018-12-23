@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Pit : MonoBehaviour
 {
-
 	[SerializeField] private float fallMoveSmoothing;
 
-	private void OnTriggerEnter2D(Collider2D collision)
+	protected void OnTriggerEnter2D(Collider2D collision)
 	{
 		Movement movement = collision.GetComponent<Movement>();
-		if (movement == null || movement.canPassPit)
+		if (movement == null)
 		{
 			return;
 		}

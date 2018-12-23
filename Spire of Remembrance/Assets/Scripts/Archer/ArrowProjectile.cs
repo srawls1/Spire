@@ -41,6 +41,11 @@ public class ArrowProjectile : Projectile
 			return;
 		}
 
+		if (burning)
+		{
+			collision.gameObject.SendMessage("OnFireDamage");
+		}
+
 		Torch torch = collision.GetComponent<Torch>();
 		if (torch != null)
 		{
@@ -65,6 +70,7 @@ public class ArrowProjectile : Projectile
 
 		damageable.TakeDamage(burning ? burningDamage : baseDamage,
 			transform.position, force);
+		// TODO - This handling should move to the OnFireDamage message of the target
 		if (burning)
 		{
 			BurnStatus.InflictBurnStatus(damageable.gameObject, burningDuration, burningDamagePerSecond);

@@ -15,6 +15,8 @@ public class IceBall : AoEProjectile
 	protected override void DealDamage(Collider2D hitBox)
 	{
 		base.DealDamage(hitBox);
+		hitBox.gameObject.SendMessage("OnIceDamage");
+		// TODO - The rest of this handling should be moved to the OnIceDamage messages
 		FreezeStatus.InflictFreezeStatus(hitBox.gameObject, freezeDuration);
 		Torch torch = hitBox.GetComponent<Torch>();
 		if (torch != null)
