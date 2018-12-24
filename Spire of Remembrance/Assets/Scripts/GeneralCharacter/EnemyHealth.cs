@@ -92,6 +92,54 @@ public class EnemyHealth : Damageable
 		HealthChanged(currentHealth, maxHealth);
 	}
 
+	public void OnFireDamage(FireDamageArgs args)
+	{
+		FreezeStatus freeze = GetComponent<FreezeStatus>();
+		if (freeze != null)
+		{
+			freeze.duration = 0f;
+			return;
+		}
+
+		BurnStatus burn = GetComponent<BurnStatus>();
+		if (burn != null)
+		{
+			if (args.duration > burn.duration)
+			{
+				burn.duration = args.duration;
+				burn.damagePerSecond = args.dps;
+			}
+		}
+		else
+		{
+			burn = gameObject.AddComponent<BurnStatus>();
+			burn.duration = args.duration;
+			burn.damagePerSecond = args.dps;
+		}
+	}
+
+	public void OnIceDamage(IceDamageArgs args)
+	{
+		BurnStatus burn = GetComponent<BurnStatus>();
+		if (burn != null)
+		{
+			burn.duration = 0f;
+			return;
+		}
+
+		FreezeStatus freeze = GetComponent<FreezeStatus>();
+		if (freeze != null)
+		{
+			freeze.duration = Mathf.Max(freeze.duration, args.duration);
+			return;
+		}
+		else
+		{
+			freeze = gameObject.AddComponent<FreezeStatus>();
+			freeze.duration = args.duration;
+		}
+	}
+
 	public void Heal(int healAmount)
 	{
 		currentHealth += healAmount;

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212940249428985746}
   - component: {fileID: 61437217782485212}
   - component: {fileID: 114487254409183646}
+  - component: {fileID: 114229705058787494}
   m_Layer: 12
   m_Name: Chest
   m_TagString: Untagged
@@ -56,6 +57,20 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 2.05, y: 1.9}
+--- !u!114 &114229705058787494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1810107808853276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d086a062f165445d9854a2c566160721, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destroyAfterBurningTime: 1
+  burningSpreadPeriod: 1
+  burningSpreadRadius: 0
 --- !u!114 &114487254409183646
 MonoBehaviour:
   m_ObjectHideFlags: 1

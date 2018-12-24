@@ -6,7 +6,7 @@ public class AoEProjectile : Projectile
 {
 	[SerializeField] private float detonateAfterSeconds;
 	[SerializeField] private float radius;
-	[SerializeField] private int damage;
+	[SerializeField] protected int damage;
 	[SerializeField] private int force;
 
 	new IEnumerator Start()
@@ -29,7 +29,7 @@ public class AoEProjectile : Projectile
 			DealDamage(colliders[i]);
 		}
 	}
-	
+
 	protected virtual void DealDamage(Collider2D hitBox)
 	{
 		// A shooter won't damage themself

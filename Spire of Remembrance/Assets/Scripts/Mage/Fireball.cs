@@ -2,6 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public class FireDamageArgs
+{
+	public float duration;
+	public float dps;
+	public int damage;
+
+	public FireDamageArgs(float dur, float dot, int dmg = 0)
+	{
+		duration = dur;
+		dps = dot;
+		damage = dmg;
+	}
+}
+
 public class Fireball : AoEProjectile
 {
 	[SerializeField] private float damagePerSecond;
@@ -15,13 +29,8 @@ public class Fireball : AoEProjectile
 	protected override void DealDamage(Collider2D hitBox)
 	{
 		base.DealDamage(hitBox);
-		hitBox.gameObject.SendMessage("OnFireDamage");
-		// TODO - the rest of this handling should be moved to the OnFireDamage messages of the targets
-		BurnStatus.InflictBurnStatus(hitBox.gameObject, burnDuration, damagePerSecond);
-		Torch torch = hitBox.GetComponent<Torch>();
-		if (torch != null)
-		{
-			torch.lit = true;
-		}
+		hitBox.gameObject.SendMessage("OnFireDamage",
+			new FireDamageArgs(burnDuration, damagePerSecond, damage),
+			SendMessageOptions.DontRequireReceiver);
 	}
 }

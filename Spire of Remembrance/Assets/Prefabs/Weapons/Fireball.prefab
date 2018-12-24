@@ -110,7 +110,7 @@ MonoBehaviour:
   destroyAfterSeconds: 3
   detonateAfterSeconds: 2
   radius: 3
-  damage: 10
+  damage: 5
   force: 6
   damagePerSecond: 1
   burnDuration: 5

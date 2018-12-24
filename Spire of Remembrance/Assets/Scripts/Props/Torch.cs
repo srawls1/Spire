@@ -28,7 +28,7 @@ public class Torch : MonoBehaviour
 		{
 			return m_lit;
 		}
-		set
+		private set
 		{
 			m_lit = value;
 
@@ -65,6 +65,16 @@ public class Torch : MonoBehaviour
 	{
 		animator = GetComponent<Animator>();
 		lit = lit;
+	}
+
+	public void OnFireDamage(FireDamageArgs args)
+	{
+		lit = true;
+	}
+
+	public void OnIceDamage(IceDamageArgs args)
+	{
+		lit = false;
 	}
 
 	#endregion // Unity Functions

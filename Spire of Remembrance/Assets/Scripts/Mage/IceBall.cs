@@ -3,6 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class IceDamageArgs
+{
+	public float duration;
+	public int damage;
+
+	public IceDamageArgs(float dur, int dmg = 0)
+	{
+		duration = dur;
+		damage = dmg;
+	}
+}
+
 public class IceBall : AoEProjectile
 {
 	[SerializeField] private float freezeDuration;
@@ -15,13 +27,8 @@ public class IceBall : AoEProjectile
 	protected override void DealDamage(Collider2D hitBox)
 	{
 		base.DealDamage(hitBox);
-		hitBox.gameObject.SendMessage("OnIceDamage");
-		// TODO - The rest of this handling should be moved to the OnIceDamage messages
-		FreezeStatus.InflictFreezeStatus(hitBox.gameObject, freezeDuration);
-		Torch torch = hitBox.GetComponent<Torch>();
-		if (torch != null)
-		{
-			torch.lit = false;
-		}
+		hitBox.gameObject.SendMessage("OnIceDamage",
+			new IceDamageArgs(freezeDuration, damage),
+			SendMessageOptions.DontRequireReceiver);
 	}
 }

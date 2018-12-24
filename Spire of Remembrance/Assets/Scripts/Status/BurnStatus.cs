@@ -11,7 +11,7 @@ public class BurnStatus : MonoBehaviour
 	{
 		StartCoroutine(DamageRoutine());
 	}
-	
+
 	private IEnumerator DamageRoutine()
 	{
 		yield return null;
@@ -44,31 +44,5 @@ public class BurnStatus : MonoBehaviour
 		// TODO - destroy particle effects
 
 		Destroy(this);
-	}
-
-	public static void InflictBurnStatus(GameObject obj, float burnDuration, float damagePerSecond)
-	{
-		FreezeStatus freeze = obj.GetComponent<FreezeStatus>();
-		if (freeze != null)
-		{
-			freeze.duration = 0f;
-			return;
-		}
-
-		BurnStatus burn = obj.GetComponent<BurnStatus>();
-		if (burn != null)
-		{
-			if (burnDuration > burn.duration)
-			{
-				burn.duration = burnDuration;
-				burn.damagePerSecond = damagePerSecond;
-			}
-		}
-		else
-		{
-			burn = obj.AddComponent<BurnStatus>();
-			burn.duration = burnDuration;
-			burn.damagePerSecond = damagePerSecond;
-		}
 	}
 }

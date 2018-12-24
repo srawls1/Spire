@@ -40,26 +40,4 @@ public class FreezeStatus : MonoBehaviour
 
 		Destroy(this);
 	}
-
-	public static void InflictFreezeStatus(GameObject obj, float freezeDuration)
-	{
-		BurnStatus burn = obj.GetComponent<BurnStatus>();
-		if (burn != null)
-		{
-			burn.duration = 0f;
-			return;
-		}
-
-		FreezeStatus freeze = obj.GetComponent<FreezeStatus>();
-		if (freeze != null)
-		{
-			freeze.duration = Mathf.Max(freeze.duration, freezeDuration);
-			return;
-		}
-		else
-		{
-			freeze = obj.AddComponent<FreezeStatus>();
-			freeze.duration = freezeDuration;
-		}
-	}
 }

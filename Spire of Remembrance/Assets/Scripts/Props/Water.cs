@@ -21,7 +21,6 @@ public class Water : Pit
 		{
 			m_frozen = value;
 			renderer.sprite = m_frozen ? iceSprite : waterSprite;
-			//collider.enabled = !m_frozen;
 		}
 	}
 
@@ -44,12 +43,12 @@ public class Water : Pit
 		}
 	}
 
-	public void OnFireDamage()
+	public void OnFireDamage(FireDamageArgs args)
 	{
 		frozen = false;
 	}
 
-	public void OnIceDamage()
+	public void OnIceDamage(IceDamageArgs args)
 	{
 		frozen = true;
 	}
