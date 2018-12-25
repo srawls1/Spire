@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 114636302147080424}
   - component: {fileID: 114454545693527230}
   - component: {fileID: 114224761640535548}
+  - component: {fileID: 114237237501077582}
   m_Layer: 8
   m_Name: Character
   m_TagString: Player
@@ -112,6 +113,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_totalStamina: 30
   passiveRecoveryRate: 3
+--- !u!114 &114237237501077582
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1206111589379376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f71cb9c29fb6b0e4abefe5379e597178, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114306616604623916
 MonoBehaviour:
   m_ObjectHideFlags: 1

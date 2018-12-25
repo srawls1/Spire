@@ -16,7 +16,7 @@ public abstract class GradualFillPotionPickup : Pickup
 	{
 		while (fillAmount > 0)
 		{
-			Bottle container = InventoryManager.instance.GetAvailableBottle(potionType);
+			Bottle container = InventoryManager.playerInventory.GetAvailableBottle(potionType);
 			if (container == null)
 			{
 				break;
