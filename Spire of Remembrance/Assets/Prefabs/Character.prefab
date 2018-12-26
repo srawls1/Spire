@@ -124,6 +124,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f71cb9c29fb6b0e4abefe5379e597178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultSwordData: {fileID: 11400000, guid: 25eca1e17c40977479cc8511800cc86c, type: 2}
+  defaultStaffData: {fileID: 11400000, guid: 627abc21222d04098840d87ec2ae008b, type: 2}
+  defaultBowData: {fileID: 11400000, guid: eaaa0bf308b8b45359de7dcdb361d838, type: 2}
 --- !u!114 &114306616604623916
 MonoBehaviour:
   m_ObjectHideFlags: 1

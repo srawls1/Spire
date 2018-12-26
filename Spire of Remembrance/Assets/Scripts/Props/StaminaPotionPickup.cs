@@ -6,6 +6,8 @@ using UnityEngine;
 public class StaminaPotionPickup : GradualFillPotionPickup
 {
 	[SerializeField] private float restoreScale;
+	[SerializeField] private Sprite partial;
+	[SerializeField] private Sprite full;
 
 	protected override Type potionType
 	{
@@ -13,6 +15,11 @@ public class StaminaPotionPickup : GradualFillPotionPickup
 		{
 			return typeof(StaminaPotion);
 		}
+	}
+
+	protected override GradualFillPotion GenerateNew()
+	{
+		return new StaminaPotion(partial, full, restoreScale);
 	}
 
 	protected override void PerformPickupAction()

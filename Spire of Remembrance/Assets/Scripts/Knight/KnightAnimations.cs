@@ -22,7 +22,7 @@ public class KnightAnimations : EntityAnimations
 	{
 		get
 		{
-			return m_weaponData;
+			return weapon.data;
 		}
 		set
 		{
@@ -42,7 +42,7 @@ public class KnightAnimations : EntityAnimations
 
 	private void Start()
 	{
-		weaponData = weaponData;
+		weaponData = m_weaponData;
 		weapon.gameObject.SetActive(false);
 	}
 

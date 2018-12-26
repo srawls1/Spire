@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weapon", menuName = "Custom/Weapon", order = 1)]
+[CreateAssetMenu(fileName = "Weapon", menuName = "Custom/Sword", order = 1)]
 public class WeaponData : ScriptableObject
 {
 	#region Editor Fields

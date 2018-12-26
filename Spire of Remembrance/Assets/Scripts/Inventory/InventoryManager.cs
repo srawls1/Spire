@@ -18,6 +18,10 @@ public class InventoryManager : MonoBehaviour
 		}
 	}
 
+	[SerializeField] private WeaponData defaultSwordData;
+	[SerializeField] private ProjectileShooterData defaultStaffData;
+	[SerializeField] private ProjectileShooterData defaultBowData;
+
 	private List<InventoryItem> m_items;
 	public List<InventoryItem> items
 	{
@@ -27,9 +31,48 @@ public class InventoryManager : MonoBehaviour
 		}
 	}
 
+	public SwordItem defaultSword
+	{
+		get; private set;
+	}
+
+	public SwordItem equippedSword
+	{
+		get; set;
+	}
+
+	public ShooterItem defaultStaff
+	{
+		get; private set;
+	}
+
+	public ShooterItem equippedStaff
+	{
+		get; set;
+	}
+
+	public ShooterItem defaultBow
+	{
+		get; private set;
+	}
+
+	public ShooterItem equippedBow
+	{
+		get; set;
+	}
+
 	private void Awake()
 	{
 		m_items = new List<InventoryItem>();
+		defaultSword = new SwordItem(defaultSwordData.weaponSprite, defaultSwordData);
+		defaultSword.manager = this;
+		equippedSword = defaultSword;
+		defaultStaff = new ShooterItem(defaultStaffData.shooterSprite, defaultStaffData, true);
+		defaultStaff.manager = this;
+		equippedStaff = defaultStaff;
+		defaultBow = new ShooterItem(defaultBowData.shooterSprite, defaultBowData, false);
+		defaultBow.manager = this;
+		equippedBow = defaultBow;
 	}
 
 	public void Add(InventoryItem item)
@@ -75,5 +118,56 @@ public class InventoryManager : MonoBehaviour
 		}
 
 		return null;
+	}
+
+	public List<SwordItem> GetAllSwords()
+	{
+		List<SwordItem> swords = new List<SwordItem>();
+		swords.Add(defaultSword);
+
+		for (int i = 0; i < m_items.Count; ++i)
+		{
+			SwordItem sword = m_items[i] as SwordItem;
+			if (sword != null)
+			{
+				swords.Add(sword);
+			}
+		}
+
+		return swords;
+	}
+
+	public List<ShooterItem> GetAllStaves()
+	{
+		List<ShooterItem> staves = new List<ShooterItem>();
+		staves.Add(defaultStaff);
+
+		for (int i = 0; i < m_items.Count; ++i)
+		{
+			ShooterItem staff = m_items[i] as ShooterItem;
+			if (staff != null && staff.isStaff)
+			{
+				staves.Add(staff);
+			}
+		}
+
+		return staves;
+	}
+
+	public List<ShooterItem> GetAllBows()
+	{
+		List<ShooterItem> bows = new List<ShooterItem>();
+		bows.Add(defaultBow);
+
+		for (int i = 0; i < m_items.Count; ++i)
+		{
+			ShooterItem bow = m_items[i] as ShooterItem;
+			if (bow != null && !bow.isStaff)
+			{
+				bows.Add(bow);
+			}
+		}
+
+		return bows;
 	}
 }

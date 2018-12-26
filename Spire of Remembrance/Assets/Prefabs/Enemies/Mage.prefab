@@ -132,7 +132,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1902035763558068}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.8076615, y: 2.8725164, z: 0}
+  m_LocalPosition: {x: 4.75, y: 3.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4875102747197014}
@@ -286,8 +286,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 197886a3fd0010947bbb33b599e7783f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 114699428791560902, guid: 550bd9bc2286324428d0fa298a104f5a,
-    type: 2}
   projectileSpawnPoint: {fileID: 4492908903905026}
 --- !u!114 &114902177837141144
 MonoBehaviour:
@@ -313,8 +311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathAnimDuration: 1
   fallAnimDuration: 1
-  attackDuration: 1
-  projectileReleaseTime: 0.2
+  m_shooterData: {fileID: 11400000, guid: 43a45220667cf447cbe1881b4aa14952, type: 2}
 --- !u!212 &212033043505251372
 SpriteRenderer:
   m_ObjectHideFlags: 1

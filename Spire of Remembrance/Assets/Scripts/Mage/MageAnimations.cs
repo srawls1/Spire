@@ -4,15 +4,43 @@ using UnityEngine;
 
 public class MageAnimations : EntityAnimations
 {
+	#region Editor Fields
+
+	[SerializeField] private ProjectileShooterData m_shooterData;
+
+	#endregion // Editor Fields
+
+	#region Non-Editor Fields
+
 	private ProjectileShooter weapon;
 
-	[SerializeField] private float attackDuration;
-	[SerializeField] private float projectileReleaseTime;
+	#endregion // Non-Editor Fields
+
+	#region Properties
+
+	public ProjectileShooterData shooterData
+	{
+		get
+		{
+			return weapon.data;
+		}
+		set
+		{
+			weapon.data = value;
+		}
+	}
+
+	#endregion // Properties
 
 	new private void Awake()
 	{
 		base.Awake();
 		weapon = GetComponentInChildren<ProjectileShooter>();
+	}
+
+	private void Start()
+	{
+		shooterData = m_shooterData;
 		weapon.gameObject.SetActive(false);
 	}
 
@@ -23,11 +51,11 @@ public class MageAnimations : EntityAnimations
 		weapon.gameObject.SetActive(true);
 		movement.enabled = false;
 
-		yield return new WaitForSeconds(projectileReleaseTime);
+		yield return new WaitForSeconds(weapon.releaseTime);
 
 		weapon.SpawnProjectile().instigator = gameObject;
 
-		yield return new WaitForSeconds(attackDuration - projectileReleaseTime);
+		yield return new WaitForSeconds(weapon.attackDuration - weapon.releaseTime);
 
 		weapon.gameObject.SetActive(false);
 		movement.enabled = true;

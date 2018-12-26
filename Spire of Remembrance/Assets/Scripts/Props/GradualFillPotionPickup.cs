@@ -12,6 +12,8 @@ public abstract class GradualFillPotionPickup : Pickup
 		get;
 	}
 
+	protected abstract GradualFillPotion GenerateNew();
+
 	protected override void PerformPickupAction()
 	{
 		while (fillAmount > 0)
@@ -21,8 +23,13 @@ public abstract class GradualFillPotionPickup : Pickup
 			{
 				break;
 			}
-			BodyPotion bodyPotion = container.containedPotion as BodyPotion;
-			fillAmount = bodyPotion.Fill(fillAmount);
+			if (container.containedPotion == null)
+			{
+				container.containedPotion = GenerateNew();
+			}
+
+			GradualFillPotion potion = container.containedPotion as GradualFillPotion;
+			fillAmount = potion.Fill(fillAmount);
 		}
 
 		if (fillAmount < 0.01f)
