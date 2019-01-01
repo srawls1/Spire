@@ -4,7 +4,20 @@ using UnityEngine;
 
 public abstract class Potion
 {
+	public virtual IEnumerator GetTarget()
+	{
+		yield break;
+	}
+
 	public abstract void Use(Controller controller, Bottle container);
+
+	public virtual bool canPerform
+	{
+		get
+		{
+			return true;
+		}
+	}
 
 	public abstract Sprite sprite
 	{

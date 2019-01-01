@@ -35,6 +35,7 @@ public class InventoryManager : MonoBehaviour
 	[SerializeField] private WeaponData defaultSwordData;
 	[SerializeField] private ProjectileShooterData defaultStaffData;
 	[SerializeField] private ProjectileShooterData defaultBowData;
+	[SerializeField] private SerializedInventoryItem[] startingInventory;
 
 	private List<InventoryItem> m_items;
 	public List<InventoryItem> items
@@ -87,6 +88,11 @@ public class InventoryManager : MonoBehaviour
 		defaultBow = new ShooterItem(defaultBowData.shooterSprite, defaultBowData, false);
 		defaultBow.manager = this;
 		equippedBow = defaultBow;
+
+		for (int i = 0; i < startingInventory.Length; ++i)
+		{
+			Add(startingInventory[i].ToItem());
+		}
 	}
 
 	public void Add(InventoryItem item)

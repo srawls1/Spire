@@ -2110,6 +2110,36 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: baba53f805a0741cd95967670644b0f0, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &636256732 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1523205674375154, guid: 6b58dbef07007914a994a8ebe62f7ba2,
+    type: 2}
+  m_PrefabInternal: {fileID: 1083050093}
+--- !u!114 &636256733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 636256732}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f71cb9c29fb6b0e4abefe5379e597178, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSwordData: {fileID: 11400000, guid: 25eca1e17c40977479cc8511800cc86c, type: 2}
+  defaultStaffData: {fileID: 11400000, guid: 627abc21222d04098840d87ec2ae008b, type: 2}
+  defaultBowData: {fileID: 11400000, guid: 99ae6b09025c649a1990c3fb1e2dd78a, type: 2}
+  startingInventory:
+  - type: 1
+    potionType: 0
+    swordData: {fileID: 0}
+    shooterData: {fileID: 0}
+    fillAmount: 0
+    potionScale: 0
+    sprite: {fileID: 21300000, guid: ce0779eeabaa0c045b7d534f0fae02ac, type: 3}
+    fullSprite: {fileID: 0}
+    partialSprite: {fileID: 0}
+    inventoryMenu: {fileID: 0}
 --- !u!1001 &645740662
 Prefab:
   m_ObjectHideFlags: 0
@@ -3279,7 +3309,7 @@ Prefab:
         type: 2}
       propertyPath: contentsPrefab
       value: 
-      objectReference: {fileID: 1261821217422976, guid: 5e377148fffe248a285cc4c4c2dc2526,
+      objectReference: {fileID: 1681224828824522, guid: fe6458e0a5f3cb247930b7ad144528cf,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a5e03f96d1a2aea49853f28d597bbeed, type: 2}
@@ -6693,6 +6723,26 @@ Prefab:
         type: 2}
       propertyPath: m_SizeDelta.y
       value: 154
+      objectReference: {fileID: 0}
+    - target: {fileID: 114175564352705264, guid: 50c41deaa6769416289ee33870378d51,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.11764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 114175564352705264, guid: 50c41deaa6769416289ee33870378d51,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.11764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 114175564352705264, guid: 50c41deaa6769416289ee33870378d51,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.11764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 114228812399373132, guid: 50c41deaa6769416289ee33870378d51,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 50c41deaa6769416289ee33870378d51, type: 2}

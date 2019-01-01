@@ -40,6 +40,19 @@ public class UsePotionAction : ItemAction
 		actionString = "Use";
 	}
 
+	public override bool canPerform
+	{
+		get
+		{
+			return bottle.containedPotion.canPerform;
+		}
+	}
+
+	public override IEnumerator GetTarget()
+	{
+		return bottle.containedPotion.GetTarget();
+	}
+
 	public override void Perform()
 	{
 		bottle.containedPotion.Use(manager.GetComponent<Controller>(), bottle);

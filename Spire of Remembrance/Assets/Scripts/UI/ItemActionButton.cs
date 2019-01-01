@@ -41,14 +41,6 @@ public class ItemActionButton : MonoBehaviour
 
 	public void PerformAction()
 	{
-		StartCoroutine(PerformActionRoutine());
-	}
-
-	private IEnumerator PerformActionRoutine()
-	{
-		yield return StartCoroutine(action.GetTarget());
-		action.Perform();
-		menu.OnEnable(); // Refresh the menu screen, since we may have just
-		//	removed this item from our inventory or otherwise changed it
+		menu.PerformAction(action);
 	}
 }

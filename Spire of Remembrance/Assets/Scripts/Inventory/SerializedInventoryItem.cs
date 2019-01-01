@@ -37,6 +37,7 @@ public class SerializedInventoryItem
 	[SerializeField] Sprite sprite;
 	[SerializeField] Sprite fullSprite;
 	[SerializeField] Sprite partialSprite;
+	[SerializeField] InventoryMenu inventoryMenu;
 
 	public InventoryItem ToItem()
 	{
@@ -76,7 +77,7 @@ public class SerializedInventoryItem
 						// TODO
 						break;
 					case PotionType.Transmutation:
-						// TODO
+						bottle.containedPotion = new TransmutationPotion(fullSprite, inventoryMenu);
 						break;
 				}
 				return bottle;

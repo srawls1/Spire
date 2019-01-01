@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +15,11 @@ public class InventoryMenu : MonoBehaviour
 	[SerializeField] private ItemButton itemButtonPrefab;
 	[SerializeField] private ItemActionButton itemActionButtonPrefab;
 
-	bool transmutationMode;
+	public bool transmutationMode
+	{
+		get; private set;
+	}
+	private Action<InventoryItem> transmutationCallback;
 
 	public void ShowSelectedItem(ItemButton item)
 	{
@@ -29,28 +34,87 @@ public class InventoryMenu : MonoBehaviour
 
 	public void ShowItemMenu(ItemButton item)
 	{
-		wholeScreenInputBlocker.gameObject.SetActive(true);
-		itemActionMenu.gameObject.SetActive(true);
+		if (!transmutationMode)
+		{
+			wholeScreenInputBlocker.gameObject.SetActive(true);
+			itemActionMenu.gameObject.SetActive(true);
 
-		List<ItemAction> actions = item.item.actions;
-		int i = 0;
-		for (; i < actions.Count && i < itemActionMenu.childCount; ++i)
-		{
-			ItemActionButton button = itemActionMenu.GetChild(i).GetComponent<ItemActionButton>();
-			button.action = actions[i];
-		}
-		for (; i < actions.Count; ++i)
-		{
-			ItemActionButton button = Instantiate(itemActionButtonPrefab);
-			button.transform.SetParent(itemActionMenu);
-			button.action = actions[i];
-		}
-		for (; i < itemActionMenu.childCount; ++i)
-		{
-			itemActionMenu.GetChild(i).gameObject.SetActive(false);
-		}
+			List<ItemAction> actions = item.item.actions;
+			int i = 0;
+			for (; i < actions.Count && i < itemActionMenu.childCount; ++i)
+			{
+				ItemActionButton button = itemActionMenu.GetChild(i).GetComponent<ItemActionButton>();
+				button.action = actions[i];
+			}
+			for (; i < actions.Count; ++i)
+			{
+				ItemActionButton button = Instantiate(itemActionButtonPrefab);
+				button.transform.SetParent(itemActionMenu);
+				button.action = actions[i];
+			}
+			for (; i < itemActionMenu.childCount; ++i)
+			{
+				itemActionMenu.GetChild(i).gameObject.SetActive(false);
+			}
 
-		StartCoroutine(RepositionMenu(itemActionMenu, item.transform as RectTransform));
+			StartCoroutine(RepositionMenu(itemActionMenu, item.transform as RectTransform));
+		}
+		else
+		{
+			transmutationCallback(item.item);
+		}
+	}
+
+	public void HideItemMenu()
+	{
+		wholeScreenInputBlocker.gameObject.SetActive(false);
+		itemActionMenu.gameObject.SetActive(false);
+	}
+
+	public void SetTransmutationMode(Action<InventoryItem> callback)
+	{
+		Debug.Log("Setting transmutation mode");
+		HideItemMenu();
+		transmutationMode = true;
+		transmutationCallback = callback;
+		spiritInventoryInputBlocker.gameObject.SetActive(true);
+		// TODO - maybe instruction text too?
+	}
+
+	public void SetBaseMode()
+	{
+		Debug.Log("Setting base mode");
+		transmutationMode = false;
+		transmutationCallback = null;
+		spiritInventoryInputBlocker.gameObject.SetActive(false);
+		// TODO - maybe instruction text too?
+	}
+
+	public void PerformAction(ItemAction action)
+	{
+		StartCoroutine(PerformActionRoutine(action));
+	}
+
+	public void OnEnable()
+	{
+		List<InventoryItem> spiritItems = InventoryManager.playerInventory.items;
+		PopulateInventoryPane(spiritInventoryContent, spiritItems);
+
+		InventoryManager bodyInventory = InventoryManager.bodyInventory;
+		if (bodyInventory != null)
+		{
+			List<InventoryItem> bodyItems = bodyInventory.items;
+			PopulateInventoryPane(bodyInventoryContent, bodyItems);
+		}
+		else
+		{
+			List<InventoryItem> dummyItems = new List<InventoryItem>();
+			PopulateInventoryPane(bodyInventoryContent, dummyItems);
+		}
+		HideItemMenu();
+		SetBaseMode();
+		selectionCursor.gameObject.SetActive(false);
+		descriptionField.item = null;
 	}
 
 	private IEnumerator RepositionMenu(RectTransform menu, RectTransform nearObject)
@@ -78,51 +142,18 @@ public class InventoryMenu : MonoBehaviour
 		{
 			x = maxX - menuWidth / 2;
 		}
-		
+
 		menu.position = new Vector2(x, y);
 	}
 
-	public void HideItemMenu()
+	private IEnumerator PerformActionRoutine(ItemAction action)
 	{
-		wholeScreenInputBlocker.gameObject.SetActive(false);
-		itemActionMenu.gameObject.SetActive(false);
-	}
-
-	public void SetTransmutationMode()
-	{
-		HideItemMenu();
-		transmutationMode = true;
-		spiritInventoryInputBlocker.gameObject.SetActive(true);
-		// TODO - maybe instruction text too?
-	}
-
-	public void SetBaseMode()
-	{
-		transmutationMode = false;
-		spiritInventoryInputBlocker.gameObject.SetActive(false);
-		// TODO - maybe instruction text too?
-	}
-
-	public void OnEnable()
-	{
-		List<InventoryItem> spiritItems = InventoryManager.playerInventory.items;
-		PopulateInventoryPane(spiritInventoryContent, spiritItems);
-
-		InventoryManager bodyInventory = InventoryManager.bodyInventory;
-		if (bodyInventory != null)
-		{
-			List<InventoryItem> bodyItems = bodyInventory.items;
-			PopulateInventoryPane(bodyInventoryContent, bodyItems);
-		}
-		else
-		{
-			List<InventoryItem> dummyItems = new List<InventoryItem>();
-			PopulateInventoryPane(bodyInventoryContent, dummyItems);
-		}
-		HideItemMenu();
-		SetBaseMode();
-		selectionCursor.gameObject.SetActive(false);
-		descriptionField.item = null;
+		Debug.Log("Getting target");
+		yield return StartCoroutine(action.GetTarget());
+		Debug.Log("Performing");
+		action.Perform();
+		Debug.Log("Refreshing");
+		OnEnable(); // Refresh the screen
 	}
 
 	private void PopulateInventoryPane(RectTransform pane, List<InventoryItem> items)
