@@ -14,6 +14,8 @@ public class WeaponData : ScriptableObject
 	[SerializeField] private float m_attackDuration;
 	[SerializeField] private Sprite m_weaponSprite;
 	[SerializeField] private Color m_trailColor;
+	[SerializeField] private string m_name;
+	[SerializeField] private string m_description;
 
 	#endregion // Editor Fields
 
@@ -72,6 +74,22 @@ public class WeaponData : ScriptableObject
 		get
 		{
 			return m_trailColor;
+		}
+	}
+
+	public string name
+	{
+		get
+		{
+			return m_name;
+		}
+	}
+
+	public string description
+	{
+		get
+		{
+			return m_description;
 		}
 	}
 

@@ -71,6 +71,36 @@ public class Bottle : InventoryItem
 		get; set;
 	}
 
+	public override string name
+	{
+		get
+		{
+			if (containedPotion == null)
+			{
+				return "Empty Bottle";
+			}
+			else
+			{
+				return containedPotion.name;
+			}
+		}
+	}
+
+	public override string description
+	{
+		get
+		{
+			if (containedPotion == null)
+			{
+				return "This bottle can be used to store a potion.";
+			}
+			else
+			{
+				return containedPotion.description;
+			}
+		}
+	}
+
 	public override List<ItemAction> actions
 	{
 		get

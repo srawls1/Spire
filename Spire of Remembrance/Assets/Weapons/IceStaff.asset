@@ -16,3 +16,5 @@ MonoBehaviour:
   m_shooterSprite: {fileID: 21300000, guid: 1b10ba8e5e813b847898d32a1a7b41b4, type: 3}
   m_attackReleaseTime: 0.5
   m_attackDuration: 2
+  m_name: Ice Staff
+  m_description: An ice staff. Shoots medium-ranged balls of ice.

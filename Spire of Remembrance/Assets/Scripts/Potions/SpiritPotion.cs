@@ -9,6 +9,24 @@ public class SpiritPotion : HealthPotion
 		: base(partial, full, scale)
 	{ }
 
+	public override string name
+	{
+		get
+		{
+			string fullness = Mathf.Approximately(portionFull, 1f) ? "Full" :
+				string.Format("{0:0.2} Full", portionFull);
+			return string.Format("Spirit Health Potion ({0})", fullness);
+		}
+	}
+
+	public override string description
+	{
+		get
+		{
+			return "Restores health to the spirit";
+		}
+	}
+
 	protected override EnemyHealth GetHealthTarget(Controller controller)
 	{
 		return GetSpiritHealth(controller);

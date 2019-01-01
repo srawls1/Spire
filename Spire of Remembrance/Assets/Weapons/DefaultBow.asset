@@ -16,3 +16,5 @@ MonoBehaviour:
   m_shooterSprite: {fileID: 21300000, guid: 3f83220dde714f348b4b1bf7a75f680b, type: 3}
   m_attackReleaseTime: 0.2
   m_attackDuration: 1
+  m_name: Bow
+  m_description: A typical bow. Long-ranged weapon.

@@ -18,6 +18,20 @@ public class InventoryManager : MonoBehaviour
 		}
 	}
 
+	public static InventoryManager bodyInventory
+	{
+		get
+		{
+			Movement m = CharacterController.instance.controlledMovement;
+			InventoryManager inventory = m.GetComponent<InventoryManager>();
+			if (inventory != playerInventory)
+			{
+				return inventory;
+			}
+			return null;
+		}
+	}
+
 	[SerializeField] private WeaponData defaultSwordData;
 	[SerializeField] private ProjectileShooterData defaultStaffData;
 	[SerializeField] private ProjectileShooterData defaultBowData;

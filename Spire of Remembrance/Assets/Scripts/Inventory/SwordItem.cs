@@ -59,6 +59,22 @@ public class SwordItem : InventoryItem
 		data = weaponData;
 	}
 
+	public override string name
+	{
+		get
+		{
+			return data.name;
+		}
+	}
+
+	public override string description
+	{
+		get
+		{
+			return data.description;
+		}
+	}
+
 	public override List<ItemAction> actions
 	{
 		get

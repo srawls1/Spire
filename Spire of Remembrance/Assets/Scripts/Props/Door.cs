@@ -90,9 +90,9 @@ public class Door : Interactable
 	{
 		renderer = GetComponent<SpriteRenderer>();
 		collider = GetComponent<Collider2D>();
+		startingLayer = gameObject.layer;
 		open = open;
 		locked = locked;
-		startingLayer = gameObject.layer;
 	}
 
 	#endregion // Unity Functions

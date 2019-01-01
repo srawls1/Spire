@@ -11,6 +11,8 @@ public class ProjectileShooterData : ScriptableObject
 	[SerializeField] private Sprite m_shooterSprite;
 	[SerializeField] private float m_attackReleaseTime;
 	[SerializeField] private float m_attackDuration;
+	[SerializeField] private string m_name;
+	[SerializeField] private string m_description;
 
 	#endregion // Editor Fields
 
@@ -45,6 +47,22 @@ public class ProjectileShooterData : ScriptableObject
 		get
 		{
 			return m_attackDuration;
+		}
+	}
+
+	public string name
+	{
+		get
+		{
+			return m_name;
+		}
+	}
+
+	public string description
+	{
+		get
+		{
+			return m_description;
 		}
 	}
 

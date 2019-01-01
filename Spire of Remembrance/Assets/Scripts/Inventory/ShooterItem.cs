@@ -74,8 +74,24 @@ public class ShooterItem : InventoryItem
 	public ShooterItem(Sprite spr, ProjectileShooterData data, bool staff)
 		: base(spr)
 	{
-		this.weaponData = data;
+		weaponData = data;
 		isStaff = staff;
+	}
+
+	public override string name
+	{
+		get
+		{
+			return weaponData.name;
+		}
+	}
+
+	public override string description
+	{
+		get
+		{
+			return weaponData.description;
+		}
 	}
 
 	public override List<ItemAction> actions

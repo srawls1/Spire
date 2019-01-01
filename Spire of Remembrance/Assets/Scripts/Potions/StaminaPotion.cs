@@ -15,6 +15,24 @@ public class StaminaPotion : GradualFillPotion
 		restoreScale = scale;
 	}
 
+	public override string name
+	{
+		get
+		{
+			string fullness = Mathf.Approximately(portionFull, 1f) ? "Full" :
+				string.Format("{0:0.2} Full", portionFull);
+			return string.Format("Stamina Potion ({0})", fullness);
+		}
+	}
+
+	public override string description
+	{
+		get
+		{
+			return "Restores stamina, allowing you to stay possessing enemies for longer.";
+		}
+	}
+
 	public override void Use(Controller controller, Bottle container)
 	{
 		portionFull = RestoreCharacterStamina(portionFull, restoreScale);

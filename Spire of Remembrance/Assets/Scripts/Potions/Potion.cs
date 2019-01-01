@@ -10,4 +10,14 @@ public abstract class Potion
 	{
 		get;
 	}
+
+	public abstract string name
+	{
+		get;
+	}
+
+	public abstract string description
+	{
+		get;
+	}
 }
