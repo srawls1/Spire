@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryMenu : MonoBehaviour
+public class InventoryMenu : ItemMenu
 {
+	#region Editor Fields
+
 	[SerializeField] private RectTransform spiritInventoryContent;
 	[SerializeField] private RectTransform bodyInventoryContent;
 	[SerializeField] private RectTransform wholeScreenInputBlocker;
@@ -12,8 +14,11 @@ public class InventoryMenu : MonoBehaviour
 	[SerializeField] private RectTransform selectionCursor;
 	[SerializeField] private ItemDescriptionField descriptionField;
 	[SerializeField] private RectTransform itemActionMenu;
-	[SerializeField] private ItemButton itemButtonPrefab;
 	[SerializeField] private ItemActionButton itemActionButtonPrefab;
+
+	#endregion // Editor Fields
+
+	#region Properties/Non-Editor Fields
 
 	public bool transmutationMode
 	{
@@ -21,7 +26,11 @@ public class InventoryMenu : MonoBehaviour
 	}
 	private Action<InventoryItem> transmutationCallback;
 
-	public void ShowSelectedItem(ItemButton item)
+	#endregion // Properties/Non-Editor Fields
+
+	#region Public Functions
+
+	public override void OnItemHover(ItemButton item)
 	{
 		descriptionField.item = item.item;
 		selectionCursor.gameObject.SetActive(true);
@@ -32,7 +41,7 @@ public class InventoryMenu : MonoBehaviour
 		selectionCursor.anchoredPosition = Vector2.zero;
 	}
 
-	public void ShowItemMenu(ItemButton item)
+	public override void OnItemClick(ItemButton item)
 	{
 		if (!transmutationMode)
 		{
@@ -73,7 +82,6 @@ public class InventoryMenu : MonoBehaviour
 
 	public void SetTransmutationMode(Action<InventoryItem> callback)
 	{
-		Debug.Log("Setting transmutation mode");
 		HideItemMenu();
 		transmutationMode = true;
 		transmutationCallback = callback;
@@ -83,7 +91,6 @@ public class InventoryMenu : MonoBehaviour
 
 	public void SetBaseMode()
 	{
-		Debug.Log("Setting base mode");
 		transmutationMode = false;
 		transmutationCallback = null;
 		spiritInventoryInputBlocker.gameObject.SetActive(false);
@@ -95,7 +102,11 @@ public class InventoryMenu : MonoBehaviour
 		StartCoroutine(PerformActionRoutine(action));
 	}
 
-	public void OnEnable()
+	#endregion // Public Functions
+
+	#region Unity Functions
+
+	private void OnEnable()
 	{
 		List<InventoryItem> spiritItems = InventoryManager.playerInventory.items;
 		PopulateInventoryPane(spiritInventoryContent, spiritItems);
@@ -116,6 +127,10 @@ public class InventoryMenu : MonoBehaviour
 		selectionCursor.gameObject.SetActive(false);
 		descriptionField.item = null;
 	}
+
+	#endregion // Unity Functions
+
+	#region Private Functions
 
 	private IEnumerator RepositionMenu(RectTransform menu, RectTransform nearObject)
 	{
@@ -148,31 +163,12 @@ public class InventoryMenu : MonoBehaviour
 
 	private IEnumerator PerformActionRoutine(ItemAction action)
 	{
-		Debug.Log("Getting target");
 		yield return StartCoroutine(action.GetTarget());
-		Debug.Log("Performing");
 		action.Perform();
-		Debug.Log("Refreshing");
 		OnEnable(); // Refresh the screen
 	}
 
-	private void PopulateInventoryPane(RectTransform pane, List<InventoryItem> items)
-	{
-		int i = 0;
-		for (; i < items.Count && i < pane.childCount; ++i)
-		{
-			ItemButton button = pane.GetChild(i).GetComponent<ItemButton>();
-			button.item = items[i];
-		}
-		for (; i < items.Count; ++i)
-		{
-			ItemButton button = Instantiate(itemButtonPrefab);
-			button.transform.SetParent(pane);
-			button.item = items[i];
-		}
-		for (; i < pane.childCount; ++i)
-		{
-			pane.GetChild(i).gameObject.SetActive(false);
-		}
-	}
+	
+
+	#endregion // Private Functions
 }

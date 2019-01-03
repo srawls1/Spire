@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BatController : AIController {
-
-	protected override int GetNavTerrainMask()
+public class BatController : StayAtHomeAIController
+{
+	protected override int navLayerMask
 	{
-		return (int)(NavTerrainTypes.Floor | NavTerrainTypes.Pit);
+		get
+		{
+			return (int)(NavTerrainTypes.Floor | NavTerrainTypes.Pit);
+		}
 	}
 }

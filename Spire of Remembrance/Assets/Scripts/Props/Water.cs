@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class Water : Pit
 {
+	#region Editor Fields
+
 	[SerializeField] private Sprite waterSprite;
 	[SerializeField] private Sprite iceSprite;
 	[SerializeField] private bool m_frozen;
 
-	private SpriteRenderer renderer;
-	private Collider2D collider;
+	#endregion // Editor Fields
+
+	#region Non-Editor Fields
+
+	private new SpriteRenderer renderer;
+	private List<Collider2D> currentlyInside;
+
+	#endregion // Non-Editor Fields
+
+	#region Properties
 
 	private bool frozen
 	{
@@ -21,13 +31,25 @@ public class Water : Pit
 		{
 			m_frozen = value;
 			renderer.sprite = m_frozen ? iceSprite : waterSprite;
+			if (m_frozen)
+			{
+				for (int i = currentlyInside.Count - 1; i >= 0; --i)
+				{
+					base.OnTriggerEnter2D(currentlyInside[i]);
+					currentlyInside.RemoveAt(i);
+				}
+			}
 		}
 	}
+
+	#endregion // Properties
+
+	#region Unity Message
 
 	public void Awake()
 	{
 		renderer = GetComponent<SpriteRenderer>();
-		collider = GetComponent<Collider2D>();
+		currentlyInside = new List<Collider2D>();
 		frozen = frozen;
 	}
 
@@ -35,12 +57,17 @@ public class Water : Pit
 	{
 		if (frozen)
 		{
-			return;
+			currentlyInside.Add(other);
 		}
 		else
 		{
 			base.OnTriggerEnter2D(other);
 		}
+	}
+
+	private void OnTriggerExit2D(Collider2D other)
+	{
+		currentlyInside.Remove(other);
 	}
 
 	public void OnFireDamage(FireDamageArgs args)
@@ -52,4 +79,6 @@ public class Water : Pit
 	{
 		frozen = true;
 	}
+
+	#endregion // Unity Messages
 }

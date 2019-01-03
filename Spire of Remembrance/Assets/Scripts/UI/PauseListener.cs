@@ -12,14 +12,24 @@ public class PauseListener : MonoBehaviour
 		{
 			if (menuCanvas.activeSelf)
 			{
-				Time.timeScale = 1f;
-				menuCanvas.SetActive(false);
+				Unpause();
 			}
 			else
 			{
-				Time.timeScale = 0f;
-				menuCanvas.SetActive(true);
+				Pause();
 			}
 		}
+	}
+
+	public void Pause()
+	{
+		Time.timeScale = 0f;
+		menuCanvas.SetActive(true);
+	}
+
+	public void Unpause()
+	{
+		Time.timeScale = 1f;
+		menuCanvas.SetActive(false);
 	}
 }

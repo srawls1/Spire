@@ -64,26 +64,19 @@ public class TransmutationPotion : Potion
 		});
 		while (m_menu.enabled && m_menu.transmutationMode)
 		{
-			Debug.Log("Waiting for menu");
 			yield return null;
 		}
-		Debug.Log("Done waiting");
 	}
 
 	public override void Use(Controller controller, Bottle container)
 	{
-		Debug.Log("Use");
 		if (targetItem == null)
 		{
-			Debug.Log("Target item null");
 			return;
 		}
 
-		Debug.Log("Removing from enemy");
 		InventoryManager.bodyInventory.Remove(targetItem);
-		Debug.Log("Adding to player");
 		InventoryManager.playerInventory.Add(targetItem);
-		Debug.Log("Emptying bottle");
 		container.containedPotion = null;
 	}
 }

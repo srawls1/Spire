@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class ItemAction
 {
-	protected InventoryManager manager;
-	protected InventoryItem item;
+	public InventoryManager manager { get; protected set; }
+	public InventoryItem item { get; protected set; }
 	public string actionString { get; protected set; }
 
 	public ItemAction(InventoryItem item, InventoryManager manager)

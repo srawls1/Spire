@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RatController : AIController {
-
-	protected override int GetNavTerrainMask()
+public class RatController : StayAtHomeAIController
+{
+	protected override int navLayerMask
 	{
-		return (int)(NavTerrainTypes.Floor | NavTerrainTypes.RatTunnel);
+		get
+		{
+			return (int)(NavTerrainTypes.Floor | NavTerrainTypes.RatTunnel);
+		}
 	}
 }

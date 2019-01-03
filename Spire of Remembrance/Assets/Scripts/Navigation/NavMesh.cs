@@ -23,11 +23,6 @@ public class NavMesh : MonoBehaviour
 			if (m_instance == null)
 			{
 				m_instance = FindObjectOfType<NavMesh>();
-				if (m_instance == null)
-				{
-					GameObject obj = new GameObject();
-					m_instance = obj.AddComponent<NavMesh>();
-				}
 			}
 
 			return m_instance;

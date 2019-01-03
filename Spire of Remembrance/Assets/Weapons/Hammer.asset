@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99da79881b5f0e745945e1b4a3264f9d, type: 3}
+  m_Name: Hammer
+  m_EditorClassIdentifier: 
+  m_damage: 5
+  m_attackForce: 14
+  m_attackAnimation: SwingAttack
+  m_attackSweepAngle: 180
+  m_attackDuration: 0.5
+  m_weaponSprite: {fileID: 21300056, guid: 9ee8aa6fad46171459f034bdff0de19e, type: 3}
+  m_trailColor: {r: 0.666, g: 0, b: 0, a: 0.722}
+  m_name: Hammer
+  m_description: A slower, wider swinging melee weapon, which has much greater knockback
+    power.

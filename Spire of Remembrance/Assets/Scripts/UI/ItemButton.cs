@@ -8,7 +8,7 @@ public class ItemButton : MonoBehaviour
 {
 	[SerializeField] private Image itemImage;
 
-	private InventoryMenu menu;
+	private ItemMenu menu;
 
 	private InventoryItem m_item;
 	public InventoryItem item
@@ -34,17 +34,17 @@ public class ItemButton : MonoBehaviour
 
 	private void Awake()
 	{
-		menu = GetComponentInParent<InventoryMenu>();
+		menu = GetComponentInParent<ItemMenu>();
 		EventTrigger trigger = GetComponent<EventTrigger>();
 	}
 
 	public void ShowSelected()
 	{
-		menu.ShowSelectedItem(this);
+		menu.OnItemHover(this);
 	}
 
 	public void Select()
 	{
-		menu.ShowItemMenu(this);
+		menu.OnItemClick(this);
 	}
 }

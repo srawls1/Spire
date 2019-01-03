@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
+	#region Significant Static Instances
+
 	private static InventoryManager m_playerInventory;
 	public static InventoryManager playerInventory
 	{
@@ -32,10 +34,18 @@ public class InventoryManager : MonoBehaviour
 		}
 	}
 
+	#endregion // Significant Static Instances
+
+	#region Editor Fields
+
 	[SerializeField] private WeaponData defaultSwordData;
 	[SerializeField] private ProjectileShooterData defaultStaffData;
 	[SerializeField] private ProjectileShooterData defaultBowData;
 	[SerializeField] private SerializedInventoryItem[] startingInventory;
+
+	#endregion // Editor Fields
+
+	#region Properties
 
 	private List<InventoryItem> m_items;
 	public List<InventoryItem> items
@@ -76,6 +86,10 @@ public class InventoryManager : MonoBehaviour
 		get; set;
 	}
 
+	#endregion // Properties
+
+	#region Unity Functions
+
 	private void Awake()
 	{
 		m_items = new List<InventoryItem>();
@@ -94,6 +108,10 @@ public class InventoryManager : MonoBehaviour
 			Add(startingInventory[i].ToItem());
 		}
 	}
+
+	#endregion // Unity Functions
+
+	#region Public Functions
 
 	public void Add(InventoryItem item)
 	{
@@ -190,4 +208,8 @@ public class InventoryManager : MonoBehaviour
 
 		return bows;
 	}
+
+	// TODO - GetAllTalismans
+
+	#endregion // Public Functions
 }

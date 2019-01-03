@@ -209,7 +209,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2eec25a557c934ca3e85d7b49cd0fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 0
+  maxWanderDistance: 5
+  outsideWaitTime: 1
+  travelDistancePerBout: 2
+  idleTimeBetweenBouts: 2
 --- !u!212 &212849449142355130
 SpriteRenderer:
   m_ObjectHideFlags: 1

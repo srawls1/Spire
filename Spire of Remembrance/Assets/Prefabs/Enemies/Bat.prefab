@@ -20,13 +20,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4393700241568808}
   - component: {fileID: 212377295689435078}
-  - component: {fileID: 114527897324356332}
   - component: {fileID: 95580292970141994}
   - component: {fileID: 114154718919895102}
   - component: {fileID: 114584065402444162}
   - component: {fileID: 61331174306110548}
   - component: {fileID: 50400715806282968}
   - component: {fileID: 114929223084187810}
+  - component: {fileID: 114144882256694994}
   m_Layer: 13
   m_Name: Bat
   m_TagString: Untagged
@@ -154,6 +154,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdfbd52aa011cd846850fa859f4813eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114144882256694994
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1410676282675462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fe9b6d3a8044ed40b34aadb1885ff43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxWalkSpeed: 4
+  walkAcceleration: 20
+  walkDecceleration: 30
+  interactionDistance: 0
 --- !u!114 &114154718919895102
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -167,26 +182,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathAnimDuration: 0
   fallAnimDuration: 0
---- !u!114 &114527897324356332
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1410676282675462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85b4b702cbe68144fbeedd58ec85aa0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxWalkSpeed: 4
-  walkAcceleration: 5
-  walkDecceleration: 5
-  interactionDistance: 0
-  possessFadeDuration: 0
-  possessedEnemyHealthBar: {fileID: 0}
-  physicalLayer: 0
-  physicalColor: {r: 0, g: 0, b: 0, a: 0}
-  physicalDuration: 0
 --- !u!114 &114584065402444162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -214,7 +209,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00e11c0f418c0254b82d0358b1bab5b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 0
+  maxWanderDistance: 10
+  outsideWaitTime: 0
+  travelDistancePerBout: 3
+  idleTimeBetweenBouts: 0
 --- !u!212 &212377295689435078
 SpriteRenderer:
   m_ObjectHideFlags: 1
