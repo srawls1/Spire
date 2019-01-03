@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 114803160047419598}
   - component: {fileID: 114688472195039682}
   - component: {fileID: 58249071756722914}
+  - component: {fileID: 114611425865327714}
   m_Layer: 0
   m_Name: Knight
   m_TagString: Untagged
@@ -396,6 +397,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76dded081ce74ae44bf8b9c5752137c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114611425865327714
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1296812185788976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f71cb9c29fb6b0e4abefe5379e597178, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSwordData: {fileID: 11400000, guid: 25eca1e17c40977479cc8511800cc86c, type: 2}
+  defaultStaffData: {fileID: 0}
+  defaultBowData: {fileID: 0}
 --- !u!114 &114688472195039682
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -409,7 +424,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathAnimDuration: 1
   fallAnimDuration: 1
-  m_weaponData: {fileID: 11400000, guid: 25eca1e17c40977479cc8511800cc86c, type: 2}
 --- !u!114 &114803160047419598
 MonoBehaviour:
   m_ObjectHideFlags: 1

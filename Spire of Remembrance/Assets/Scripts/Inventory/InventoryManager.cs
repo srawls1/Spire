@@ -41,7 +41,6 @@ public class InventoryManager : MonoBehaviour
 	[SerializeField] private WeaponData defaultSwordData;
 	[SerializeField] private ProjectileShooterData defaultStaffData;
 	[SerializeField] private ProjectileShooterData defaultBowData;
-	[SerializeField] private SerializedInventoryItem[] startingInventory;
 
 	#endregion // Editor Fields
 
@@ -93,19 +92,24 @@ public class InventoryManager : MonoBehaviour
 	private void Awake()
 	{
 		m_items = new List<InventoryItem>();
-		defaultSword = new SwordItem(defaultSwordData.weaponSprite, defaultSwordData);
-		defaultSword.manager = this;
-		equippedSword = defaultSword;
-		defaultStaff = new ShooterItem(defaultStaffData.shooterSprite, defaultStaffData, true);
-		defaultStaff.manager = this;
-		equippedStaff = defaultStaff;
-		defaultBow = new ShooterItem(defaultBowData.shooterSprite, defaultBowData, false);
-		defaultBow.manager = this;
-		equippedBow = defaultBow;
 
-		for (int i = 0; i < startingInventory.Length; ++i)
+		if (defaultSwordData != null)
 		{
-			Add(startingInventory[i].ToItem());
+			defaultSword = new SwordItem(defaultSwordData.weaponSprite, defaultSwordData);
+			defaultSword.manager = this;
+			equippedSword = defaultSword;
+		}
+		if (defaultStaffData != null)
+		{
+			defaultStaff = new ShooterItem(defaultStaffData.shooterSprite, defaultStaffData, true);
+			defaultStaff.manager = this;
+			equippedStaff = defaultStaff;
+		}
+		if (defaultBowData != null)
+		{
+			defaultBow = new ShooterItem(defaultBowData.shooterSprite, defaultBowData, false);
+			defaultBow.manager = this;
+			equippedBow = defaultBow;
 		}
 	}
 

@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 50166046174212858}
   - component: {fileID: 114012239529798188}
   - component: {fileID: 58222196634771016}
+  - component: {fileID: 114299932200755036}
   m_Layer: 0
   m_Name: Archer
   m_TagString: Untagged
@@ -259,6 +260,20 @@ MonoBehaviour:
   walkAcceleration: 40
   walkDecceleration: 60
   interactionDistance: 1.5
+--- !u!114 &114299932200755036
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1540100684556620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f71cb9c29fb6b0e4abefe5379e597178, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultSwordData: {fileID: 0}
+  defaultStaffData: {fileID: 0}
+  defaultBowData: {fileID: 11400000, guid: eaaa0bf308b8b45359de7dcdb361d838, type: 2}
 --- !u!114 &114358845152585062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -311,7 +326,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathAnimDuration: 1
   fallAnimDuration: 1
-  m_shooterData: {fileID: 11400000, guid: eaaa0bf308b8b45359de7dcdb361d838, type: 2}
+  isArcher: 1
 --- !u!212 &212326402433007048
 SpriteRenderer:
   m_ObjectHideFlags: 1

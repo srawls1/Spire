@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class KnightAnimations : EntityAnimations
 {
-	#region Editor Fields
-
-	[SerializeField] private WeaponData m_weaponData;
-
-	#endregion // Editor Fields
-
 	#region Non-Editor Fields
 
 	private Weapon weapon;
@@ -42,7 +36,6 @@ public class KnightAnimations : EntityAnimations
 
 	private void Start()
 	{
-		weaponData = m_weaponData;
 		weapon.gameObject.SetActive(false);
 	}
 
@@ -69,6 +62,9 @@ public class KnightAnimations : EntityAnimations
 
 	protected override IEnumerator AttackRoutine(Animations state)
 	{
+		InventoryManager inventory = movement.CurrentController.GetComponent<InventoryManager>();
+		weaponData = inventory.equippedSword.data;
+
 		animator.Play(weapon.attackAnimation + directionStringForState(state));
 		weapon.gameObject.SetActive(true);
 		movement.enabled = false;

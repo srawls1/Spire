@@ -6,7 +6,7 @@ public class MageAnimations : EntityAnimations
 {
 	#region Editor Fields
 
-	[SerializeField] private ProjectileShooterData m_shooterData;
+	[SerializeField] private bool isArcher;
 
 	#endregion // Editor Fields
 
@@ -40,12 +40,14 @@ public class MageAnimations : EntityAnimations
 
 	private void Start()
 	{
-		shooterData = m_shooterData;
 		weapon.gameObject.SetActive(false);
 	}
 
 	protected override IEnumerator AttackRoutine(Animations state)
 	{
+		InventoryManager inventory = movement.CurrentController.GetComponent<InventoryManager>();
+		shooterData = isArcher ? inventory.equippedBow.weaponData : inventory.equippedStaff.weaponData;
+
 		animator.Play(state.ToString());
 		weapon.transform.parent.localRotation = Quaternion.Euler(0f, 0f, getAngle(state));
 		weapon.gameObject.SetActive(true);

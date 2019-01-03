@@ -150,7 +150,7 @@ public class CharacterController : Controller
 
 	public void useSpiritOrbs(int count)
 	{
-		--numSpiritOrbs;
+		numSpiritOrbs -= count;
 	}
 
 	public override void Possess(Movement move)
@@ -173,10 +173,13 @@ public class CharacterController : Controller
 		{
 			controlledMovement.OnNewInteractables += SetInteractions;
 		}
+
+		ReconcileDefaultWeapons(InventoryManager.playerInventory, InventoryManager.bodyInventory);
 	}
 
 	public Coroutine Deposess()
 	{
+		ResetDefaultWeapons(InventoryManager.playerInventory, InventoryManager.bodyInventory);
 		controlledMovement.CurrentController = controlledMovement.GetComponent<Controller>();
 		Possess(GetComponent<Movement>());
 		return spiritMovement.Depossess();
@@ -211,6 +214,50 @@ public class CharacterController : Controller
 		if (OnInteractableChanged != null)
 		{
 			OnInteractableChanged(interaction, interactables.Length > 1);
+		}
+	}
+
+	private void ReconcileDefaultWeapons(InventoryManager playerInventory, InventoryManager bodyInventory)
+	{
+		if (bodyInventory == null)
+		{
+			return;
+		}
+
+		if (playerInventory.equippedBow == playerInventory.defaultBow &&
+			bodyInventory.defaultBow != null)
+		{
+			playerInventory.equippedBow = bodyInventory.defaultBow;
+		}
+
+		if (playerInventory.equippedStaff == playerInventory.defaultStaff &&
+			bodyInventory.defaultStaff != null)
+		{
+			playerInventory.equippedStaff = bodyInventory.defaultStaff;
+		}
+
+		if (playerInventory.equippedSword == playerInventory.defaultSword &&
+			bodyInventory.equippedSword != null)
+		{
+			playerInventory.equippedSword = bodyInventory.defaultSword;
+		}
+	}
+
+	private void ResetDefaultWeapons(InventoryManager playerInventory, InventoryManager bodyInventory)
+	{
+		if (playerInventory.equippedSword == bodyInventory.defaultSword)
+		{
+			playerInventory.equippedSword = playerInventory.defaultSword;
+		}
+
+		if (playerInventory.equippedStaff == bodyInventory.defaultStaff)
+		{
+			playerInventory.equippedStaff = playerInventory.defaultStaff;
+		}
+
+		if (playerInventory.equippedBow == bodyInventory.defaultBow)
+		{
+			playerInventory.equippedBow = playerInventory.defaultBow;
 		}
 	}
 

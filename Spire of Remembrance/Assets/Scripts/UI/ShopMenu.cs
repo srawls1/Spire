@@ -5,12 +5,22 @@ using UnityEngine;
 
 public class ShopMenu : ItemMenu
 {
+	#region Editor Fields
+
 	[SerializeField] private RectTransform selectionCursor;
 	[SerializeField] private RectTransform itemsContentPane;
 	[SerializeField] private PricedItemDescriptionField description;
 
+	#endregion // Editor Fields
+
+	#region Non-Editor Fields
+
 	private MerchantInteractable merchant;
 	private Dictionary<InventoryItem, int> priceByItem;
+
+	#endregion // Non-Editor Fields
+
+	#region Public Functions
 
 	public void SetMerchantInfo(MerchantInteractable merch, List<InventoryItem> items, List<int> prices)
 	{
@@ -40,4 +50,6 @@ public class ShopMenu : ItemMenu
 		selectionCursor.sizeDelta = Vector2.zero;
 		selectionCursor.anchoredPosition = Vector2.zero;
 	}
+
+	#endregion // Public Functions
 }
