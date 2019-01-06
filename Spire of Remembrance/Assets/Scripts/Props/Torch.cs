@@ -16,15 +16,6 @@ public class Torch : MonoBehaviour
 
 	#endregion // Editor Fields
 
-	int id = -1;
-
-	#region Events
-
-	public event Action OnLit;
-	public event Action OnPutOut;
-
-	#endregion // Events
-
 	#region Properties
 
 	public bool lit
@@ -35,6 +26,11 @@ public class Torch : MonoBehaviour
 		}
 		private set
 		{
+			if (m_lit == value)
+			{
+				return;
+			}
+
 			m_lit = value;
 
 			if (m_lit)
@@ -44,10 +40,7 @@ public class Torch : MonoBehaviour
 				{
 					id = LightLevel.RegisterLightSource(transform.position, lightIntensity, lightFalloff, lightRadius);
 				}
-				if (OnLit != null)
-				{
-					OnLit();
-				}
+				activator.Activate();
 			}
 			else
 			{
@@ -57,10 +50,7 @@ public class Torch : MonoBehaviour
 					LightLevel.UnregisterLightSource(id);
 					id = -1;
 				}
-				if (OnPutOut != null)
-				{
-					OnPutOut();
-				}
+				activator.Deactivate();
 			}
 		}
 	}
@@ -70,6 +60,8 @@ public class Torch : MonoBehaviour
 	#region Non-Editor Fields
 
 	Animator animator;
+	private Activator activator;
+	private int id;
 
 	#endregion // Non-Editor Fields
 
@@ -78,6 +70,8 @@ public class Torch : MonoBehaviour
 	void Awake()
 	{
 		animator = GetComponent<Animator>();
+		activator = GetComponent<Activator>();
+		id = -1;
 		lit = lit;
 	}
 

@@ -109,7 +109,7 @@ MonoBehaviour:
   speed: 2
   destroyAfterSeconds: 3
   detonateAfterSeconds: 2
-  radius: 1.5
+  radius: 1
   damage: 10
   force: 0
   freezeDuration: 5

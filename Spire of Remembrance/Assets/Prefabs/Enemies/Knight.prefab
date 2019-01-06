@@ -381,9 +381,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e79f597cd065b4db2fa0137abd1098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontArmor: 0.5
+  m_frontArmor: 0
   backArmor: 0.4
-  frontPoise: 5
+  m_frontPoise: 0
   backPoise: 2
   m_maxHealth: 25
 --- !u!114 &114570273112664092
@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceadf7c4e7d74c44d9f706a5f60594dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 1
+  attackRange: 1.5
 --- !u!114 &114879237018346718
 MonoBehaviour:
   m_ObjectHideFlags: 1

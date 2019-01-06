@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 95522823704625972}
   - component: {fileID: 61853934153265176}
   - component: {fileID: 114775421584398356}
+  - component: {fileID: 114153176778828330}
   m_Layer: 0
   m_Name: Torch
   m_TagString: Untagged
@@ -74,6 +75,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114153176778828330
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1913213491844134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7d4b3239d9ffac4192b9ee277e88057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114775421584398356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -88,6 +100,14 @@ MonoBehaviour:
   m_lit: 0
   idleAnimName: StandinDarkTorch
   litAnimName: StandinLitTorch
+  lightIntensity: 0
+  lightRadius: 0
+  lightFalloff:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!212 &212753969382429468
 SpriteRenderer:
   m_ObjectHideFlags: 1
