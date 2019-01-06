@@ -89,20 +89,20 @@ public class CharacterMovement : Movement
 
 	#region Override Functions
 
-	protected override int getInteractionLayermask()
-	{
-		if (gameObject.layer == physicalLayer)
-		{
-			return base.getInteractionLayermask();
-		}
-		else
-		{
-			return LayerMask.GetMask(new string[]
-			{
-				"Spirit"
-			});
-		}
-	}
+	//protected override int getInteractionLayermask()
+	//{
+	//	if (gameObject.layer == physicalLayer)
+	//	{
+	//		return base.getInteractionLayermask();
+	//	}
+	//	else
+	//	{
+	//		return LayerMask.GetMask(new string[]
+	//		{
+	//			"Spirit"
+	//		});
+	//	}
+	//}
 
 	#endregion // Override Functions
 
