@@ -7,9 +7,9 @@ public class EnemyHealth : Damageable
 {
 	#region Editor Fields
 
-	[SerializeField] private float frontArmor;
+	[SerializeField] private float m_frontArmor;
 	[SerializeField] private float backArmor;
-	[SerializeField] private float frontPoise;
+	[SerializeField] private float m_frontPoise;
 	[SerializeField] private float backPoise;
 	[SerializeField] protected int m_maxHealth;
 
@@ -43,6 +43,30 @@ public class EnemyHealth : Damageable
 		private set
 		{
 			m_currentHealth = value;
+		}
+	}
+
+	public float frontArmor
+	{
+		get
+		{
+			return m_frontArmor;
+		}
+		set
+		{
+			m_frontArmor = value;
+		}
+	}
+
+	public float frontPoise
+	{
+		get
+		{
+			return m_frontPoise;
+		}
+		set
+		{
+			m_frontPoise = value;
 		}
 	}
 

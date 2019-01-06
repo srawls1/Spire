@@ -50,9 +50,29 @@ public class Movement : MonoBehaviour
 		}
 	}
 
+	private Facing m_Facing;
 	public Facing Facing
 	{
-		get; protected set;
+		get
+		{
+			return m_Facing;
+		}
+		protected set
+		{
+			m_Facing = value;
+			for (int i = 0; i < transform.childCount; ++i)
+			{
+				float angle = 0f;
+				switch (m_Facing)
+				{
+					case Facing.right: angle = 0f; break;
+					case Facing.up: angle = 90f; break;
+					case Facing.left: angle = 180f; break;
+					case Facing.down: angle = 270f; break;
+				}
+				transform.GetChild(i).localRotation = Quaternion.Euler(0, 0, angle);
+			}
+		}
 	}
 
 	public virtual bool canPassPit
