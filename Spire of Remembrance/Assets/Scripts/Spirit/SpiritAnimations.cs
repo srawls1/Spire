@@ -44,7 +44,6 @@ public class SpiritAnimations : EntityAnimations
 		PlayAnimation(Animations.FallInPit);
 		yield return new WaitForSeconds(fallAnimDuration);
 
-		Debug.Log("Taking fall damage");
 		health.TakeDamage(damageOnFall, transform.position, 0f);
 		currentState = Animations.IdleDown;
 		transform.position = resetPotion;

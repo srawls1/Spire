@@ -11,6 +11,7 @@ public class SpiritHealth : EnemyHealth
 	private AnimationCurve damageFromLight;
 	[SerializeField] private float lightDamageMultiplier;
 	[SerializeField] private float bodyDamagePortion;
+	[SerializeField] private GameOver gameOverScreen;
 
 	#endregion // Editor Fields
 
@@ -82,7 +83,7 @@ public class SpiritHealth : EnemyHealth
 
 	protected override void Die()
 	{
-		// TODO trigger game over screen
+		gameOverScreen.gameObject.SetActive(true);
 		base.Die();
 	}
 
