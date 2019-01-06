@@ -13,6 +13,7 @@ public class MageAnimations : EntityAnimations
 	#region Non-Editor Fields
 
 	private ProjectileShooter weapon;
+	private ShooterItem defaultShooter;
 
 	#endregion // Non-Editor Fields
 
@@ -32,6 +33,8 @@ public class MageAnimations : EntityAnimations
 
 	#endregion // Properties
 
+	#region Unity Functions
+
 	new private void Awake()
 	{
 		base.Awake();
@@ -41,6 +44,50 @@ public class MageAnimations : EntityAnimations
 	private void Start()
 	{
 		weapon.gameObject.SetActive(false);
+	}
+
+	#endregion // Unity Functions
+
+	#region Overrides
+
+	public override List<InventoryItem> UpdateInventoryWeapons(InventoryManager playerInventory, InventoryManager bodyInventory)
+	{
+		List<ShooterItem> playerShooters = isArcher ? playerInventory.GetAllBows() : playerInventory.GetAllStaves();
+		List<InventoryItem> ret = new List<InventoryItem>();
+		defaultShooter = isArcher ? bodyInventory.defaultBow : bodyInventory.defaultStaff;
+		defaultShooter.manager = playerInventory;
+		ret.Add(defaultShooter);
+		for (int i = 0; i < playerShooters.Count; ++i)
+		{
+			ret.Add(playerShooters[i]);
+		}
+
+		WeaponSelectionUI.instance.SetAvailableWeapons(ret);
+		UpdateWeaponSelectedUI(isArcher ? playerInventory.equippedBow : playerInventory.equippedStaff);
+
+		if (isArcher)
+		{
+			playerInventory.OnNewBowEquipped += UpdateWeaponSelectedUI;
+		}
+		else
+		{
+			playerInventory.OnNewStaffEquipped += UpdateWeaponSelectedUI;
+		}
+
+		return ret;
+	}
+
+	public override void CleanUpInventoryEvents(InventoryManager playerInventory, InventoryManager bodyInventory)
+	{
+		defaultShooter.manager = bodyInventory;
+		if (isArcher)
+		{
+			playerInventory.OnNewBowEquipped -= UpdateWeaponSelectedUI;
+		}
+		else
+		{
+			playerInventory.OnNewStaffEquipped -= UpdateWeaponSelectedUI;
+		}
 	}
 
 	protected override IEnumerator AttackRoutine(Animations state)
@@ -68,4 +115,11 @@ public class MageAnimations : EntityAnimations
 			queuedAction = null;
 		}
 	}
+
+	private void UpdateWeaponSelectedUI(ShooterItem item)
+	{
+		WeaponSelectionUI.instance.ShowSelectedWeapon(item);
+	}
+
+	#endregion // Overrides
 }

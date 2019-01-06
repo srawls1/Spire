@@ -156,6 +156,16 @@ public class Movement : MonoBehaviour
 		animator.Attack(Facing);
 	}
 
+	public List<InventoryItem> UpdateInventoryWeapons(InventoryManager playerInventory, InventoryManager bodyInventory)
+	{
+		return animator.UpdateInventoryWeapons(playerInventory, bodyInventory);
+	}
+
+	public void CleanUpInventoryEvents(InventoryManager playerInventory, InventoryManager bodyInventory)
+	{
+		animator.CleanUpInventoryEvents(playerInventory, bodyInventory);
+	}
+
 	#endregion // Public Functions
 
 	#region Private Functions

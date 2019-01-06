@@ -60,9 +60,22 @@ public class InventoryManager : MonoBehaviour
 		get; private set;
 	}
 
+	public event Action<SwordItem> OnNewSwordEquipped;
+	private SwordItem m_equippedSword;
 	public SwordItem equippedSword
 	{
-		get; set;
+		get
+		{
+			return m_equippedSword;
+		}
+		set
+		{
+			m_equippedSword = value;
+			if (OnNewSwordEquipped != null)
+			{
+				OnNewSwordEquipped(value);
+			}
+		}
 	}
 
 	public ShooterItem defaultStaff
@@ -70,9 +83,22 @@ public class InventoryManager : MonoBehaviour
 		get; private set;
 	}
 
+	public event Action<ShooterItem> OnNewStaffEquipped;
+	private ShooterItem m_equippedStaff;
 	public ShooterItem equippedStaff
 	{
-		get; set;
+		get
+		{
+			return m_equippedStaff;
+		}
+		set
+		{
+			m_equippedStaff = value;
+			if (OnNewStaffEquipped != null)
+			{
+				OnNewStaffEquipped(value);
+			}
+		}
 	}
 
 	public ShooterItem defaultBow
@@ -80,9 +106,22 @@ public class InventoryManager : MonoBehaviour
 		get; private set;
 	}
 
+	public event Action<ShooterItem> OnNewBowEquipped;
+	private ShooterItem m_equippedBow;
 	public ShooterItem equippedBow
 	{
-		get; set;
+		get
+		{
+			return m_equippedBow;
+		}
+		set
+		{
+			m_equippedBow = value;
+			if (OnNewBowEquipped != null)
+			{
+				OnNewBowEquipped(value);
+			}
+		}
 	}
 
 	#endregion // Properties
@@ -121,12 +160,20 @@ public class InventoryManager : MonoBehaviour
 	{
 		item.manager = this;
 		m_items.Add(item);
+		//if (OnInventoryChanged != null)
+		//{
+		//	OnInventoryChanged();
+		//}
 	}
 
 	public void Remove(InventoryItem item)
 	{
 		item.manager = null;
 		m_items.Remove(item);
+		//if (OnInventoryChanged != null)
+		//{
+		//	OnInventoryChanged();
+		//}
 	}
 
 	public Bottle GetAvailableBottle(Type potionType)
@@ -165,7 +212,6 @@ public class InventoryManager : MonoBehaviour
 	public List<SwordItem> GetAllSwords()
 	{
 		List<SwordItem> swords = new List<SwordItem>();
-		swords.Add(defaultSword);
 
 		for (int i = 0; i < m_items.Count; ++i)
 		{
@@ -182,7 +228,6 @@ public class InventoryManager : MonoBehaviour
 	public List<ShooterItem> GetAllStaves()
 	{
 		List<ShooterItem> staves = new List<ShooterItem>();
-		staves.Add(defaultStaff);
 
 		for (int i = 0; i < m_items.Count; ++i)
 		{
@@ -199,7 +244,6 @@ public class InventoryManager : MonoBehaviour
 	public List<ShooterItem> GetAllBows()
 	{
 		List<ShooterItem> bows = new List<ShooterItem>();
-		bows.Add(defaultBow);
 
 		for (int i = 0; i < m_items.Count; ++i)
 		{

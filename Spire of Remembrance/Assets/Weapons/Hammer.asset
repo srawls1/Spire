@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Hammer
   m_EditorClassIdentifier: 
   m_damage: 5
-  m_attackForce: 14
+  m_attackForce: 30
   m_attackAnimation: SwingAttack
   m_attackSweepAngle: 180
   m_attackDuration: 0.5

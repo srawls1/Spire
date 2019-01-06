@@ -3,12 +3,64 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#region D-Pad Input Struct
+
+struct DPadAxisState
+{
+	private bool rightPressedPrev;
+	private bool leftPressedPrev;
+	private bool upPressedPrev;
+	private bool downPressedPrev;
+
+	public bool rightPressed;
+	public bool leftPressed;
+	public bool upPressed;
+	public bool downPressed;
+
+	public bool right { get { return rightPressed && !rightPressedPrev; } }
+	public bool left { get { return leftPressed && !leftPressedPrev; } }
+	public bool up { get { return upPressed && !upPressedPrev; } }
+	public bool down { get { return downPressed && !downPressedPrev; } }
+
+	public bool this[int n]
+	{
+		get
+		{
+			switch (n)
+			{
+				case 0: return right;
+				case 1: return up;
+				case 2: return left;
+				case 3: return down;
+				default: return false;
+			}
+		}
+	}
+
+	public void Update(float horiz, float vertic)
+	{
+		rightPressedPrev = rightPressed;
+		leftPressedPrev = leftPressed;
+		upPressedPrev = upPressed;
+		downPressedPrev = downPressed;
+
+		rightPressed = horiz > 0.5f;
+		leftPressed = horiz < -0.5f;
+		upPressed = vertic > 0.5f;
+		downPressed = vertic < -0.5f;
+	}
+}
+
+#endregion // D-Pad Input Struct
+
 public class CharacterController : Controller
 {
 	#region Private Fields
 
 	private CharacterMovement spiritMovement;
 	private Interaction[] interactables;
+	private List<InventoryItem> availableWeapons;
+	private DPadAxisState dpad = new DPadAxisState();
 	private int interactableIndex;
 	private int m_numKeys;
 	private int m_numSpiritOrbs;
@@ -68,7 +120,7 @@ public class CharacterController : Controller
 
 	#region Unity Functions
 
-	new void Awake()
+	void Awake()
 	{
 		if (m_instance == null)
 		{
@@ -80,11 +132,11 @@ public class CharacterController : Controller
 			Destroy(gameObject);
 		}
 		spiritMovement = GetComponent<CharacterMovement>();
-		base.Awake();
 	}
 
-	void Start()
+	new void Start()
 	{
+		base.Start();
 		numSpiritOrbs = numSpiritOrbs;
 		numKeys = numKeys;
 	}
@@ -125,6 +177,18 @@ public class CharacterController : Controller
 			if (controlledMovement != spiritMovement)
 			{
 				Deposess();
+			}
+		}
+
+		dpad.Update(Input.GetAxisRaw("ItemH"), Input.GetAxisRaw("ItemV"));
+		if (availableWeapons != null)
+		{
+			for (int i = 0; i < availableWeapons.Count; ++i)
+			{
+				if (Input.GetButtonDown("Weapon" + i) || dpad[i])
+				{
+					EquipWeapon(availableWeapons[i]);
+				}
 			}
 		}
 	}
@@ -219,6 +283,8 @@ public class CharacterController : Controller
 
 	private void ReconcileDefaultWeapons(InventoryManager playerInventory, InventoryManager bodyInventory)
 	{
+		availableWeapons = controlledMovement.UpdateInventoryWeapons(playerInventory, bodyInventory);
+
 		if (bodyInventory == null)
 		{
 			return;
@@ -245,6 +311,13 @@ public class CharacterController : Controller
 
 	private void ResetDefaultWeapons(InventoryManager playerInventory, InventoryManager bodyInventory)
 	{
+		controlledMovement.CleanUpInventoryEvents(playerInventory, bodyInventory);
+
+		if (bodyInventory == null)
+		{
+			return;
+		}
+
 		if (playerInventory.equippedSword == bodyInventory.defaultSword)
 		{
 			playerInventory.equippedSword = playerInventory.defaultSword;
@@ -258,6 +331,16 @@ public class CharacterController : Controller
 		if (playerInventory.equippedBow == bodyInventory.defaultBow)
 		{
 			playerInventory.equippedBow = playerInventory.defaultBow;
+		}
+	}
+
+	private void EquipWeapon(InventoryItem inventoryItem)
+	{
+		List<ItemAction> actions = inventoryItem.actions;
+		ItemAction equipAction = actions.Find((action) => action.actionString.Equals("Equip"));
+		if (equipAction != null)
+		{
+			equipAction.Perform();
 		}
 	}
 

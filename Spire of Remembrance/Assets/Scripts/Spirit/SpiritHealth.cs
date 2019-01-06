@@ -67,7 +67,7 @@ public class SpiritHealth : EnemyHealth
 	{
 		while (possessedBody == null)
 		{
-			float lightLevel = 0f; // TODO - Implement this Black box
+			float lightLevel = LightLevel.GetLightLevel(transform.position);
 			float damage = damageFromLight.Evaluate(lightLevel) * Time.deltaTime * lightDamageMultiplier;
 			TakeDamage(Mathf.RoundToInt(damage), transform.position, 0f);
 			yield return null;

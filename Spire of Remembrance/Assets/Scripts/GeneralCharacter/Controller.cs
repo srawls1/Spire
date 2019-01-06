@@ -12,7 +12,7 @@ public abstract class Controller : MonoBehaviour
 		get; protected set;
 	}
 
-	protected void Awake()
+	protected void Start()
 	{
 		Possess(GetComponent<Movement>());
 	}

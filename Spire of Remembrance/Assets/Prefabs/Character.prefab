@@ -170,7 +170,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathAnimDuration: 3
-  fallAnimDuration: 3
+  fallAnimDuration: 1
+  timeToRewindOnFall: 1
+  damageOnFall: 5
 --- !u!114 &114636302147080424
 MonoBehaviour:
   m_ObjectHideFlags: 1

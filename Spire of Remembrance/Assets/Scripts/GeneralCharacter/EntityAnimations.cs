@@ -37,8 +37,8 @@ public class EntityAnimations : MonoBehaviour
 
 	#region Editor Fields
 
-	[SerializeField] private float deathAnimDuration;
-	[SerializeField] private float fallAnimDuration;
+	[SerializeField] protected float deathAnimDuration;
+	[SerializeField] protected float fallAnimDuration;
 
 	#endregion // Editor Fields
 
@@ -112,7 +112,7 @@ public class EntityAnimations : MonoBehaviour
 		}
 	}
 
-	internal void Stagger(Facing facing)
+	public void Stagger(Facing facing)
 	{
 		switch (facing)
 		{
@@ -171,7 +171,19 @@ public class EntityAnimations : MonoBehaviour
 		Destroy(gameObject, deathAnimDuration);
 	}
 
-	public void FallInPit()
+	public virtual void CleanUpInventoryEvents(InventoryManager playerInventory, InventoryManager bodyInventory)
+	{
+	}
+
+	public virtual List<InventoryItem> UpdateInventoryWeapons(InventoryManager playerInventory, InventoryManager bodyInventory)
+	{
+		List<InventoryItem> ret = new List<InventoryItem>();
+		WeaponSelectionUI.instance.SetAvailableWeapons(ret);
+		WeaponSelectionUI.instance.ShowSelectedWeapon(null);
+		return ret;
+	}
+
+	public virtual void FallInPit()
 	{
 		PlayAnimation(Animations.FallInPit);
 		movement.enabled = false;

@@ -10,8 +10,13 @@ public class Torch : MonoBehaviour
 	[SerializeField] private bool m_lit;
 	[SerializeField] private string idleAnimName;
 	[SerializeField] private string litAnimName;
+	[SerializeField] private float lightIntensity;
+	[SerializeField] private float lightRadius;
+	[SerializeField] private AnimationCurve lightFalloff;
 
 	#endregion // Editor Fields
+
+	int id = -1;
 
 	#region Events
 
@@ -35,6 +40,10 @@ public class Torch : MonoBehaviour
 			if (m_lit)
 			{
 				animator.Play(litAnimName);
+				if (id == -1)
+				{
+					id = LightLevel.RegisterLightSource(transform.position, lightIntensity, lightFalloff, lightRadius);
+				}
 				if (OnLit != null)
 				{
 					OnLit();
@@ -43,6 +52,11 @@ public class Torch : MonoBehaviour
 			else
 			{
 				animator.Play(idleAnimName);
+				if (id != -1)
+				{
+					LightLevel.UnregisterLightSource(id);
+					id = -1;
+				}
 				if (OnPutOut != null)
 				{
 					OnPutOut();
@@ -65,6 +79,11 @@ public class Torch : MonoBehaviour
 	{
 		animator = GetComponent<Animator>();
 		lit = lit;
+	}
+
+	private void OnDestroy()
+	{
+		lit = false;
 	}
 
 	public void OnFireDamage(FireDamageArgs args)

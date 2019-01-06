@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class KnightAnimations : EntityAnimations
 	#region Non-Editor Fields
 
 	private Weapon weapon;
+	private SwordItem defaultSword;
 
 	#endregion // Non-Editor Fields
 
@@ -40,6 +42,36 @@ public class KnightAnimations : EntityAnimations
 	}
 
 	#endregion // Unity Functions
+
+	#region Public Functions
+
+	public override List<InventoryItem> UpdateInventoryWeapons(InventoryManager playerInventory, InventoryManager bodyInventory)
+	{
+		List<SwordItem> playerSwords = playerInventory.GetAllSwords();
+		List<InventoryItem> ret = new List<InventoryItem>();
+		defaultSword = bodyInventory.defaultSword;
+		defaultSword.manager = playerInventory;
+		ret.Add(defaultSword);
+		for (int i = 0; i < playerSwords.Count; ++i)
+		{
+			ret.Add(playerSwords[i]);
+		}
+
+		WeaponSelectionUI.instance.SetAvailableWeapons(ret);
+		UpdateWeaponSelectedUI(playerInventory.equippedSword);
+
+		playerInventory.OnNewSwordEquipped += UpdateWeaponSelectedUI;
+
+		return ret;
+	}
+
+	public override void CleanUpInventoryEvents(InventoryManager playerInventory, InventoryManager bodyInventory)
+	{
+		defaultSword.manager = bodyInventory;
+		playerInventory.OnNewSwordEquipped -= UpdateWeaponSelectedUI;
+	}
+
+	#endregion // Public Functions
 
 	#region Private Functions
 
@@ -90,6 +122,11 @@ public class KnightAnimations : EntityAnimations
 			PlayAnimation(queuedAction.Value);
 			queuedAction = null;
 		}
+	}
+
+	private void UpdateWeaponSelectedUI(SwordItem sword)
+	{
+		WeaponSelectionUI.instance.ShowSelectedWeapon(sword);
 	}
 
 	#endregion // Private Functions

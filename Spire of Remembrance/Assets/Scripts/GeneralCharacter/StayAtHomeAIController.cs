@@ -33,8 +33,9 @@ public class StayAtHomeAIController : Controller
 
 	#region Unity Functions
 
-	protected void Start()
+	new protected void Start()
 	{
+		base.Start();
 		homePosition = transform.position;
 	}
 
