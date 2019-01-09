@@ -12,8 +12,7 @@ public class InteractionUI : MonoBehaviour
 
 	private void Start()
 	{
-		CharacterController character = FindObjectOfType<CharacterController>();
-		character.OnInteractableChanged += ShowInteractable;
+		CharacterController.instance.OnInteractableChanged += ShowInteractable;
 	}
 	
 	private void ShowInteractable(Interaction interactable, bool moreThanOne)
