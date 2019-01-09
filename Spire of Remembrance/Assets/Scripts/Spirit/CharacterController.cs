@@ -58,7 +58,8 @@ public class CharacterController : Controller
 	#region Private Fields
 
 	private CharacterMovement spiritMovement;
-	private Interaction[] interactables;
+	private Interactable interactable;
+	private Interaction[] interactions;
 	private List<InventoryItem> availableWeapons;
 	private DPadAxisState dpad = new DPadAxisState();
 	private int interactableIndex;
@@ -154,11 +155,11 @@ public class CharacterController : Controller
 			controlledMovement.Attack();
 		}
 
-		if (Input.GetButtonDown("RotateInteractable") && interactables.Length > 1)
+		if (Input.GetButtonDown("RotateInteractable") && interactions.Length > 1)
 		{
 			++interactableIndex;
-			interactableIndex %= interactables.Length;
-			Interaction inter = interactables[interactableIndex];
+			interactableIndex %= interactions.Length;
+			Interaction inter = interactions[interactableIndex];
 
 			if (OnInteractableChanged != null)
 			{
@@ -166,9 +167,9 @@ public class CharacterController : Controller
 			}
 		}
 
-		if (Input.GetButtonDown("Interact") && interactables.Length > 0 && interactables[interactableIndex].enabled)
+		if (Input.GetButtonDown("Interact") && interactions.Length > 0 && interactions[interactableIndex].enabled)
 		{
-			interactables[interactableIndex].interact();
+			interactions[interactableIndex].interact();
 			RefreshInteractable();
 		}
 
@@ -221,10 +222,10 @@ public class CharacterController : Controller
 	{
 		if (controlledMovement != null)
 		{
-			controlledMovement.OnNewInteractables -= SetInteractions;
+			controlledMovement.OnNewInteractable -= SetInteractions;
 		}
 
-		interactables = empty;
+		RefreshInteractable();
 
 		if (OnInteractableChanged != null)
 		{
@@ -235,7 +236,7 @@ public class CharacterController : Controller
 
 		if (move != null)
 		{
-			controlledMovement.OnNewInteractables += SetInteractions;
+			controlledMovement.OnNewInteractable += SetInteractions;
 		}
 
 		ReconcileDefaultWeapons(InventoryManager.playerInventory, InventoryManager.bodyInventory);
@@ -266,18 +267,23 @@ public class CharacterController : Controller
 
 	private void RefreshInteractable()
 	{
-		controlledMovement.RefreshInteracable();
+		SetInteractions(null);
 	}
 
-	private void SetInteractions(Interaction[] inters)
+	private void SetInteractions(Interactable inter)
 	{
-		interactables = inters != null ? inters : empty;
+		//if (inter == interactable)
+		//{
+		//	return;
+		//}
+		interactable = inter;
+		interactions = inter != null ? inter.interactions : empty;
 		interactableIndex = 0;
-		Interaction interaction = interactables.Length > 0 ? interactables[0] : null;
+		Interaction interaction = interactions.Length > 0 ? interactions[0] : null;
 
 		if (OnInteractableChanged != null)
 		{
-			OnInteractableChanged(interaction, interactables.Length > 1);
+			OnInteractableChanged(interaction, interactions.Length > 1);
 		}
 	}
 

@@ -89,20 +89,20 @@ public class CharacterMovement : Movement
 
 	#region Override Functions
 
-	//protected override int getInteractionLayermask()
-	//{
-	//	if (gameObject.layer == physicalLayer)
-	//	{
-	//		return base.getInteractionLayermask();
-	//	}
-	//	else
-	//	{
-	//		return LayerMask.GetMask(new string[]
-	//		{
-	//			"Spirit"
-	//		});
-	//	}
-	//}
+	protected override int getInteractionLayermask()
+	{
+		if (gameObject.layer == physicalLayer)
+		{
+			return base.getInteractionLayermask();
+		}
+		else
+		{
+			return LayerMask.GetMask(new string[]
+			{
+				"Spirit"
+			});
+		}
+	}
 
 	#endregion // Override Functions
 
@@ -197,7 +197,7 @@ public class CharacterMovement : Movement
 		Vector3 startScale = transform.localScale;
 		Color startColor = renderer.color;
 
-		Vector3 endPosition = basePosition;
+		Vector3 endPosition = transform.localPosition;
 		Vector3 endScale = baseScale;
 		Color endColor = baseColor;
 

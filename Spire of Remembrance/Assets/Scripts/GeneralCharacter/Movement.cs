@@ -16,6 +16,7 @@ public class Movement : MonoBehaviour
 	[SerializeField] protected float walkAcceleration;
 	[SerializeField] protected float walkDecceleration;
 	[SerializeField] private float interactionDistance;
+	//[SerializeField] private Collider2D interactionZone;
 
 	#endregion // Editor Fields
 
@@ -24,7 +25,7 @@ public class Movement : MonoBehaviour
 	protected Rigidbody2D rigidBody;
 	protected EntityAnimations animator;
 	protected Controller m_current;
-	private GameObject currentInteractionHit;
+	//private GameObject currentInteractionHit;
 
 	#endregion // Non-Editor Fields
 
@@ -75,11 +76,11 @@ public class Movement : MonoBehaviour
 		}
 	}
 
-	public virtual bool canPassPit
+	public bool canAttack
 	{
 		get
 		{
-			return false;
+			return true;
 		}
 	}
 
@@ -87,7 +88,7 @@ public class Movement : MonoBehaviour
 
 	#region Events
 
-	public event Action<Interaction[]> OnNewInteractables;
+	public event Action<Interactable> OnNewInteractable;
 
 	#endregion // Events
 
@@ -118,28 +119,30 @@ public class Movement : MonoBehaviour
 				break;
 		}
 
-		Debug.DrawRay(transform.position, direction * interactionDistance);
-		RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, interactionDistance, getInteractionLayermask());
-		Collider2D c = hit.collider;
-		GameObject obj = c != null ? c.gameObject : null;
-		if (obj != currentInteractionHit)
+		Vector2 position = transform.position;
+		Collider2D[] c = Physics2D.OverlapCircleAll(position + direction * interactionDistance / 2, interactionDistance / 2, getInteractionLayermask());
+		Interactable interactable = null;
+		for (int i = 0; i < c.Length; ++i)
 		{
-			currentInteractionHit = obj;
-			Interactable interactable = obj != null ? obj.GetComponent<Interactable>() : null;
-			if (interactable == null)
+			interactable = c[i].GetComponent<Interactable>();
+			if (interactable != null)
 			{
-				if (OnNewInteractables != null)
+				if (Physics2D.Raycast(transform.position, direction, interactionDistance, getInteractionLayermask()).collider != c[i])
 				{
-					OnNewInteractables(null);
+					interactable = null;
 				}
 			}
-			else
+			if (interactable != null)
 			{
-				if (OnNewInteractables != null)
-				{
-					OnNewInteractables(interactable.interactions);
-				}
+				break;
 			}
+		}
+		//RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, interactionDistance, getInteractionLayermask());
+		//Interactable interactable = hit.collider != null ?
+		//	hit.collider.GetComponent<Interactable>() : null;
+		if (OnNewInteractable != null)
+		{
+			OnNewInteractable(interactable);
 		}
 	}
 
@@ -161,11 +164,6 @@ public class Movement : MonoBehaviour
 		animator.UpdateMovementAnim(Facing, velocity.magnitude);
 	}
 
-	public void RefreshInteracable()
-	{
-		currentInteractionHit = null;
-	}
-
 	public void Attack()
 	{
 		if (!enabled)
@@ -185,6 +183,14 @@ public class Movement : MonoBehaviour
 	{
 		animator.CleanUpInventoryEvents(playerInventory, bodyInventory);
 	}
+
+	//public void NewInteractables(List<Interactable> interactables)
+	//{
+	//	if (OnNewInteractables != null)
+	//	{
+	//		OnNewInteractables(interactables);
+	//	}
+	//}
 
 	#endregion // Public Functions
 
@@ -236,7 +242,7 @@ public class Movement : MonoBehaviour
 
 	protected virtual int getInteractionLayermask()
 	{
-		return Physics2D.GetLayerCollisionMask(gameObject.layer);
+		return Physics2D.GetLayerCollisionMask(gameObject.layer) | LayerMask.NameToLayer("Interactable");
 	}
 
 	bool DecelerationRequired(float input, float velocity)

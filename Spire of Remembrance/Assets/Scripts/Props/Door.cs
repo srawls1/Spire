@@ -38,9 +38,9 @@ public class Door : Interactable
 			}
 
 			m_open = value;
-			//collider.enabled = !m_open;
+			collider.isTrigger = m_open;
 			renderer.sprite = m_open ? openSprite : closedSprite;
-			gameObject.layer = m_open ?  LayerMask.NameToLayer("Interactable") : startingLayer;
+			//gameObject.layer = m_open ?  LayerMask.NameToLayer("Interactable") : startingLayer;
 		}
 	}
 
