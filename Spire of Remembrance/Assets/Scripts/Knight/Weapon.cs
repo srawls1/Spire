@@ -81,7 +81,10 @@ public class Weapon : MonoBehaviour
 
 	public void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (transform.IsChildOf(collision.transform))
+		AITarget self = GetComponentInParent<AITarget>();
+		Alignment instigatorAlignment = self != null ? self.alignment : Alignment.Wildcard;
+		AITarget target = collision.GetComponentInParent<AITarget>();
+		if (target != null && !AITarget.FactionsHostile(instigatorAlignment, target.alignment))
 		{
 			return;
 		}

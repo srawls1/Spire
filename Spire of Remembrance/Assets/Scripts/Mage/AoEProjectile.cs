@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,12 +10,30 @@ public class AoEProjectile : Projectile
 	[SerializeField] protected int damage;
 	[SerializeField] private int force;
 
+	private bool detonated;
+
 	new IEnumerator Start()
 	{
 		base.Start();
 
 		yield return new WaitForSeconds(detonateAfterSeconds);
 
+		Detonate();
+	}
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		Detonate();
+	}
+
+	private void Detonate()
+	{
+		if (detonated)
+		{
+			return;
+		}
+
+		detonated = true;
 		Animator animator = GetComponent<Animator>();
 		animator.Play("Detonate");
 		Rigidbody2D rigidBody = GetComponent<Rigidbody2D>();
@@ -32,8 +51,8 @@ public class AoEProjectile : Projectile
 
 	protected virtual void DealDamage(Collider2D hitBox)
 	{
-		// A shooter won't damage themself
-		if (hitBox.transform.IsChildOf(instigator.transform))
+		AITarget target = hitBox.GetComponentInParent<AITarget>();
+		if (target != null && !AITarget.FactionsHostile(instigatorAlignment, target.alignment))
 		{
 			return;
 		}

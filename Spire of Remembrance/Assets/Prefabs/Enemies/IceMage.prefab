@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 50039182928817286}
   - component: {fileID: 58688347474676838}
   - component: {fileID: 114681052038867896}
+  - component: {fileID: 114537628248276908}
   m_Layer: 0
   m_Name: IceMage
   m_TagString: Untagged
@@ -244,9 +245,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e79f597cd065b4db2fa0137abd1098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontArmor: 0.2
+  m_frontArmor: 0
   backArmor: 0
-  frontPoise: 2
+  m_frontPoise: 0
   backPoise: 0
   m_maxHealth: 15
 --- !u!114 &114342449282426678
@@ -276,6 +277,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 5
+  actions: []
+  perception:
+    sightRange: 12
+    coneAngularWidth: 30
+  perceptionCheckFrequency: 15
+  pathRecalcFrequency: 60
+--- !u!114 &114537628248276908
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1966841656348832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64524db89c075ef44a492e49095a8b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114681052038867896
 MonoBehaviour:
   m_ObjectHideFlags: 1

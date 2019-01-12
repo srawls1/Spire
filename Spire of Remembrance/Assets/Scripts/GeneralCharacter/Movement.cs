@@ -23,6 +23,7 @@ public class Movement : MonoBehaviour
 	#region Non-Editor Fields
 
 	protected Rigidbody2D rigidBody;
+	new protected Collider2D collider;
 	protected EntityAnimations animator;
 	protected Controller m_current;
 	//private GameObject currentInteractionHit;
@@ -98,6 +99,7 @@ public class Movement : MonoBehaviour
 	{
 		rigidBody = GetComponent<Rigidbody2D>();
 		animator = GetComponentInChildren<EntityAnimations>();
+		collider = GetComponent<Collider2D>();
 	}
 
 	protected void Update()
@@ -158,6 +160,14 @@ public class Movement : MonoBehaviour
 			return;
 		}
 
+		//RaycastHit2D hit = Physics2D.Raycast(transform.position, input,
+		//	collider.bounds.extents.x + 0.05f,
+		//	Physics2D.GetLayerCollisionMask(gameObject.layer));
+		//if (hit.collider != null && !hit.collider.isTrigger)
+		//{
+		//	input = Vector3.ProjectOnPlane(input, hit.normal);
+		//}
+		
 		Vector2 velocity = getUpdatedVelocity(rigidBody.velocity, input);
 		rigidBody.velocity = velocity;
 		setFacing(input);

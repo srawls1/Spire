@@ -14,12 +14,13 @@ public class MarkedStatus : MonoBehaviour
 	
 	private IEnumerator MarkRoutine()
 	{
-		Damageable damageable = GetComponent<Damageable>();
-		if (damageable == null)
+		AITarget target = GetComponent<AITarget>();
+		if (target == null)
 		{
 			yield break;
 		}
 
+		target.alignment = Alignment.Wildcard;
 		// TODO - Flashing particle effect
 
 		while (duration > 0)
@@ -32,11 +33,16 @@ public class MarkedStatus : MonoBehaviour
 				AIController controller = colliders[i].GetComponent<AIController>();
 				if (controller != null && controller.gameObject != gameObject)
 				{
-					controller.target = damageable;
+					controller.target = target;
 				}
 			}
 
 			yield return null;
+		}
+
+		if (target.attackingEnemies.Count == 0)
+		{
+			target.ResetAlignmentFrom(Alignment.Wildcard);
 		}
 
 		// TODO - Destroy flashing effect

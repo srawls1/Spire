@@ -7,9 +7,31 @@ public class Projectile : MonoBehaviour
 	[SerializeField] private float speed;
 	[SerializeField] private float destroyAfterSeconds;
 
+	protected Alignment instigatorAlignment;
+	private GameObject m_instigator;
 	public GameObject instigator
 	{
-		get; set;
+		get
+		{
+			return m_instigator;
+		}
+		set
+		{
+			m_instigator = value;
+			AITarget ait = null;
+			if (m_instigator != null)
+			{
+				ait = m_instigator.GetComponent<AITarget>();
+			}
+			if (ait != null)
+			{
+				instigatorAlignment = ait.alignment;
+			}
+			else
+			{
+				instigatorAlignment = Alignment.Wildcard;
+			}
+		}
 	}
 
 	protected void Start()

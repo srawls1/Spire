@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 114644731256415636}
   - component: {fileID: 58131186594564062}
   - component: {fileID: 114804785670302744}
+  - component: {fileID: 114879059287207950}
   m_Layer: 0
   m_Name: Scout
   m_TagString: Untagged
@@ -259,9 +260,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e79f597cd065b4db2fa0137abd1098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontArmor: 0.6
+  m_frontArmor: 0
   backArmor: 0
-  frontPoise: 2
+  m_frontPoise: 0
   backPoise: 0
   m_maxHealth: 20
 --- !u!114 &114122566759008964
@@ -301,6 +302,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 10
+  actions: []
+  perception:
+    sightRange: 20
+    coneAngularWidth: 45
+  perceptionCheckFrequency: 15
+  pathRecalcFrequency: 60
 --- !u!114 &114804785670302744
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -315,6 +322,17 @@ MonoBehaviour:
   defaultSwordData: {fileID: 0}
   defaultStaffData: {fileID: 0}
   defaultBowData: {fileID: 11400000, guid: 99ae6b09025c649a1990c3fb1e2dd78a, type: 2}
+--- !u!114 &114879059287207950
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1523205674375154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64524db89c075ef44a492e49095a8b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114925144085821934
 MonoBehaviour:
   m_ObjectHideFlags: 1

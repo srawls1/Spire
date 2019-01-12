@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 114276609981553244}
   - component: {fileID: 58212004984928952}
   - component: {fileID: 114075319239754038}
+  - component: {fileID: 114839747288025376}
   m_Layer: 0
   m_Name: ShieldKnight
   m_TagString: Untagged
@@ -538,6 +539,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defenseIncrease: 1
   poiseIncrease: 5
+--- !u!114 &114839747288025376
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1093024801300396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64524db89c075ef44a492e49095a8b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114998265365954560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -550,6 +562,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 1.5
+  actions: []
+  perception:
+    sightRange: 10
+    coneAngularWidth: 45
+  perceptionCheckFrequency: 15
+  pathRecalcFrequency: 60
 --- !u!212 &212754818479907684
 SpriteRenderer:
   m_ObjectHideFlags: 1

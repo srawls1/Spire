@@ -19,7 +19,6 @@ public class SpiritHealth : EnemyHealth
 
 	private EnemyHealth m_possessedBody;
 	private int bodysLastHealth;
-	private Coroutine currentLightDamage;
 
 	#endregion // Non-Editor Fields
 
@@ -41,7 +40,7 @@ public class SpiritHealth : EnemyHealth
 			m_possessedBody = value;
 			if (m_possessedBody == null)
 			{
-				currentLightDamage = StartCoroutine(lightDamage());
+				StartCoroutine(lightDamage());
 			}
 			else
 			{
@@ -57,7 +56,12 @@ public class SpiritHealth : EnemyHealth
 
 	private void Start()
 	{
-		currentLightDamage = StartCoroutine(lightDamage());
+		StartCoroutine(lightDamage());
+	}
+
+	private void OnDestroy()
+	{
+		gameOverScreen.gameObject.SetActive(true);
 	}
 
 	#endregion // Unity Functions

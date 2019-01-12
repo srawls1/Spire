@@ -15,6 +15,7 @@ public class StayAtHomeAIController : Controller
 
 	#region Non-Editor Fields
 
+	private AITarget selfTarget;
 	private Vector2 homePosition;
 
 	#endregion // Non-Editor Fields
@@ -33,6 +34,11 @@ public class StayAtHomeAIController : Controller
 
 	#region Unity Functions
 
+	private void Awake()
+	{
+		selfTarget = GetComponent<AITarget>();
+	}
+
 	new protected void Start()
 	{
 		base.Start();
@@ -42,6 +48,7 @@ public class StayAtHomeAIController : Controller
 	private void OnEnable()
 	{
 		StartCoroutine(Wander());
+		selfTarget.alignment = Alignment.Wildcard;
 	}
 
 	#endregion // Unity Functions

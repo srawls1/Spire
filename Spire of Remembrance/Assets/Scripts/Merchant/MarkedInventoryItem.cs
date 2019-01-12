@@ -15,6 +15,8 @@ public class MarkedItemAction : ItemAction
 	{
 		innerAction = action;
 		actionString = innerAction.actionString;
+		markRadius = radius;
+		markDuration = duration;
 	}
 
 	public override void Perform()

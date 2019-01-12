@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 114976231499786258}
   - component: {fileID: 58078338049492922}
   - component: {fileID: 114293126455787496}
+  - component: {fileID: 114823877106167634}
   m_Layer: 0
   m_Name: WoodShieldKnight
   m_TagString: Untagged
@@ -483,6 +484,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 1.5
+  actions: []
+  perception:
+    sightRange: 10
+    coneAngularWidth: 45
+  perceptionCheckFrequency: 15
+  pathRecalcFrequency: 60
 --- !u!114 &114333417607899210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -552,6 +559,17 @@ MonoBehaviour:
   walkAcceleration: 10
   walkDecceleration: 20
   interactionDistance: 1
+--- !u!114 &114823877106167634
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1325340101369400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64524db89c075ef44a492e49095a8b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114976231499786258
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -43,6 +43,8 @@ GameObject:
   - component: {fileID: 50568441917702610}
   - component: {fileID: 58905222575199526}
   - component: {fileID: 114336591948134020}
+  - component: {fileID: 114149750978030914}
+  - component: {fileID: 114809846605055898}
   m_Layer: 16
   m_Name: Scribe
   m_TagString: Untagged
@@ -142,6 +144,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114149750978030914
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1786384670470682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64524db89c075ef44a492e49095a8b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114207485201802368
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -196,6 +209,22 @@ MonoBehaviour:
   outsideWaitTime: 20
   travelDistancePerBout: 0
   idleTimeBetweenBouts: 1
+--- !u!114 &114809846605055898
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1786384670470682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e79f597cd065b4db2fa0137abd1098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_frontArmor: 0.3
+  backArmor: 0
+  m_frontPoise: 2
+  backPoise: 0
+  m_maxHealth: 30
 --- !u!212 &212546845821679074
 SpriteRenderer:
   m_ObjectHideFlags: 1

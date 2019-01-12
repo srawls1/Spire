@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 50678731656111652}
   - component: {fileID: 114785262940188442}
   - component: {fileID: 114866820223313652}
+  - component: {fileID: 114878755604040036}
   m_Layer: 0
   m_Name: Rat
   m_TagString: Untagged
@@ -178,9 +179,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e79f597cd065b4db2fa0137abd1098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontArmor: 0
+  m_frontArmor: 0
   backArmor: 0
-  frontPoise: 0
+  m_frontPoise: 0
   backPoise: 0
   m_maxHealth: 1
 --- !u!114 &114785262940188442
@@ -213,6 +214,17 @@ MonoBehaviour:
   outsideWaitTime: 1
   travelDistancePerBout: 2
   idleTimeBetweenBouts: 2
+--- !u!114 &114878755604040036
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1531867576785340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64524db89c075ef44a492e49095a8b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212849449142355130
 SpriteRenderer:
   m_ObjectHideFlags: 1

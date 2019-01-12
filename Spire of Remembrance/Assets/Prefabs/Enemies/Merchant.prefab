@@ -29,6 +29,7 @@ GameObject:
   - component: {fileID: 114573320894921012}
   - component: {fileID: 114335621351184122}
   - component: {fileID: 114972087779076746}
+  - component: {fileID: 114796868464811212}
   m_Layer: 0
   m_Name: Merchant
   m_TagString: Untagged
@@ -262,6 +263,17 @@ MonoBehaviour:
   walkAcceleration: 10
   walkDecceleration: 20
   interactionDistance: 1
+--- !u!114 &114796868464811212
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1742507360532952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64524db89c075ef44a492e49095a8b2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114972087779076746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -273,9 +285,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e79f597cd065b4db2fa0137abd1098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontArmor: 0
+  m_frontArmor: 0
   backArmor: 0
-  frontPoise: 0
+  m_frontPoise: 0
   backPoise: 0
   m_maxHealth: 50
 --- !u!114 &114997899626044200

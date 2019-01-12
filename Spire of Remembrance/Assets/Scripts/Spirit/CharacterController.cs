@@ -239,13 +239,23 @@ public class CharacterController : Controller
 			controlledMovement.OnNewInteractable += SetInteractions;
 		}
 
+		AITarget target = controlledMovement.GetComponent<AITarget>();
+		if (target != null)
+		{
+			target.alignment = Alignment.Player;
+		}
 		ReconcileDefaultWeapons(InventoryManager.playerInventory, InventoryManager.bodyInventory);
 	}
 
 	public Coroutine Deposess()
 	{
+		AITarget target = controlledMovement.GetComponent<AITarget>();
+		if (target != null)
+		{
+			target.ResetAlignmentFrom(Alignment.Player);
+		}
 		ResetDefaultWeapons(InventoryManager.playerInventory, InventoryManager.bodyInventory);
-		controlledMovement.CurrentController = controlledMovement.GetComponent<Controller>();
+		controlledMovement.CurrentController = disabledController;
 		Possess(GetComponent<Movement>());
 		return spiritMovement.Depossess();
 	}

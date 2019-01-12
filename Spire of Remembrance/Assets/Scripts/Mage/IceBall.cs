@@ -19,13 +19,13 @@ public class IceBall : AoEProjectile
 {
 	[SerializeField] private float freezeDuration;
 
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		DealDamage(collision);
-	}
-
 	protected override void DealDamage(Collider2D hitBox)
 	{
+		AITarget target = hitBox.GetComponentInParent<AITarget>();
+		if (target != null && !AITarget.FactionsHostile(instigatorAlignment, target.alignment))
+		{
+			return;
+		}
 		base.DealDamage(hitBox);
 		hitBox.gameObject.SendMessage("OnIceDamage",
 			new IceDamageArgs(freezeDuration, damage),

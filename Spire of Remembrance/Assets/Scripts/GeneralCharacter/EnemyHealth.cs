@@ -17,6 +17,7 @@ public class EnemyHealth : Damageable
 
 	#region Non-Editor Fields
 
+	Possessable possessable;
 	EntityAnimations animations;
 	Movement movement;
 	Rigidbody2D rigidBody;
@@ -76,6 +77,7 @@ public class EnemyHealth : Damageable
 
 	private void Awake()
 	{
+		possessable = GetComponentInChildren<Possessable>();
 		currentHealth = maxHealth;
 		animations = GetComponent<EntityAnimations>();
 		movement = GetComponent<Movement>();
@@ -198,13 +200,16 @@ public class EnemyHealth : Damageable
 	protected virtual void Die()
 	{
 		currentHealth = 0;
-		animations.Die(movement.Facing);
-
 		if (movement.CurrentController is CharacterController)
 		{
 			CharacterController controller = movement.CurrentController as CharacterController;
 			controller.Deposess();
 		}
+		if (possessable != null)
+		{
+			Destroy(possessable);
+		}
+		animations.Die(movement.Facing);
 	}
 
 	#endregion // Private Functions

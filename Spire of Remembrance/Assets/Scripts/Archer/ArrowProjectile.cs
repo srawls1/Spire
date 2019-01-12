@@ -36,7 +36,8 @@ public class ArrowProjectile : Projectile
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		if (collision.transform.IsChildOf(instigator.transform))
+		AITarget target = collision.GetComponentInParent<AITarget>();
+		if (target != null && !AITarget.FactionsHostile(instigatorAlignment, target.alignment))
 		{
 			return;
 		}

@@ -17,11 +17,9 @@ public class CharacterMovement : Movement
 
 	#region Non-Editor Fields
 
-	private new Collider2D collider;
 	private SpiritHealth health;
 	private Color baseColor;
-	private Vector3 baseScale;
-	private Vector3 basePosition;
+	private Bounds baseScale;
 	private int baseLayer;
 
 	#endregion // Non-Editor Fields
@@ -147,9 +145,9 @@ public class CharacterMovement : Movement
 
 	private IEnumerator FadeOutOf(GameObject obj)
 	{
+		transform.parent = null;
 		yield return StartCoroutine(FadeOutOfRoutine(obj));
 		collider.enabled = true;
-		transform.parent = null;
 		rigidBody.bodyType = RigidbodyType2D.Dynamic;
 	}
 
@@ -170,8 +168,7 @@ public class CharacterMovement : Movement
 		Color endColor = new Color(startColor.r, startColor.g, startColor.b, 0.0f);
 
 		baseColor = startColor;
-		baseScale = startScale;
-		basePosition = startPosition;
+		baseScale = myBounds;
 
 		float timePassed = 0f;
 		while (timePassed < 1f)
@@ -193,25 +190,24 @@ public class CharacterMovement : Movement
 	{
 		SpriteRenderer renderer = GetComponent<SpriteRenderer>();
 
-		Vector3 startPosition = transform.localPosition;
 		Vector3 startScale = transform.localScale;
 		Color startColor = renderer.color;
 
-		Vector3 endPosition = transform.localPosition;
-		Vector3 endScale = baseScale;
+		Bounds myBounds = renderer.bounds;
+		Vector3 endScale = new Vector3(transform.localScale.x * baseScale.extents.x / myBounds.extents.x,
+									transform.localScale.y * baseScale.extents.y / myBounds.extents.y,
+									transform.localScale.z);
 		Color endColor = baseColor;
 
 		float timePassed = 0f;
 		while (timePassed < 1f)
 		{
 			timePassed += Time.deltaTime / possessFadeDuration;
-			transform.localPosition = Vector3.Lerp(startPosition, endPosition, timePassed);
 			transform.localScale = Vector3.Lerp(startScale, endScale, timePassed);
 			renderer.color = Color.Lerp(startColor, endColor, timePassed);
 			yield return null;
 		}
 
-		transform.localPosition = endPosition;
 		transform.localScale = endScale;
 		renderer.color = endColor;
 		yield break;

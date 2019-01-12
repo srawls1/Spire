@@ -21,13 +21,13 @@ public class Fireball : AoEProjectile
 	[SerializeField] private float damagePerSecond;
 	[SerializeField] private float burnDuration;
 
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		DealDamage(collision);
-	}
-
 	protected override void DealDamage(Collider2D hitBox)
 	{
+		AITarget target = hitBox.GetComponentInParent<AITarget>();
+		if (target != null && !AITarget.FactionsHostile(instigatorAlignment, target.alignment))
+		{
+			return;
+		}
 		base.DealDamage(hitBox);
 		hitBox.gameObject.SendMessage("OnFireDamage",
 			new FireDamageArgs(burnDuration, damagePerSecond, damage),
