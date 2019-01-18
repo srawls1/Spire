@@ -13,13 +13,30 @@ public class EnterZoneActivator : MonoBehaviour
 {
 	[SerializeField] private ZoneActivationMode mode;
 	[SerializeField] private float timeLimit;
+	[SerializeField] private Sprite baseSprite;
+	[SerializeField] private Sprite pressedSprite;
 
 	private Activator activator;
-	private bool activated;
+	new private SpriteRenderer renderer;
+	private bool m_activated;
+
+	public bool activated
+	{
+		get
+		{
+			return m_activated;
+		}
+		private set
+		{
+			m_activated = value;
+			renderer.sprite = m_activated ? pressedSprite : baseSprite;
+		}
+	}
 
 	private void Awake()
 	{
 		activator = GetComponent<Activator>();
+		renderer = GetComponent<SpriteRenderer>();
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)

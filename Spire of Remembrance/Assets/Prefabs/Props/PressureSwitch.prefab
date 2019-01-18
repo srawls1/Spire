@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 58389277931085426}
   - component: {fileID: 114885548051536904}
   - component: {fileID: 114795742303909204}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: PressureSwitch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1576203784780290}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.9949546, y: -1.0826466, z: 0}
+  m_LocalPosition: {x: -46.99144, y: -24.585186, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -70,6 +70,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mode: 0
   timeLimit: 0
+  baseSprite: {fileID: 21300490, guid: 54e05f0b4090cda49ad32fec113291c9, type: 3}
+  pressedSprite: {fileID: 21300492, guid: 54e05f0b4090cda49ad32fec113291c9, type: 3}
 --- !u!114 &114885548051536904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -112,7 +114,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ce0779eeabaa0c045b7d534f0fae02ac, type: 3}
+  m_Sprite: {fileID: 21300490, guid: 54e05f0b4090cda49ad32fec113291c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

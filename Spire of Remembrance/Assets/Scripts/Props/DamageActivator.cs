@@ -16,12 +16,29 @@ public class DamageActivator : Damageable
 	[SerializeField] private float minForce = 0f;
 	[SerializeField] private DamageActivationMode mode;
 	[SerializeField] private float timeLimit = 0f;
+	[SerializeField] private Sprite baseSprite;
+	[SerializeField] private Sprite activeSprite;
 
+	new private SpriteRenderer renderer;
 	private Activator activator;
-	private bool activated;
+	private bool m_activated;
+
+	public bool activated
+	{
+		get
+		{
+			return m_activated;
+		}
+		private set
+		{
+			m_activated = value;
+			renderer.sprite = m_activated ? activeSprite : activeSprite;
+		}
+	}
 
 	private void Awake()
 	{
+		renderer = GetComponent<SpriteRenderer>();
 		activator = GetComponent<Activator>();
 	}
 
