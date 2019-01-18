@@ -68,15 +68,26 @@ public class Door : Interactable
 			{
 				return new Interaction[]
 				{
-					new Interaction("Close Door", ToggleOpen, true)
+					//new Interaction("Close Door", ToggleOpen, true)
 				};
+			}
+			else if (locked)
+			{
+				return new Interaction[]
+				{
+					new Interaction("Unlock", ToggleLocked, CharacterController.instance.numKeys > 0)
+				};
+				//return new Interaction[]
+				//{
+				//	new Interaction("Open Door", ToggleOpen, !locked),
+				//	new Interaction(locked ? "Unlock" : "Lock", ToggleLocked, CharacterController.instance.numKeys > 0)
+				//};
 			}
 			else
 			{
 				return new Interaction[]
 				{
-					new Interaction("Open Door", ToggleOpen, !locked),
-					new Interaction(locked ? "Unlock" : "Lock", ToggleLocked, CharacterController.instance.numKeys > 0)
+					new Interaction("Open Door", ToggleOpen, true)
 				};
 			}
 		}
