@@ -87,6 +87,10 @@ public class NavMesh : MonoBehaviour
 	{
 		NavRectangle startingRect = root.GetRectangleContainingPoint(start);
 		NavRectangle endRect = root.GetRectangleContainingPoint(end);
+		if (startingRect == null || endRect == null)
+		{
+			return null;
+		}
 		List<NavRectangle> rectSequence = AStarPath(startingRect, endRect, linkTypeMask);
 
 		List<Vector2> points = new List<Vector2>();

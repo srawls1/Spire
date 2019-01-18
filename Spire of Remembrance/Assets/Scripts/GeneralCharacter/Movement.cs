@@ -17,6 +17,7 @@ public class Movement : MonoBehaviour
 	[SerializeField] protected float walkDecceleration;
 	[SerializeField] private float interactionDistance;
 	//[SerializeField] private Collider2D interactionZone;
+	[SerializeField] private Transform shield;
 
 	#endregion // Editor Fields
 
@@ -62,7 +63,7 @@ public class Movement : MonoBehaviour
 		protected set
 		{
 			m_Facing = value;
-			for (int i = 0; i < transform.childCount; ++i)
+			if (shield != null)
 			{
 				float angle = 0f;
 				switch (m_Facing)
@@ -72,7 +73,7 @@ public class Movement : MonoBehaviour
 					case Facing.left: angle = 180f; break;
 					case Facing.down: angle = 270f; break;
 				}
-				transform.GetChild(i).localRotation = Quaternion.Euler(0, 0, angle);
+				shield.localRotation = Quaternion.Euler(0, 0, angle);
 			}
 		}
 	}

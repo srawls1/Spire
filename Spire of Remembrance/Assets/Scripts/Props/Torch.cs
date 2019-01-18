@@ -26,11 +26,6 @@ public class Torch : MonoBehaviour
 		}
 		private set
 		{
-			if (m_lit == value)
-			{
-				return;
-			}
-
 			m_lit = value;
 
 			if (m_lit)
@@ -39,8 +34,8 @@ public class Torch : MonoBehaviour
 				if (id == -1)
 				{
 					id = LightLevel.RegisterLightSource(transform.position, lightIntensity, lightFalloff, lightRadius);
+					activator.Activate();
 				}
-				activator.Activate();
 			}
 			else
 			{
@@ -49,8 +44,8 @@ public class Torch : MonoBehaviour
 				{
 					LightLevel.UnregisterLightSource(id);
 					id = -1;
+					activator.Deactivate();
 				}
-				activator.Deactivate();
 			}
 		}
 	}

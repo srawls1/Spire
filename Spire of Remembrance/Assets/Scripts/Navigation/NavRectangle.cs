@@ -304,8 +304,8 @@ public class NavRectangle
 
 	public bool ContainsPoint(Vector2 point)
 	{
-		return Mathf.Abs(point.x - centerX) < width / 2 &&
-			Mathf.Abs(point.y - centerY) < height / 2;
+		return Mathf.Abs(point.x - centerX) <= width / 2 &&
+			Mathf.Abs(point.y - centerY) <= height / 2;
 	}
 
 	public override bool Equals(object other)

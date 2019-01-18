@@ -75,7 +75,7 @@ Transform:
   m_GameObject: {fileID: 1742507360532952}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.2692895, y: -3.2041523, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4104643397300112}
   m_Father: {fileID: 0}
@@ -263,6 +263,7 @@ MonoBehaviour:
   walkAcceleration: 10
   walkDecceleration: 20
   interactionDistance: 1
+  shield: {fileID: 0}
 --- !u!114 &114796868464811212
 MonoBehaviour:
   m_ObjectHideFlags: 1
