@@ -326,7 +326,7 @@ public class NavRectangle
 	{
 		if (object.ReferenceEquals(rect1, null))
 		{
-			return rect2 == null;
+			return object.ReferenceEquals(rect2, null);
 		}
 		return rect1.Equals(rect2);
 	}

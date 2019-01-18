@@ -38,6 +38,7 @@ public class AIController : Controller
 	private int currentPerceptionCount;
 	private int pathRecalcFrame;
 	private int currentPathCount;
+	private Vector2 homePosition;
 
 	#endregion // Non-Editor Fields
 
@@ -71,6 +72,7 @@ public class AIController : Controller
 
 	protected void Awake()
 	{
+		homePosition = transform.position;
 		selfTarget = GetComponent<AITarget>();
 		selfTarget.alignment = Alignment.Enemy;
 		perceptionCheckFrame = Random.Range(0, perceptionCheckFrequency);
@@ -106,6 +108,8 @@ public class AIController : Controller
 
 	private IEnumerator FollowRoute()
 	{
+		yield return null;
+		yield return NavigateToPoint(homePosition);
 		while (true)
 		{
 			yield return null;
@@ -115,7 +119,7 @@ public class AIController : Controller
 				switch (actions[i].type)
 				{
 					case ActionType.Walk:
-						yield return StartCoroutine(NavigateToPoint(actions[i].destination));
+						yield return StartCoroutine(WalkToPoint(actions[i].destination));
 						break;
 					case ActionType.Turn:
 						yield return StartCoroutine(Turn(actions[i].direction));
