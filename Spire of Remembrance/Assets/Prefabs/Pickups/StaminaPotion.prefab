@@ -133,8 +133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRoot: {fileID: 1404936442479738}
+  message: Found a Stamina Potion
   fillAmount: 0.5
   restoreScale: 16.86
+  partial: {fileID: 0}
+  full: {fileID: 0}
 --- !u!212 &212015560672769466
 SpriteRenderer:
   m_ObjectHideFlags: 1

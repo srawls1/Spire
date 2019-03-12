@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212453852969111048}
   - component: {fileID: 114737766054327244}
   - component: {fileID: 60220113840449836}
+  - component: {fileID: 114522735727424010}
   m_Layer: 15
   m_Name: Gap_01
   m_TagString: Untagged
@@ -62,6 +63,18 @@ PolygonCollider2D:
       - {x: 0.5, y: 0.25}
       - {x: 0.25, y: 0.25}
       - {x: 0.25, y: 0.5}
+--- !u!114 &114522735727424010
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1158447012587112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf78617bf0bf2437e880c6712ad73258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_navTerrainType: 2
 --- !u!114 &114737766054327244
 MonoBehaviour:
   m_ObjectHideFlags: 1

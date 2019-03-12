@@ -5,6 +5,7 @@ using UnityEngine;
 public class Pickup : MonoBehaviour
 {
 	[SerializeField] private GameObject pickupRoot;
+	[SerializeField] private string message;
 
 	private void OnTriggerEnter2D(Collider2D collider)
 	{
@@ -17,6 +18,7 @@ public class Pickup : MonoBehaviour
 
 	protected virtual void PerformPickupAction()
 	{
+		InGameUIManager.instance.ShowPickup(message);
 		Destroy(pickupRoot);
 	}
 }

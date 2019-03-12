@@ -119,7 +119,7 @@ public class AIController : Controller
 				switch (actions[i].type)
 				{
 					case ActionType.Walk:
-						yield return StartCoroutine(WalkToPoint(actions[i].destination));
+						yield return StartCoroutine(NavigateToPoint(actions[i].destination));
 						break;
 					case ActionType.Turn:
 						yield return StartCoroutine(Turn(actions[i].direction));
@@ -139,6 +139,11 @@ public class AIController : Controller
 		{
 			route = NavMesh.instance.GetClosestPath(transform.position, destination, GetNavTerrainMask());
 		}
+
+		//for (int i = 1; i < route.Count; ++i)
+		//{
+		//	Debug.DrawLine(route[i - 1], route[i], Color.white, .5f);
+		//}
 
 		if (route == null)
 		{
@@ -254,21 +259,21 @@ public class AIController : Controller
 
 			if (route == null || route.Count == 0)
 			{
-				target = null;
-				//while (Vector2.Distance(transform.position, destination) > 0.5f)
-				//{
-				//	++currentPathCount;
-				//	currentPathCount %= pathRecalcFrequency;
-				//	if (currentPathCount == pathRecalcFrame)
-				//	{
-				//		yield break;
-				//	}
-					
-				//	Vector2 position = transform.position;
-				//	Vector2 dir = destination - position;
-				//	controlledMovement.Walk(dir.normalized);
-				//	yield return null;
-				//}
+				//target = null;
+				while (Vector2.Distance(transform.position, destination) > 0.5f)
+				{
+					++currentPathCount;
+					currentPathCount %= pathRecalcFrequency;
+					if (currentPathCount == pathRecalcFrame)
+					{
+						yield break;
+					}
+
+					Vector2 position = transform.position;
+					Vector2 dir = destination - position;
+					controlledMovement.Walk(dir.normalized);
+					yield return null;
+				}
 			}
 			else
 			{
@@ -315,9 +320,9 @@ public class AIController : Controller
 			selfTarget.attackingEnemies.Contains(other.gameObject));
 	}
 
-	protected virtual int GetNavTerrainMask()
+	protected virtual NavTerrainTypes GetNavTerrainMask()
 	{
-		return (int)(NavTerrainTypes.Floor | NavTerrainTypes.Door);
+		return NavTerrainTypes.Floor | NavTerrainTypes.Door;
 	}
 
 	#endregion // Private Functions

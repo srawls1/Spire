@@ -251,7 +251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxWalkSpeed: 4
   walkAcceleration: 20
-  walkDecceleration: 30
+  walkDecceleration: 50
   interactionDistance: 0
   shield: {fileID: 0}
 --- !u!114 &114154718919895102
@@ -308,7 +308,7 @@ MonoBehaviour:
   maxWanderDistance: 2
   outsideWaitTime: 0
   travelDistancePerBout: 3
-  idleTimeBetweenBouts: 0
+  idleTimeBetweenBouts: 1.5
 --- !u!212 &212377295689435078
 SpriteRenderer:
   m_ObjectHideFlags: 1

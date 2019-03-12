@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4523128243163560}
   - component: {fileID: 212622827075828436}
   - component: {fileID: 61262251344113678}
+  - component: {fileID: 114150189480445220}
   m_Layer: 9
   m_Name: Wall_42
   m_TagString: Untagged
@@ -35,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1953111440197044}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.31, y: 1.96, z: 0}
+  m_LocalPosition: {x: 13.752028, y: 62.548203, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -55,6 +56,18 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
+--- !u!114 &114150189480445220
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1953111440197044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf78617bf0bf2437e880c6712ad73258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_navTerrainType: 8
 --- !u!212 &212622827075828436
 SpriteRenderer:
   m_ObjectHideFlags: 1

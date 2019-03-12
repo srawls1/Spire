@@ -133,8 +133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRoot: {fileID: 1643569953457448}
+  message: Found Body Health Potion
   fillAmount: 0.5
   healScale: 10
+  partialFull: {fileID: 0}
+  full: {fileID: 0}
 --- !u!212 &212688608121722526
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -45,157 +45,66 @@ public class NavMesh : MonoBehaviour
 	[SerializeField] private float maxX;
 	[SerializeField] private float minY;
 	[SerializeField] private float maxY;
-	[SerializeField] private int maxRectsPerCell;
-	[SerializeField] private NavRectangle[] rects;
+	[SerializeField] private int distBetweenNodes;
 
-	public IEnumerable<NavRectangle> rectangles
+	public List<Vector2> GetClosestPath(Vector2 start, Vector2 end, NavTerrainTypes linkTypeMask)
 	{
-		get { return rects; } 
+		PathNode node = FindReversePath(start, end, linkTypeMask);
+		List<Vector2> path = new List<Vector2>();
+		while (node != null)
+		{
+			path.Add(node.position);
+			node = node.pathParent;
+		}
+		
+		return path;
 	}
 
-	private BspNode root;
-
-	void Start()
+	private PathNode FindReversePath(Vector2 start, Vector2 end, NavTerrainTypes linkTypeMask)
 	{
-		BuildMesh();
-	}
+		NodePool pool = new NodePool(minX, maxX, minY, maxY, distBetweenNodes);
+		MinHeap<PathNode> openNodes = new MinHeap<PathNode>();
 
-	private void OnDrawGizmosSelected()
-	{
-		Gizmos.color = Color.green;
-		for (int i = 0; i < rects.Length; ++i)
+		PathNode endNode = pool.GetAt(start);
+		PathNode startNode = new PathNode(end, -1, NavTerrainTypes.Floor);
+		startNode.pathRemainderEstimate = Vector2.Distance(start, end);
+		openNodes.Add(startNode);
+
+
+		while (openNodes.size > 0)
 		{
-			Gizmos.DrawWireCube(new Vector2(rects[i].centerX, rects[i].centerY),
-								new Vector2(rects[i].width, rects[i].height));
-		}
-	}
-
-	private void BuildMesh()
-	{
-		root = new BspNode(minX, minY, maxX, maxY, maxRectsPerCell);
-		for (int i = 0; i < rects.Length; ++i)
-		{
-			rects[i].DeserializeAdjacents(rects);
-		}
-		for (int i = 0; i < rects.Length; ++i)
-		{
-			root.AddRect(rects[i]);
-		}
-	}
-
-	public List<Vector2> GetClosestPath(Vector2 start, Vector2 end, int linkTypeMask)
-	{
-		NavRectangle startingRect = root.GetRectangleContainingPoint(start);
-		NavRectangle endRect = root.GetRectangleContainingPoint(end);
-		if (startingRect == null || endRect == null)
-		{
-			return null;
-		}
-		List<NavRectangle> rectSequence = AStarPath(startingRect, endRect, linkTypeMask);
-
-		List<Vector2> points = new List<Vector2>();
-		points.Add(start);
-		for (int i = 0; i < rectSequence.Count - 1; ++i)
-		{
-			Vector2 dest = i < rectSequence.Count - 2 ?
-				new Vector2(rectSequence[i + 2].centerX, rectSequence[i + 2].centerY) :
-				end;
-			points.Add(GetBestEdgePoint(rectSequence[i], rectSequence[i + 1], points[i], dest));
-		}
-		points.Add(end);
-		return points;
-	}
-
-	private Vector2 GetBestEdgePoint(NavRectangle rect1, NavRectangle rect2, Vector2 currentPos, Vector2 destination)
-	{
-		Pair<Vector2, Vector2> connectingEdge = rect1.GetAdjoiningEdge(rect2);
-		float edgeDx = connectingEdge.second.x -  connectingEdge.first.x;
-		float edgeDy = connectingEdge.second.y - connectingEdge.first.y;
-		float pathDx = destination.x - currentPos.x;
-		float pathDy = destination.y - currentPos.y;
-
-		// This is kinda messy, but it's based on setting up parametric equations
-		// for the edge and line from current to destination, setting up a 2x2 system of
-		// equations, and solving for the first variable (the edge parameter) using Cramer's
-		// rule. If this is between 0 and 1, the line from current to destination intersects
-		// the shared edge
-		float detA1 = pathDx * (currentPos.y - connectingEdge.first.y) - pathDy * (currentPos.x - connectingEdge.first.x);
-		float detA = pathDx * edgeDy - pathDy * edgeDx;
-		float t = detA1 / detA;
-		t = Mathf.Clamp(t, 0f, 1f);
-		Vector2 edgePoint = Vector2.Lerp(connectingEdge.first, connectingEdge.second, t);
-
-		return edgePoint;
-	}
-
-	private List<NavRectangle> AStarPath(NavRectangle start, NavRectangle end, int linkTypeMask)
-	{
-		if (start == end)
-		{
-			return new List<NavRectangle>() { start };
-		}
-		PriorityQueue<float, NavRectangle> openRects = new PriorityQueue<float, NavRectangle>();
-		openRects.Add(Heuristic(start, end), start);
-		Dictionary<NavRectangle, float> closedRects = new Dictionary<NavRectangle, float>();
-		Dictionary<NavRectangle, NavRectangle> parentsInPath = new Dictionary<NavRectangle, NavRectangle>();
-
-		while (!parentsInPath.ContainsKey(end))
-		{
-			float priority = openRects.PeekPriority();
-			NavRectangle rect = openRects.Pop();
-			closedRects.Add(rect, priority);
-
-			foreach (NavRectangle adjoining in rect.GetAdjacentRectangles())
+			PathNode node = openNodes.Pop();
+			if (node == endNode)
 			{
-				if (adjoining.Equals(end))
-				{
-					parentsInPath[end] = rect;
-					break;
-				}
-				if ((linkTypeMask & adjoining.navTerrainType) == 0)
+				return endNode;
+			}
+			node.isClosed = true;
+
+			foreach (PathNode adjacent in pool.GetAdjacentNodes(node))
+			{
+				if (adjacent.isClosed || (linkTypeMask & adjacent.terrainType) == 0)
 				{
 					continue;
 				}
 
-				float cost = Heuristic(rect, adjoining) + Heuristic(adjoining, end);
-				if (closedRects.ContainsKey(adjoining) && cost < closedRects[adjoining])
+				float cost = node.knownCost + Vector2.Distance(node.position, adjacent.position);
+				
+				if (!openNodes.Contains(adjacent))
 				{
-					closedRects.Remove(adjoining);
+					adjacent.knownCost = cost;
+					adjacent.pathRemainderEstimate = Vector2.Distance(adjacent.position, endNode.position);
+					openNodes.Add(adjacent);
+					adjacent.pathParent = node;
 				}
-				if (!closedRects.ContainsKey(adjoining))
+				else if (cost < adjacent.knownCost)
 				{
-					if (!openRects.Contains(adjoining))
-					{
-						openRects.Add(cost, adjoining);
-						parentsInPath[adjoining] = rect;
-					}
-					else if (openRects.LowerPriority(adjoining, cost))
-					{
-						parentsInPath[adjoining] = rect;
-					}
+					adjacent.knownCost = cost;
+					adjacent.pathParent = node;
+					openNodes.PriorityLowered(adjacent);
 				}
 			}
 		}
-
-		List<NavRectangle> ret = new List<NavRectangle>();
-		AddParentsFirst(parentsInPath, ret, end);
-		return ret;
-	}
-
-	private void AddParentsFirst(Dictionary<NavRectangle, NavRectangle> parentsInPath, List<NavRectangle> ret, NavRectangle child)
-	{
-		NavRectangle parent;
-		if (parentsInPath.TryGetValue(child, out parent) && parent != null)
-		{
-			AddParentsFirst(parentsInPath, ret, parent);
-		}
-		ret.Add(child);
-	}
-
-	private float Heuristic(NavRectangle current, NavRectangle dest)
-	{
-		float dx = current.centerX - dest.centerX;
-		float dy = current.centerY - dest.centerY;
-		return Mathf.Sqrt(dx * dx + dy * dy);
+		
+		return endNode;
 	}
 }

@@ -22,11 +22,11 @@ public class StayAtHomeAIController : Controller
 
 	#region Properties
 
-	protected virtual int navLayerMask
+	protected virtual NavTerrainTypes navLayerMask
 	{
 		get
 		{
-			return (int)(NavTerrainTypes.Floor | NavTerrainTypes.Door);
+			return NavTerrainTypes.Floor | NavTerrainTypes.Door;
 		}
 	}
 
@@ -48,7 +48,7 @@ public class StayAtHomeAIController : Controller
 	private void OnEnable()
 	{
 		StartCoroutine(Wander());
-		selfTarget.alignment = Alignment.Wildcard;
+		selfTarget.alignment = Alignment.Enemy;
 	}
 
 	#endregion // Unity Functions

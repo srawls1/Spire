@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class RatController : StayAtHomeAIController
 {
-	protected override int navLayerMask
+	protected override NavTerrainTypes navLayerMask
 	{
 		get
 		{
-			return (int)(NavTerrainTypes.Floor | NavTerrainTypes.RatTunnel);
+			return NavTerrainTypes.Floor | NavTerrainTypes.RatTunnel;
 		}
 	}
 }

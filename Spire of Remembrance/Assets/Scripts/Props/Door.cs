@@ -18,6 +18,7 @@ public class Door : Interactable
 
 	private new SpriteRenderer renderer;
 	private new Collider2D collider;
+	private NavObstacle obstacle;
 	private int startingLayer;
 
 	#endregion // Non-Editor Fields
@@ -40,7 +41,7 @@ public class Door : Interactable
 			m_open = value;
 			collider.isTrigger = m_open;
 			renderer.sprite = m_open ? openSprite : closedSprite;
-			//gameObject.layer = m_open ?  LayerMask.NameToLayer("Interactable") : startingLayer;
+			obstacle.terrainType = m_open ? NavTerrainTypes.Floor : NavTerrainTypes.Door;
 		}
 	}
 
@@ -53,6 +54,14 @@ public class Door : Interactable
 		set
 		{
 			m_locked = value;
+			if (locked)
+			{
+				obstacle.terrainType = NavTerrainTypes.ThickWall;
+			}
+			else
+			{
+				obstacle.terrainType = open ? NavTerrainTypes.Floor : NavTerrainTypes.Door;
+			}
 		}
 	}
 
@@ -101,6 +110,7 @@ public class Door : Interactable
 	{
 		renderer = GetComponent<SpriteRenderer>();
 		collider = GetComponent<Collider2D>();
+		obstacle = GetComponent<NavObstacle>();
 		startingLayer = gameObject.layer;
 		open = open;
 		locked = locked;

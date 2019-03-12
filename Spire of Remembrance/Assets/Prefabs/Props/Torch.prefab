@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 61853934153265176}
   - component: {fileID: 114775421584398356}
   - component: {fileID: 114153176778828330}
+  - component: {fileID: 114677371258346978}
   m_Layer: 0
   m_Name: Torch
   m_TagString: Untagged
@@ -116,6 +117,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7d4b3239d9ffac4192b9ee277e88057, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114677371258346978
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1913213491844134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf78617bf0bf2437e880c6712ad73258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_navTerrainType: 8
 --- !u!114 &114775421584398356
 MonoBehaviour:
   m_ObjectHideFlags: 1

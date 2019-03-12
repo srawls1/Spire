@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BatController : StayAtHomeAIController
 {
-	protected override int navLayerMask
+	protected override NavTerrainTypes navLayerMask
 	{
 		get
 		{
-			return (int)(NavTerrainTypes.Floor | NavTerrainTypes.Pit);
+			return NavTerrainTypes.Floor | NavTerrainTypes.Pit;
 		}
 	}
 }

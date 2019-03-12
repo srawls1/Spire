@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212018925320775068}
   - component: {fileID: 114186748664802048}
   - component: {fileID: 61507680013951126}
+  - component: {fileID: 114773394359829992}
   m_Layer: 9
   m_Name: Door_B
   m_TagString: Untagged
@@ -71,6 +72,18 @@ MonoBehaviour:
   m_locked: 0
   closedSprite: {fileID: 21300414, guid: 54e05f0b4090cda49ad32fec113291c9, type: 3}
   openSprite: {fileID: 21300386, guid: 54e05f0b4090cda49ad32fec113291c9, type: 3}
+--- !u!114 &114773394359829992
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1953039062468036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf78617bf0bf2437e880c6712ad73258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_navTerrainType: 32
 --- !u!212 &212018925320775068
 SpriteRenderer:
   m_ObjectHideFlags: 1

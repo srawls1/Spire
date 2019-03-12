@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRoot: {fileID: 1433257158152042}
+  message: Found a key.
 --- !u!212 &212518910022826668
 SpriteRenderer:
   m_ObjectHideFlags: 1

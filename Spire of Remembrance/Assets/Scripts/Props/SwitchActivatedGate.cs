@@ -11,6 +11,7 @@ public class SwitchActivatedGate : Actuator
 
 	new private Collider2D collider;
 	new private SpriteRenderer renderer;
+	private NavObstacle obstacle;
 
 	protected bool open
 	{
@@ -23,6 +24,7 @@ public class SwitchActivatedGate : Actuator
 			m_open = value;
 
 			renderer.sprite = m_open ? openSprite : closedSprite;
+			obstacle.terrainType = m_open ? NavTerrainTypes.Floor : NavTerrainTypes.ThickWall;
 			collider.enabled = !m_open;
 		}
 	}
@@ -31,6 +33,7 @@ public class SwitchActivatedGate : Actuator
 	{
 		collider = GetComponent<Collider2D>();
 		renderer = GetComponent<SpriteRenderer>();
+		obstacle = GetComponent<NavObstacle>();
 	}
 
 	new protected void Start()

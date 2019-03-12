@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212133582653076416}
   - component: {fileID: 61654425262429926}
   - component: {fileID: 114621814251507374}
+  - component: {fileID: 114668855797068472}
   m_Layer: 15
   m_Name: Gap_02
   m_TagString: Untagged
@@ -68,6 +69,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallMoveSmoothing: 2
+--- !u!114 &114668855797068472
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1004684267484472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf78617bf0bf2437e880c6712ad73258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_navTerrainType: 2
 --- !u!212 &212133582653076416
 SpriteRenderer:
   m_ObjectHideFlags: 1

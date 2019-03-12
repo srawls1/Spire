@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212469910199944204}
   - component: {fileID: 61653260256047290}
   - component: {fileID: 114877110611856808}
+  - component: {fileID: 114867771602828410}
   m_Layer: 15
   m_Name: Gap_10
   m_TagString: Untagged
@@ -56,6 +57,18 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -0.125}
   serializedVersion: 2
   m_Size: {x: 1, y: 0.75}
+--- !u!114 &114867771602828410
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1442307805931736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf78617bf0bf2437e880c6712ad73258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_navTerrainType: 2
 --- !u!114 &114877110611856808
 MonoBehaviour:
   m_ObjectHideFlags: 1

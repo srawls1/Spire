@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212261441927813762}
   - component: {fileID: 61833672117443850}
   - component: {fileID: 114111260721551636}
+  - component: {fileID: 114455596181230528}
   m_Layer: 15
   m_Name: Water
   m_TagString: Untagged
@@ -71,6 +72,18 @@ MonoBehaviour:
   waterSprite: {fileID: 21300000, guid: a7de407181ec74645a9723941e6ee518, type: 3}
   iceSprite: {fileID: 21300000, guid: f149f7791e3ed4dfcac89682ac873092, type: 3}
   m_frozen: 0
+--- !u!114 &114455596181230528
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1005976116459828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf78617bf0bf2437e880c6712ad73258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_navTerrainType: 2
 --- !u!212 &212261441927813762
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InGameUIManager : MonoBehaviour
 {
@@ -31,6 +33,9 @@ public class InGameUIManager : MonoBehaviour
 
 	[SerializeField] private CounterUI keyCounter;
 	[SerializeField] private CounterUI spiritOrbCounter;
+	[SerializeField] private RectTransform pickupNotificationBox;
+	[SerializeField] private PickupNotification pickupNotifPrefab;
+	[SerializeField] private float notificationDuration;
 
 	public void SetNumKeys(int numKeys)
 	{
@@ -40,5 +45,34 @@ public class InGameUIManager : MonoBehaviour
 	public void SetNumSpiritOrbs(int numOrbs)
 	{
 		spiritOrbCounter.SetCount(numOrbs);
+	}
+
+	public void ShowPickup(string message)
+	{
+		StartCoroutine(ShowPickupRoutine(message));
+	}
+
+	private IEnumerator ShowPickupRoutine(string message)
+	{
+		int i = 0;
+		for (; i < pickupNotificationBox.childCount &&
+			pickupNotificationBox.GetChild(i).gameObject.activeSelf; ++i) ;
+
+		PickupNotification notification;
+		if (i == pickupNotificationBox.childCount)
+		{
+			notification = Instantiate(pickupNotifPrefab);
+			notification.transform.SetParent(pickupNotificationBox);
+		}
+		else
+		{
+			notification = pickupNotificationBox.GetChild(i).GetComponent<PickupNotification>();
+			notification.gameObject.SetActive(true);
+		}
+
+		notification.message = message;
+		yield return new WaitForSeconds(notificationDuration);
+		notification.gameObject.SetActive(false);
+		notification.transform.SetAsLastSibling();
 	}
 }

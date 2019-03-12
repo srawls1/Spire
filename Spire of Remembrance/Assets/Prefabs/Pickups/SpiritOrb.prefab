@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRoot: {fileID: 1957042213775536}
+  message: Found a spirit orb.
 --- !u!212 &212124096977072510
 SpriteRenderer:
   m_ObjectHideFlags: 1

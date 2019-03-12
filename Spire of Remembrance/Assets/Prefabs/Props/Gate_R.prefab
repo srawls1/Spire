@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212248175485273834}
   - component: {fileID: 61873281296320406}
   - component: {fileID: 114282916109318084}
+  - component: {fileID: 114268451644058618}
   m_Layer: 9
   m_Name: Gate_R
   m_TagString: Untagged
@@ -56,6 +57,18 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
+--- !u!114 &114268451644058618
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1927392347529988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf78617bf0bf2437e880c6712ad73258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_navTerrainType: 32
 --- !u!114 &114282916109318084
 MonoBehaviour:
   m_ObjectHideFlags: 1

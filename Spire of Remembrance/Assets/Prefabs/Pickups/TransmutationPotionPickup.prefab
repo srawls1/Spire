@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRoot: {fileID: 1681224828824522}
+  message: Acquired a Bottle of Transmutation Potion.
   serialized:
     type: 1
     potionType: 6

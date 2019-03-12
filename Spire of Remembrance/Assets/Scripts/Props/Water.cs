@@ -16,6 +16,7 @@ public class Water : Pit
 
 	private new SpriteRenderer renderer;
 	private List<Collider2D> currentlyInside;
+	private NavObstacle obstacle;
 
 	#endregion // Non-Editor Fields
 
@@ -31,6 +32,7 @@ public class Water : Pit
 		{
 			m_frozen = value;
 			renderer.sprite = m_frozen ? iceSprite : waterSprite;
+			obstacle.terrainType = m_frozen ? NavTerrainTypes.Floor : NavTerrainTypes.Pit;
 			if (m_frozen)
 			{
 				for (int i = currentlyInside.Count - 1; i >= 0; --i)
@@ -46,9 +48,11 @@ public class Water : Pit
 
 	#region Unity Message
 
-	public void Awake()
+	public new void Awake()
 	{
+		base.Awake();
 		renderer = GetComponent<SpriteRenderer>();
+		obstacle = GetComponent<NavObstacle>();
 		currentlyInside = new List<Collider2D>();
 		frozen = frozen;
 	}

@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRoot: {fileID: 1261821217422976}
+  message: Acquired Bottle of Spirit Health Potion
   serialized:
     type: 1
     potionType: 2

@@ -130,10 +130,10 @@ public class Movement : MonoBehaviour
 			interactable = c[i].GetComponent<Interactable>();
 			if (interactable != null)
 			{
-				if (Physics2D.Raycast(transform.position, direction, interactionDistance, getInteractionLayermask()).collider != c[i])
-				{
-					interactable = null;
-				}
+				//if (Physics2D.Raycast(transform.position, direction, interactionDistance, getInteractionLayermask()).collider != c[i])
+				//{
+				//	interactable = null;
+				//}
 			}
 			if (interactable != null)
 			{

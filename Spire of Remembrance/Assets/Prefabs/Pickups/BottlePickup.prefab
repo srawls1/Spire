@@ -133,6 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRoot: {fileID: 1261821217422976}
+  message: Acquired Empty Bottle
   serialized:
     type: 1
     potionType: 0
@@ -143,6 +144,7 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: ce0779eeabaa0c045b7d534f0fae02ac, type: 3}
     fullSprite: {fileID: 0}
     partialSprite: {fileID: 0}
+    inventoryMenu: {fileID: 0}
 --- !u!212 &212867029103429018
 SpriteRenderer:
   m_ObjectHideFlags: 1
