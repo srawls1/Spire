@@ -37,10 +37,14 @@ public class SpiritHealth : EnemyHealth
 				m_possessedBody.OnHealthChanged -= TakeDamageFromBody;
 			}
 
+			var prevPossessed = m_possessedBody;
 			m_possessedBody = value;
 			if (m_possessedBody == null)
 			{
-				StartCoroutine(lightDamage());
+				if (prevPossessed != null)
+				{
+					StartCoroutine(lightDamage());
+				}
 			}
 			else
 			{
@@ -70,7 +74,7 @@ public class SpiritHealth : EnemyHealth
 
 	private IEnumerator lightDamage()
 	{
-		while (possessedBody == null)
+		while (possessedBody == null && currentHealth > 0)
 		{
 			float lightLevel = LightLevel.GetLightLevel(transform.position);
 			float damage = damageFromLight.Evaluate(lightLevel) * Time.deltaTime * lightDamageMultiplier;
