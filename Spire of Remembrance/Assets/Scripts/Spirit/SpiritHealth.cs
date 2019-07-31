@@ -34,7 +34,7 @@ public class SpiritHealth : EnemyHealth
 		{
 			if (m_possessedBody != null)
 			{
-				m_possessedBody.OnHealthChanged -= TakeDamageFromBody;
+				//m_possessedBody.OnHealthChanged -= TakeDamageFromBody;
 			}
 
 			var prevPossessed = m_possessedBody;
@@ -48,8 +48,8 @@ public class SpiritHealth : EnemyHealth
 			}
 			else
 			{
-				bodysLastHealth = m_possessedBody.currentHealth;
-				m_possessedBody.OnHealthChanged += TakeDamageFromBody;
+				//bodysLastHealth = m_possessedBody.currentHealth;
+				//m_possessedBody.OnHealthChanged += TakeDamageFromBody;
 			}
 		}
 	}
@@ -74,20 +74,26 @@ public class SpiritHealth : EnemyHealth
 
 	private IEnumerator lightDamage()
 	{
+		Debug.Log("Starting light damage");
+
 		while (possessedBody == null && currentHealth > 0)
 		{
 			float lightLevel = LightLevel.GetLightLevel(transform.position);
+			Debug.Log("LightLevel=" + lightLevel);
 			float damage = damageFromLight.Evaluate(lightLevel) * Time.deltaTime * lightDamageMultiplier;
-			TakeDamage(Mathf.RoundToInt(damage), transform.position, 0f);
+			Debug.Log("Damage=" + damage);
+			TakeDamage(damage, transform.position, 0f);
 			yield return null;
 		}
+
+		Debug.Log("Stopping light damage");
 	}
 
-	private void TakeDamageFromBody(int currentHealth, int maxHealth)
-	{
-		int bodyDamage = bodysLastHealth - currentHealth;
-		TakeDamage(Mathf.RoundToInt(bodyDamage * bodyDamagePortion), transform.position, 0f);
-	}
+	//private void TakeDamageFromBody(int currentHealth, int maxHealth)
+	//{
+	//	int bodyDamage = bodysLastHealth - currentHealth;
+	//	TakeDamage(Mathf.RoundToInt(bodyDamage * bodyDamagePortion), transform.position, 0f);
+	//}
 
 	protected override void Die()
 	{

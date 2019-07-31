@@ -75,6 +75,12 @@ public class Torch : MonoBehaviour
 		lit = false;
 	}
 
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.green;
+		Gizmos.DrawWireSphere(transform.position, lightRadius);
+	}
+
 	public void OnFireDamage(FireDamageArgs args)
 	{
 		lit = true;

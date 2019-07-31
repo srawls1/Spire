@@ -7,6 +7,7 @@ public class AIPerception
 {
 	[SerializeField] private float sightRange;
 	[SerializeField] private float coneAngularWidth;
+	[SerializeField] private AnimationCurve sightRangeOverDistance;
 
 	private static List<AITarget> targets;
 
@@ -27,13 +28,14 @@ public class AIPerception
 
 	public List<AITarget> GetSeenTargets(Vector3 position, Vector2 forward)
 	{
-		float effectiveSightRange = sightRange * LightLevel.GetLightLevel(position);
+		float effectiveSightRange = sightRange *
+			sightRangeOverDistance.Evaluate(LightLevel.GetLightLevel(position));
+
 		List<AITarget> seenTargets = new List<AITarget>();
 		for (int i = 0; i < targets.Count; ++i)
 		{
-			// TODO - eventually change this to use effective sight range instead
 			Vector2 selfToTarget = targets[i].transform.position - position;
-			if (selfToTarget.magnitude < sightRange &&
+			if (selfToTarget.magnitude < effectiveSightRange &&
 				Mathf.Abs(Vector2.Angle(forward, selfToTarget)) < 90 &&
 				Physics2D.Raycast(position, selfToTarget).transform == targets[i].transform)
 			{

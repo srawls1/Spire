@@ -42,7 +42,7 @@ public class DamageActivator : Damageable
 		activator = GetComponent<Activator>();
 	}
 
-	public override void TakeDamage(int damage, Vector3 damagerPosition, float force)
+	public override void TakeDamage(float damage, Vector3 damagerPosition, float force)
 	{
 		if (damage >= minDamage && force >= minForce)
 		{

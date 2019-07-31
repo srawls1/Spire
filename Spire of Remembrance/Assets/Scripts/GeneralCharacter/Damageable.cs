@@ -13,6 +13,6 @@ public abstract class Damageable : MonoBehaviour
 		}
 	}
 
-	public abstract void TakeDamage(int damage, Vector3 damagerPosition, float force);
+	public abstract void TakeDamage(float damage, Vector3 damagerPosition, float force);
 
 }

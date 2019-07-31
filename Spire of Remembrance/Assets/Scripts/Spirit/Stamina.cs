@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Stamina : MonoBehaviour
@@ -12,6 +14,7 @@ public class Stamina : MonoBehaviour
 
 	#region Non-Editor Fields
 
+	private LinkedList<StaminaFilter> filters;
 	private CharacterController controller;
 	private CharacterMovement movement;
 	private float m_currentStamina;
@@ -46,10 +49,6 @@ public class Stamina : MonoBehaviour
 			if (m_currentStamina <= 0f)
 			{
 				m_currentStamina = 0f;
-				if (isPossessing)
-				{
-					controller.Deposess();
-				}
 			}
 
 			if (m_currentStamina > totalStamina)
@@ -78,31 +77,89 @@ public class Stamina : MonoBehaviour
 
 	private void Awake()
 	{
+		filters = new LinkedList<StaminaFilter>();
+		AddFilter(new DefaultStaminaFilter());
 		controller = GetComponent<CharacterController>();
 		movement = GetComponent<CharacterMovement>();
 		currentStamina = totalStamina;
 	}
 
+	//<temp>
 	private void Update()
 	{
 		if (isPossessing)
 		{
-			currentStamina -= Time.deltaTime;
+			if (!Expend(Time.deltaTime))
+			{
+				if (isPossessing)
+				{
+					controller.Deposess();
+				}
+			}
 		}
 		else
 		{
-			currentStamina += Time.deltaTime * passiveRecoveryRate;
+			Expend(-Time.deltaTime * passiveRecoveryRate);
 		}
 	}
+	//</temp>
 
 	#endregion // Unity Functions
 
 	#region Public Functions
 
-	public void Restore(float amount)
+	public void AddFilter(StaminaFilter filter)
 	{
-		currentStamina += amount;
+		for (LinkedListNode<StaminaFilter> node = filters.First; node != null; node = node.Next)
+		{
+			if (node.Value.priority > filter.priority)
+			{
+				filters.AddBefore(node, filter);
+				return;
+			}
+		}
+		filters.AddLast(filter);
+	}
+
+	public void RemoveFilter(StaminaFilter filter, float delay = 0f)
+	{
+		if (delay > 0)
+		{
+			StartCoroutine(RemoveFilterAfterDelay(filter, delay));
+		}
+		else
+		{
+			filters.Remove(filter);
+		}
+	}
+
+	public bool Expend(float amount)
+	{
+		StaminaExpense expense = new StaminaExpense();
+		expense.cost = amount;
+
+		foreach (StaminaFilter filter in filters)
+		{
+			filter.FilterExpense(expense, this);
+		}
+
+		if (expense.canAfford)
+		{
+			currentStamina -= expense.cost;
+		}
+
+		return expense.canAfford;
 	}
 
 	#endregion // Public Functions
+
+	#region Private Functions
+
+	private IEnumerator RemoveFilterAfterDelay(StaminaFilter filter, float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		filters.Remove(filter);
+	}
+
+	#endregion // Private Functions
 }

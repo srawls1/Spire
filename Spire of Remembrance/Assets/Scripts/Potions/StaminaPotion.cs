@@ -51,7 +51,7 @@ public class StaminaPotion : GradualFillPotion
 		float ableToRestore = scale * portion;
 		float amountRestored = Mathf.Min(roomToRestore, ableToRestore);
 
-		stamina.Restore(amountRestored);
+		stamina.Expend(-amountRestored);
 		portion -= amountRestored / scale;
 		return portion;
 	}

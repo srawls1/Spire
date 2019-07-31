@@ -360,6 +360,24 @@ MonoBehaviour:
   perception:
     sightRange: 12
     coneAngularWidth: 30
+    sightRangeOverDistance:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0.2
+        inSlope: 0.8
+        outSlope: 0.8
+        tangentMode: 34
+      - serializedVersion: 2
+        time: 1
+        value: 1
+        inSlope: 0.8
+        outSlope: 0.8
+        tangentMode: 34
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
   perceptionCheckFrequency: 15
   pathRecalcFrequency: 60
 --- !u!114 &114417399504543416

@@ -29,7 +29,7 @@ public abstract class HealthPotion : GradualFillPotion
 			return portion;
 		}
 
-		int roomToHeal = target.maxHealth - target.currentHealth;
+		int roomToHeal = Mathf.CeilToInt(target.maxHealth - target.currentHealth);
 		int ableToHeal = Mathf.RoundToInt(scale * portion);
 		int amountHealed = Mathf.Min(roomToHeal, ableToHeal);
 

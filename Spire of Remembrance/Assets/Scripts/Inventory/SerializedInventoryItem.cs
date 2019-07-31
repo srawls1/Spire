@@ -34,6 +34,7 @@ public class SerializedInventoryItem
 	[SerializeField] ProjectileShooterData shooterData;
 	[SerializeField] float fillAmount;
 	[SerializeField] float potionScale;
+	[SerializeField] float duration;
 	[SerializeField] Sprite sprite;
 	[SerializeField] Sprite fullSprite;
 	[SerializeField] Sprite partialSprite;
@@ -71,8 +72,10 @@ public class SerializedInventoryItem
 						break;
 					}
 					case PotionType.InfiniteStamina:
-						// TODO
+					{
+						bottle.containedPotion = new InfiniteStaminaPotion(fullSprite, duration);
 						break;
+					}
 					case PotionType.LightResist:
 						// TODO
 						break;

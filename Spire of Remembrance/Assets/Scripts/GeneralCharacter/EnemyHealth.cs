@@ -21,7 +21,7 @@ public class EnemyHealth : Damageable
 	EntityAnimations animations;
 	Movement movement;
 	Rigidbody2D rigidBody;
-	private int m_currentHealth;
+	private float m_currentHealth;
 
 	#endregion // Non-Editor Fields
 
@@ -35,7 +35,7 @@ public class EnemyHealth : Damageable
 		}
 	}
 
-	public int currentHealth
+	public float currentHealth
 	{
 		get
 		{
@@ -88,7 +88,7 @@ public class EnemyHealth : Damageable
 
 	#region Override Functions
 
-	public override void TakeDamage(int damage, Vector3 damagerPosition, float force)
+	public override void TakeDamage(float damage, Vector3 damagerPosition, float force)
 	{
 		Vector3 positionDif = damagerPosition - transform.position;
 
@@ -115,7 +115,7 @@ public class EnemyHealth : Damageable
 			animations.Stagger(movement.Facing);
 		}
 		rigidBody.AddForce(positionDif * -knockback, ForceMode2D.Impulse);
-		HealthChanged(currentHealth, maxHealth);
+		HealthChanged(Mathf.RoundToInt(currentHealth), maxHealth);
 	}
 
 	public void OnFireDamage(FireDamageArgs args)
@@ -173,7 +173,7 @@ public class EnemyHealth : Damageable
 		{
 			currentHealth = maxHealth;
 		}
-		HealthChanged(currentHealth, maxHealth);
+		HealthChanged(Mathf.RoundToInt(currentHealth), maxHealth);
 	}
 
 	#endregion // Override Functions

@@ -143,14 +143,26 @@ MonoBehaviour:
   m_lit: 0
   idleAnimName: StandinDarkTorch
   litAnimName: StandinLitTorch
-  lightIntensity: 0
-  lightRadius: 0
+  lightIntensity: 1
+  lightRadius: 5
   lightFalloff:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0.03333314
+      outSlope: 0.03333314
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: -3.2499988
+      outSlope: -3.2499988
+      tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!212 &212263563533819314
 SpriteRenderer:
   m_ObjectHideFlags: 1

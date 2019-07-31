@@ -12,11 +12,11 @@ public class SpawnFrequencyEntry
 public class LootCrate : Damageable
 {
 	[SerializeField] private SpawnFrequencyEntry[] lootTable;
-	[SerializeField] private int durability;
+	[SerializeField] private float durability;
 	[SerializeField] private float destroyAnimDuration;
 	[SerializeField] private float courseCorrection;
 
-	public override void TakeDamage(int damage, Vector3 damagerPosition, float force)
+	public override void TakeDamage(float damage, Vector3 damagerPosition, float force)
 	{
 		durability -= damage;
 		if (durability <= 0)
