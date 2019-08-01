@@ -77,7 +77,7 @@ public class SerializedInventoryItem
 						break;
 					}
 					case PotionType.LightResist:
-						// TODO
+						bottle.containedPotion = new LightResistPotion(fullSprite, duration);
 						break;
 					case PotionType.Transmutation:
 						bottle.containedPotion = new TransmutationPotion(fullSprite, inventoryMenu);

@@ -75,7 +75,7 @@ public class EnemyHealth : Damageable
 
 	#region Unity Functions
 
-	private void Awake()
+	protected void Awake()
 	{
 		possessable = GetComponentInChildren<Possessable>();
 		currentHealth = maxHealth;

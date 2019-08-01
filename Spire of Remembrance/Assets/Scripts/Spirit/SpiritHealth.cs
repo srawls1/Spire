@@ -70,6 +70,15 @@ public class SpiritHealth : EnemyHealth
 
 	#endregion // Unity Functions
 
+	#region Public Functions
+
+	public void ResistLight(float duration)
+	{
+		StartCoroutine(resistLightRoutine(duration));
+	}
+
+	#endregion // Public Functions
+
 	#region Private Functions
 
 	private IEnumerator lightDamage()
@@ -87,6 +96,14 @@ public class SpiritHealth : EnemyHealth
 		}
 
 		Debug.Log("Stopping light damage");
+	}
+
+	private IEnumerator resistLightRoutine(float duration)
+	{
+		float defaultLightDamage = lightDamageMultiplier;
+		lightDamageMultiplier = 0f;
+		yield return new WaitForSeconds(duration);
+		lightDamageMultiplier = defaultLightDamage;
 	}
 
 	//private void TakeDamageFromBody(int currentHealth, int maxHealth)
