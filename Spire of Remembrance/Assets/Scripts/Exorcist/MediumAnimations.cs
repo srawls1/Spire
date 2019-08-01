@@ -10,13 +10,25 @@ public class MediumAnimations : EntityAnimations
 	[SerializeField] private float attackRadius;
 	[SerializeField] private float attackTime;
 	[SerializeField] private float attackDuration;
+	[SerializeField] private float teleportWarmUp;
+	[SerializeField] private float teleportCoolDown;
 
 	#endregion // Editor Fields
+
+	#region Public Functions
+
+	public Coroutine AnimateTeleport(Vector2 destination)
+	{
+		return StartCoroutine(teleportRoutine(destination));
+	}
+
+	#endregion // Public Functions
 
 	#region Overrides
 
 	protected override IEnumerator AttackRoutine(Animations state)
 	{
+		Debug.Log("Attacking");
 		animator.Play(state.ToString());
 		showWarningRing();
 		movement.enabled = false;
@@ -59,6 +71,16 @@ public class MediumAnimations : EntityAnimations
 
 			character.TurnPhysical();
 		}
+	}
+
+	private IEnumerator teleportRoutine(Vector2 destination)
+	{
+		movement.enabled = false;
+		animator.Play("Teleport");
+		yield return new WaitForSeconds(teleportWarmUp);
+		transform.position = destination;
+		yield return new WaitForSeconds(teleportCoolDown);
+		movement.enabled = true;
 	}
 
 	private void showAttackRing()

@@ -33,7 +33,6 @@ public static class LightLevel
 		{
 			if (holes.Contains(i))
 			{
-				Debug.Log("Hole at " + i);
 				continue;
 			}
 
@@ -41,7 +40,6 @@ public static class LightLevel
 			if (distance < 1)
 			{
 				float light = sources[i].intensity * sources[i].falloff.Evaluate(distance);
-				Debug.Log("Distance=" + distance + ", Light=" + light);
 				lightLevel += light;
 			}
 		}

@@ -21,13 +21,13 @@ GameObject:
   - component: {fileID: 4930263349084460}
   - component: {fileID: 212738005295419926}
   - component: {fileID: 95577111366657494}
-  - component: {fileID: 114887815721800928}
   - component: {fileID: 114898463686483854}
   - component: {fileID: 50428009099484538}
   - component: {fileID: 114177618833698868}
   - component: {fileID: 114961933620327776}
   - component: {fileID: 58984992610744778}
   - component: {fileID: 114620047676316130}
+  - component: {fileID: 114271880455337578}
   m_Layer: 0
   m_Name: Exorcist
   m_TagString: Untagged
@@ -72,7 +72,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1169169763371070}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.58, y: -3.42, z: 0}
+  m_LocalPosition: {x: -1.6, y: 35.52, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
   - {fileID: 4746431344307408}
@@ -160,6 +160,27 @@ MonoBehaviour:
   attackRadius: 2
   attackTime: 1
   attackDuration: 2
+  teleportWarmUp: 1
+  teleportCoolDown: 1
+--- !u!114 &114271880455337578
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1169169763371070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f462de306f92801429ab896a580b2006, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxWalkSpeed: 1.5
+  walkAcceleration: 20
+  walkDecceleration: 30
+  interactionDistance: 0.75
+  shield: {fileID: 0}
+  teleporterPrefab: {fileID: 114558308835860042, guid: cd5af77a49de9994d88986e7f825d64f,
+    type: 2}
+  teleportWindow: 2
 --- !u!114 &114620047676316130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -182,22 +203,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdfbd52aa011cd846850fa859f4813eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114887815721800928
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1169169763371070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fe9b6d3a8044ed40b34aadb1885ff43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxWalkSpeed: 1.5
-  walkAcceleration: 20
-  walkDecceleration: 30
-  interactionDistance: 0.75
-  shield: {fileID: 0}
 --- !u!114 &114898463686483854
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -226,7 +231,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackRange: 2
-  actions: []
+  actions:
+  - type: 2
+    destination: {x: 0, y: 0, z: 0}
+    waitTime: 0
+    direction: 1
+  - type: 1
+    destination: {x: 0, y: 0, z: 0}
+    waitTime: 10
+    direction: 0
   perception:
     sightRange: 8
     coneAngularWidth: 90

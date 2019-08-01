@@ -124,6 +124,7 @@ public class Movement : MonoBehaviour
 
 		Vector2 position = transform.position;
 		Collider2D[] c = Physics2D.OverlapCircleAll(position + direction * interactionDistance / 2, interactionDistance / 2, getInteractionLayermask());
+		Debug.DrawLine(position, position + direction * interactionDistance);
 		Interactable interactable = null;
 		for (int i = 0; i < c.Length; ++i)
 		{
@@ -143,10 +144,7 @@ public class Movement : MonoBehaviour
 		//RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, interactionDistance, getInteractionLayermask());
 		//Interactable interactable = hit.collider != null ?
 		//	hit.collider.GetComponent<Interactable>() : null;
-		if (OnNewInteractable != null)
-		{
-			OnNewInteractable(interactable);
-		}
+		NewInteractable(interactable);
 	}
 
 	#endregion // Unity Functions
@@ -206,6 +204,14 @@ public class Movement : MonoBehaviour
 	#endregion // Public Functions
 
 	#region Private Functions
+
+	protected void NewInteractable(Interactable interactable)
+	{
+		if (OnNewInteractable != null)
+		{
+			OnNewInteractable(interactable);
+		}
+	}
 
 	protected Vector2 getUpdatedVelocity(Vector2 currentVelocity, Vector2 input)
 	{

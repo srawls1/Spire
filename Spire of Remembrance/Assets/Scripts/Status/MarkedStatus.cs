@@ -33,7 +33,7 @@ public class MarkedStatus : MonoBehaviour
 				AIController controller = colliders[i].GetComponent<AIController>();
 				if (controller != null && controller.gameObject != gameObject)
 				{
-					controller.target = target;
+					controller.SetTarget(target);
 				}
 			}
 

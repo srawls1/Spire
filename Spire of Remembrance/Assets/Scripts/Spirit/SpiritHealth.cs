@@ -83,19 +83,13 @@ public class SpiritHealth : EnemyHealth
 
 	private IEnumerator lightDamage()
 	{
-		Debug.Log("Starting light damage");
-
 		while (possessedBody == null && currentHealth > 0)
 		{
 			float lightLevel = LightLevel.GetLightLevel(transform.position);
-			Debug.Log("LightLevel=" + lightLevel);
 			float damage = damageFromLight.Evaluate(lightLevel) * Time.deltaTime * lightDamageMultiplier;
-			Debug.Log("Damage=" + damage);
 			TakeDamage(damage, transform.position, 0f);
 			yield return null;
 		}
-
-		Debug.Log("Stopping light damage");
 	}
 
 	private IEnumerator resistLightRoutine(float duration)

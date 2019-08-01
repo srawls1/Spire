@@ -104,6 +104,15 @@ public class AIController : Controller
 
 	#endregion // Unity Functions
 
+	#region Public Functions
+
+	public virtual void SetTarget(AITarget targ)
+	{
+		target = targ;
+	}
+
+	#endregion // Public Functions
+
 	#region Private Functions
 
 	private IEnumerator FollowRoute()
@@ -240,17 +249,7 @@ public class AIController : Controller
 		while (target != null)
 		{
 			currentPathCount %= pathRecalcFrequency;
-			float targettingAngle = target.GetTargetingAngle(this);
-			Vector2 destination = target.transform.position;
-			Vector2 disp = new Vector2(Mathf.Cos(targettingAngle) * (attackRange - 0.5f),
-				Mathf.Sin(targettingAngle) * (attackRange - 0.5f));
-			RaycastHit2D hit = Physics2D.Raycast(destination, disp, attackRange - 0.5f,
-				Physics2D.GetLayerCollisionMask(gameObject.layer));
-			if (hit.transform != null)
-			{
-				disp *= hit.distance / disp.magnitude;
-			}
-			destination += disp;
+			Vector2 destination = GetDestination();
 			List<Vector2> route = null;
 			if (NavMesh.instance != null)
 			{
@@ -323,6 +322,22 @@ public class AIController : Controller
 	protected virtual NavTerrainTypes GetNavTerrainMask()
 	{
 		return NavTerrainTypes.Floor | NavTerrainTypes.Door;
+	}
+
+	protected Vector2 GetDestination()
+	{
+		float targettingAngle = target.GetTargetingAngle(this);
+		Vector2 destination = target.transform.position;
+		Vector2 disp = new Vector2(Mathf.Cos(targettingAngle) * (attackRange - 0.5f),
+			Mathf.Sin(targettingAngle) * (attackRange - 0.5f));
+		RaycastHit2D hit = Physics2D.Raycast(destination, disp, attackRange - 0.5f,
+			Physics2D.GetLayerCollisionMask(gameObject.layer));
+		if (hit.transform != null)
+		{
+			disp *= hit.distance / disp.magnitude;
+		}
+		destination += disp;
+		return destination;
 	}
 
 	#endregion // Private Functions
