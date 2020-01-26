@@ -19,13 +19,9 @@ public class SpiritAnimations : EntityAnimations
 
 	private void Update()
 	{
-		previousPositions.Enqueue(new Pair<float, Vector2>
-		{
-			first = Time.time,
-			second = transform.position
-		});
+		previousPositions.Enqueue(new Pair<float, Vector2>(Time.time, transform.position));
 
-		float headTime = previousPositions.Peek().first;
+		float headTime = previousPositions.Peek().First;
 		if (headTime < Time.time - timeToRewindOnFall)
 		{
 			previousPositions.Dequeue();
@@ -40,7 +36,7 @@ public class SpiritAnimations : EntityAnimations
 	private IEnumerator FallInPitRoutine()
 	{
 		movement.enabled = false;
-		Vector2 resetPotion = previousPositions.Peek().second;
+		Vector2 resetPotion = previousPositions.Peek().Second;
 		PlayAnimation(Animations.FallInPit);
 		yield return new WaitForSeconds(fallAnimDuration);
 

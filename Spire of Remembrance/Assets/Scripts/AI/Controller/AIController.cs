@@ -215,8 +215,8 @@ public class AIController : Controller
 	{
 		if (target == null && currentPerceptionCount++ == perceptionCheckFrame)
 		{
-			List<AITarget> targetsInView = perception.GetSeenTargets(transform.position,
-				GetVectorForDirection(controlledMovement.Facing));
+			List<AITarget> targetsInView = /*perception.GetSeenTargets(transform.position,
+				GetVectorForDirection(controlledMovement.Facing))*/null;
 
 			float minDistance = Mathf.Infinity;
 			int minIndex = -1;

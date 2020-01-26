@@ -44,12 +44,6 @@ public class AITarget : MonoBehaviour
 	private void Awake()
 	{
 		m_attackingEnemies = new List<GameObject>();
-		AIPerception.RegisterTarget(this);
-	}
-
-	private void OnDestroy()
-	{
-		AIPerception.UnregisterTarget(this);
 	}
 
 	public void AddAttackingEnemy(GameObject attacker)
